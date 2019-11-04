@@ -19,8 +19,6 @@ def create_event():
     date = request.args.get('date')
     desc = request.args.get('description')
     
-    print(name, date, desc)
-    
     b = Events()
     c = b.create_ev(name, date, desc)
     

@@ -28,6 +28,16 @@ main {
 	height: auto;
 	width: 100%;
 	background-color: yellow;
+	text-align: center;
+}
+
+.event {
+	background-color: lightblue;
+	display: inline-block;
+	padding: 10px 5px 10px 5px; 
+	max-width: 250px;
+	heigth: auto;
+	overflow: auto;
 }
 
 footer {

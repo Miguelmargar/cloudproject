@@ -24,10 +24,18 @@
 	<main> 
 	
 	{% if eveLen == 0 %}
-	<h1>NO EVENTS</h1>
+	<h1>NO EVENTS - Please click on create event to add event</h1>
 	{% else %}
 	<h1>EVENTS</h1>
-	{% endif %} </main>
+	{% for i in events['events'] %}
+	<div class="event">
+	<h2>{{ events['events'][i]["name"] }}</h2>
+	<h2>{{ events['events'][i]["date"] }}</h2>
+	<h2>{{ events['events'][i]["desc"] }}</h2>
+	</div>
+	{% endfor %}
+	{% endif %} 
+	</main>
 
 	<footer>
 		<h2>Event Organiser</h2>
