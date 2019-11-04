@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>EVENT ORGANISER</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+	<header>
+		<h1>Event Organiser</h1>
+		<h3>Create Event</h3>
+		<h3>Search Event</h3>
+	</header>
+	
+	<main>
+	{% if events.length == 0 %}
+		<h1>NO EVENTS</h1>
+	{% else %}
+		<h1>EVENTS</h1>
+	{% endif %}
+	</main>
+
+	<footer>
+		<h2>Event Organiser</h2>
+	</footer>
+
+</body>
+</html>
