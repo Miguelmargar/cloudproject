@@ -4,6 +4,7 @@ class Events:
     
     def __init__(self):
         self.file_name = "events.json"
+        self.eventCount = 0
 
     def show_events(self):
         
@@ -11,19 +12,30 @@ class Events:
         
         with open(self.file_name) as self.file:
             self.data = json.load(self.file)
-            return self.data["events"]
         self.file.close()
-    
+        return self.data
             
     
     
-    def create_event(self):
+    def create_ev(self, name, date, desc):
         
-        self.check_if_any()
+        with open(self.file_name) as self.file:
+            self.data = json.load(self.file)
             
-#         with open(self.file_name, "w") as self.file:
+            self.eventCount = len(self.data["events"])
+            
+            self.data["events"][self.eventCount + 1] = {
+                                                "name":name, 
+                                                "date":date,
+                                                "desc":desc
+                                                }
+            self.file.close()
+            
+        with open(self.file_name, "w") as self.file:
+            json.dump(self.data, self.file)
+        self.file.close()
 
-            
+        
 
     def check_if_any(self):
         if not os.path.exists(self.file_name):
@@ -32,5 +44,5 @@ class Events:
             self.new_file.close()
             
             with open(self.file_name, "w") as self.file:
-                json.dump({"events":[]}, self.file)
+                json.dump({"events":{}}, self.file)
             self.file.close()

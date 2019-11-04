@@ -35,3 +35,18 @@ footer {
 	width: 100%;
 	background-color: grey;
 }
+
+.modalTop {
+	width: 350px;
+	height: auto;
+	background-color: red;
+}
+
+#modal {
+	display: none;
+}
+
+textarea {
+	height: 200px;
+	width: 200px;
+}

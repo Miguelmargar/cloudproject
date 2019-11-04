@@ -1,29 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>EVENT ORGANISER</title>
 <link rel="stylesheet" href="../static/style.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type=text/javascript>
+        // Set-up connection variable between JS and Flask server application
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
 </head>
+
 <body>
 
 	<header>
 		<h1>Event Organiser</h1>
-		<h3>Create Event</h3>
+		<h3 onclick="document.getElementById('modal').style.display='block'">Create
+			Event</h3>
 		<h3>Search Event</h3>
 	</header>
+
+	<main> 
 	
-	<main>
-	{% if events.length == 0 %}
-		<h1>NO EVENTS</h1>
+	{% if eveLen == 0 %}
+	<h1>NO EVENTS</h1>
 	{% else %}
-		<h1>EVENTS</h1>
-	{% endif %}
-	</main>
+	<h1>EVENTS</h1>
+	{% endif %} </main>
 
 	<footer>
 		<h2>Event Organiser</h2>
 	</footer>
 
+
 </body>
+
+<div id="modal" class="modalTop">
+
+		EVENT NAME:<br>
+		<input type="text" id="Name" value="Shopping" runat="server"> 
+		<br> 
+		EVENT DATE:<br> 
+		<input type="text" id="Date" value="Tomorrow" runat="server">
+		<br>
+		EVENT DESCRIPTION:<br>
+		<textarea id="Desc" runat="server"></textarea> 
+		<br><br> 
+		<button type="submit" value="Submit" onclick="creEv()">Submit</button>
+		
+	<button onclick="document.getElementById('modal').style.display='none'">close</button>
+</div>
+
+<script src="../static/events.js"></script>
+
 </html>
