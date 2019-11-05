@@ -36,6 +36,19 @@ def delete_event():
     return redirect("/")
 
 
+@app.route("/editEvent", methods=['GET', 'POST'])
+def edit_event():
+    num = request.args.get('ed_num')
+    name = request.args.get('ed_name')
+    date = request.args.get('ed_date')
+    desc = request.args.get('ed_description')
+
+    d = Events()
+    edi = d.edit_event(num, name, date, desc)
+
+    return "Hello"
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     

@@ -50,6 +50,29 @@ class Events:
         self.file.close()
 
 
+    def edit_event(self, num, name, date, desc):
+        num = int(num)
+        
+        with open(self.file_name) as self.file:
+            self.data = json.load(self.file)
+
+            if len(name) > 0:
+                self.data["events"][num]["name"] = name
+
+            if len(date) > 0:
+                self.data["events"][num]["date"] = date
+
+            if len(desc) > 0:
+                self.data["events"][num]["desc"] = desc
+        
+        self.file.close()
+             
+        with open(self.file_name, "w") as self.file:
+            json.dump(self.data, self.file)
+        self.file.close()
+
+
+
     def check_if_any(self):
         if not os.path.exists(self.file_name):
             self.new_file = open(self.file_name, 'w+')
