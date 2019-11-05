@@ -13,15 +13,26 @@ def index():
     
     return render_template('index.html', events=events, eveLen=eveLen)
 
+
 @app.route("/createEvent", methods=['GET', 'POST'])
 def create_event():
     name = request.args.get('name')
     date = request.args.get('date')
     desc = request.args.get('description')
-    
+     
     b = Events()
-    c = b.create_ev(name, date, desc)
-    
+    create = b.create_ev(name, date, desc)
+     
+    return redirect("/")
+ 
+ 
+@app.route("/deleteEvent", methods=['GET', 'POST'])
+def delete_event():
+    num = request.args.get('num')
+     
+    c = Events()
+    dele = c.del_event(num)
+     
     return redirect("/")
 
 

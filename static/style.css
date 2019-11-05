@@ -35,8 +35,9 @@ main {
 	background-color: lightblue;
 	display: inline-block;
 	padding: 10px 5px 10px 5px; 
-	max-width: 250px;
-	heigth: auto;
+	width: 200px;
+	height: 250px;
+	word-wrap: break-word;
 	overflow: auto;
 }
 
@@ -55,6 +56,17 @@ footer {
 #modal {
 	display: none;
 }
+
+.modalEdit {
+	width: 350px;
+	height: auto;
+	background-color: yellow;
+}
+
+#moded {
+	display: none;
+}
+
 
 textarea {
 	height: 200px;

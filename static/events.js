@@ -1,6 +1,7 @@
 var name;
 var date;
 var description;
+var editNum;
 
 
 function creEv() {
@@ -17,5 +18,22 @@ function creEv() {
 	 },
      function(response) {
      });
+}
+
+function delEv(num) {
+	$.getJSON($SCRIPT_ROOT + '/deleteEvent', {
+		num
+	 },
+     function(response) {
+     });
+}
+
+
+function editEv(num) {
+	document.getElementById('moded').style.display='block';
+	editNum = num;
+}
+
+function edFrontEv() {
 	
 }
