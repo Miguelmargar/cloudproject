@@ -18,8 +18,8 @@
 		<h1>Event Organiser</h1>
 		<h3 onclick="document.getElementById('modal').style.display='block'">Create
 			Event</h3>
-		<h3>Search Event</h3>
 	</header>
+	
 	<div id="modal" class="modalTop">
 		<form>
 			EVENT NAME:<br>
@@ -36,21 +36,22 @@
 		<button onclick="document.getElementById('modal').style.display='none'">close</button>
 	</div>
 
-	<main> 
-
+	<main>
+	
 	{% if eveLen == 0 %}
 	
 	<h1>NO EVENTS - Please click on create event to add event</h1>
 	
 	{% else %}
-	
 	<h1>EVENTS</h1>
 	{% for i in range(0, eveLen) %}
+	
 	<div class="event">
 	<button type="submit" value="Edit" onclick="editEv({{ i }})">Edit</button>
 	<form>
 	<button type="submit" value="Delete" onclick="delEv({{ i }})">Delete</button>
 	</form>
+
 	<h2>{{ events["events"][i]["name"] }}</h2>
 	<h2>{{ events["events"][i]["date"] }}</h2>
 	<p>{{ events["events"][i]["desc"] }}</p>
@@ -60,6 +61,13 @@
 	{% endfor %}	
 	
 	{% endif %} 
+	
+	<div>
+		<h3>Search Event</h3>
+		<input type="text" id="search" runat="server">
+		<button type="submit" value="search" onclick="search()">Search</button>
+	</div>
+	
 	</main>
 
 	<footer>

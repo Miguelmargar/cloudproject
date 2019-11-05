@@ -2,7 +2,7 @@ var name;
 var date;
 var description;
 var ed_num;
-
+var frontSearch;
 
 function creEv() {
 	document.getElementById("modal").style.display="none";
@@ -47,4 +47,15 @@ function edFrontEv() {
 	 },
      function(response) {
      });
+}
+
+
+function search() {
+	sear = document.getElementById("search").value;
+	$.getJSON($SCRIPT_ROOT + '/searchEvent', {
+		sear
+	 },
+     function(response) {
+     });
+	window.location.reload();
 }

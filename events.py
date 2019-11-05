@@ -1,20 +1,30 @@
 import os, json
 
+
 class Events:
     
     def __init__(self):
         self.file_name = "events.json"
-        self.eventCount = 0
+        self.search_file_name = "search_events.json"
+        
 
     def show_events(self):
         
-        self.check_if_any()
+        self.check_if_db()
         
-        with open(self.file_name) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
-        return self.data
-            
+        if self.check_if_search() == False:
+            with open(self.file_name) as self.file:
+                self.data = json.load(self.file)
+            self.file.close()
+            return self.data
+        else:
+            with open(self.search_file_name) as self.file:
+                self.data = json.load(self.file)
+            self.file.close()
+
+            os.remove(self.search_file_name)
+            return self.data         
+        
     
     
     def create_ev(self, name, date, desc):
@@ -72,8 +82,26 @@ class Events:
         self.file.close()
 
 
+    def search_event(self, str):
+        
+        with open(self.search_file_name) as self.file:
+            self.search_data = json.load(self.file)
+        self.file.close()      
+        
+        with open(self.file_name) as self.file:
+            self.data = json.load(self.file)
+        self.file.close()
+        
+        for i in self.data["events"]:
+            if i["name"] == str:
+                self.search_data["events"].append(i)
 
-    def check_if_any(self):
+        with open(self.search_file_name, "w") as self.search_file:
+            json.dump(self.search_data, self.search_file)
+        self.search_file.close()
+        
+
+    def check_if_db(self):
         if not os.path.exists(self.file_name):
             self.new_file = open(self.file_name, 'w+')
             print("xxxxxxxx FILE CREATED xxxxxxxx")
@@ -83,6 +111,33 @@ class Events:
                 json.dump({"events":[]}, self.file)
             self.file.close()
             
+        if not os.path.exists(self.search_file_name):
+            self.new_file = open(self.search_file_name, 'w+')
+            print("xxxx SEARCH FILE CREATED xxxx")
+            self.new_file.close()
             
+            with open(self.search_file_name, "w") as self.file:
+                json.dump({"events":[]}, self.file)
+            self.file.close()
 
+
+    def check_if_search(self):
+        
+        if not os.path.exists(self.search_file_name):
+            return False
+        else:
+            with open(self.search_file_name) as self.search_file:
+                self.search_data = json.load(self.search_file)
+                self.search_file.close()
+                if len(self.search_data["events"]) > 0:
+                    return True
+                else:
+                    return False
+            
+            
+            
+            
+            
+            
+            
             

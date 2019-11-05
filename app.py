@@ -1,14 +1,19 @@
 from flask import Flask, render_template, redirect, request, jsonify
 from events import *
 from flask.globals import request
+from _ast import Try
+from _overlapped import NULL
+
 
 app = Flask(__name__)
+
+
 
 @app.route('/')
 def index():
     
     a = Events()
-    events = a.show_events()
+    events = a.show_events() 
     eveLen = len(events["events"])
     
     return render_template('index.html', events=events, eveLen=eveLen)
@@ -46,7 +51,18 @@ def edit_event():
     d = Events()
     edi = d.edit_event(num, name, date, desc)
 
-    return "Hello"
+    return redirect("/")
+
+
+@app.route("/searchEvent", methods=['GET', 'POST'])
+def search_event():
+    searched = request.args.get('sear')
+    print(searched)
+    e = Events()
+    sea = e.search_event(searched)
+
+    return redirect("/")
+
 
 
 if __name__ == '__main__':

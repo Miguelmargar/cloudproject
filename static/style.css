@@ -24,6 +24,10 @@ header h3:hover {
 	cursor: pointer;
 }
 
+header form {
+	display: inline-block;
+}
+
 main {
 	height: auto;
 	width: 100%;
