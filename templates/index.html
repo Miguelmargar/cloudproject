@@ -15,9 +15,13 @@
 <body>
 
 	<header>
-		<h1>Event Organiser</h1>
+		<h1><a href="/">Event Organiser</a></h1>
 		<h3 onclick="document.getElementById('modal').style.display='block'">Create
 			Event</h3>
+		<h3>Search Event</h3>
+		<input type="text" id="search" runat="server">
+		<button type="submit" value="search" onclick="search()">Search</button>
+			
 	</header>
 	
 	<div id="modal" class="modalTop">
@@ -52,8 +56,13 @@
 	<button type="submit" value="Delete" onclick="delEv({{ i }})">Delete</button>
 	</form>
 
+	<hr>
 	<h2>{{ events["events"][i]["name"] }}</h2>
-	<h2>{{ events["events"][i]["date"] }}</h2>
+	<hr>
+	<h2>WHEN:</h2>
+	<h3>{{ events["events"][i]["date"] }}</h3>
+	<hr>
+	<h2>COMMENTS:</h2>
 	<p>{{ events["events"][i]["desc"] }}</p>
 	
 	</div>
@@ -61,12 +70,6 @@
 	{% endfor %}	
 	
 	{% endif %} 
-	
-	<div>
-		<h3>Search Event</h3>
-		<input type="text" id="search" runat="server">
-		<button type="submit" value="search" onclick="search()">Search</button>
-	</div>
 	
 	</main>
 

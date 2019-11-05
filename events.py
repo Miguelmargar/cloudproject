@@ -1,4 +1,4 @@
-import os, json
+import os, json, errno, time
 
 
 class Events:
@@ -21,8 +21,9 @@ class Events:
             with open(self.search_file_name) as self.file:
                 self.data = json.load(self.file)
             self.file.close()
-
+            time.sleep(0.5)
             os.remove(self.search_file_name)
+            
             return self.data         
         
     
