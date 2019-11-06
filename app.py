@@ -93,6 +93,15 @@ def search_event():
     return redirect("/")
 
 
+@app.route("/archiveEvent", methods=['GET', 'POST'])
+def archive_event():
+    num = request.args.get('num')
+    
+    h = Events()
+    arch = h.arch_eve(num)
+    
+    return redirect("/")
+
 
 if __name__ == '__main__':
     app.run(debug=True)

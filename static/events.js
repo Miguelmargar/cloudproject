@@ -29,6 +29,7 @@ function delEv(num) {
      function(response) {
      });
 	window.location.reload();
+	alert("Event Deleted");
 }
 
 function delEvSear(num) {
@@ -38,6 +39,7 @@ function delEvSear(num) {
      function(response) {
      });
 	window.location.reload();
+	alert("Event Deleted");
 }
 
 
@@ -60,6 +62,7 @@ function edFrontEv() {
      function(response) {
      });
 	window.location.reload();
+	alert("Event changed");
 }
 
 function editEvSear(num) {
@@ -81,6 +84,7 @@ function edSearEv() {
      function(response) {
      });
 	window.location.reload();
+	alert("Event changed");
 }
 
 
@@ -92,4 +96,14 @@ function search() {
      function(response) {
      });
 	window.location.reload();
+}
+
+function archEv(num) {
+	$.getJSON($SCRIPT_ROOT + '/archiveEvent', {
+		num
+	 },
+     function(response) {
+     });
+	window.location.reload();
+	alert("Event archived");
 }

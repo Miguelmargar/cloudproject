@@ -8,6 +8,7 @@ class Events:
     def __init__(self):
         self.file_name = "events.json"
         self.search_file_name = "search_events.json"
+        self.archive_name = "archive.json"
         
 
     def show_events(self):
@@ -167,6 +168,15 @@ class Events:
             with open(self.search_file_name, "w") as self.file:
                 json.dump({"events":[]}, self.file)
             self.file.close()
+            
+        if not os.path.exists(self.archive_name):
+            self.new_file = open(self.archive_name, 'w+')
+            print("xxxx ARCIVE FILE CREATED xxxx")
+            self.new_file.close()
+            
+            with open(self.archive_name, "w") as self.file:
+                json.dump({"events":[]}, self.file)
+            self.file.close()
 
 
     def check_if_search(self):
@@ -183,7 +193,27 @@ class Events:
                     return False
             
             
-            
+    def arch_eve(self, num):
+        num = int(num)
+        
+        with open(self.file_name) as self.file:
+            self.data = json.load(self.file) 
+        self.file.close()     
+        
+        with open(self.archive_name) as self.file:
+            self.a_data = json.load(self.file)  
+        self.file.close()
+
+        self.a_data["events"].append(self.data["events"][num])
+        del self.data["events"][num]
+        
+        with open(self.file_name, "w") as self.file:
+            json.dump(self.data, self.file)
+        self.file.close()
+        
+        with open(self.archive_name, "w") as self.file:
+            json.dump(self.a_data, self.file)
+        self.file.close()
             
             
             
