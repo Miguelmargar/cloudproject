@@ -13,10 +13,16 @@ app = Flask(__name__)
 def index():
     
     a = Events()
+    
+    if a.flag == "yes":
+        flag = "yes"
+    else:
+        flag = "no"
+    
     events = a.show_events() 
     eveLen = len(events["events"])
     
-    return render_template('index.html', events=events, eveLen=eveLen)
+    return render_template('index.html', events=events, eveLen=eveLen, flag=flag)
 
 
 @app.route("/createEvent", methods=['GET', 'POST'])
@@ -57,7 +63,7 @@ def edit_event():
 @app.route("/searchEvent", methods=['GET', 'POST'])
 def search_event():
     searched = request.args.get('sear')
-    print(searched)
+
     e = Events()
     sea = e.search_event(searched)
 

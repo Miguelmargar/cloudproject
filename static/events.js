@@ -18,6 +18,7 @@ function creEv() {
 	 },
      function(response) {
      });
+	window.location.reload();
 }
 
 function delEv(num) {
@@ -26,6 +27,7 @@ function delEv(num) {
 	 },
      function(response) {
      });
+	window.location.reload();
 }
 
 
@@ -47,6 +49,7 @@ function edFrontEv() {
 	 },
      function(response) {
      });
+	window.location.reload();
 }
 
 

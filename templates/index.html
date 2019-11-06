@@ -25,7 +25,6 @@
 	</header>
 	
 	<div id="modal" class="modalTop">
-		<form>
 			EVENT NAME:<br>
 			<input type="text" id="Name" value="Shopping" runat="server"> 
 			<br> 
@@ -36,7 +35,6 @@
 			<textarea id="Desc" runat="server"></textarea> 
 			<br><br> 
 			<button type="submit" value="Submit" onclick="creEv()">Submit</button>
-		</form>
 		<button onclick="document.getElementById('modal').style.display='none'">close</button>
 	</div>
 
@@ -51,11 +49,11 @@
 	{% for i in range(0, eveLen) %}
 	
 	<div class="event">
+	{% if flag == "no" %}
 	<button type="submit" value="Edit" onclick="editEv({{ i }})">Edit</button>
-	<form>
 	<button type="submit" value="Delete" onclick="delEv({{ i }})">Delete</button>
-	</form>
 
+	{% endif %}
 	<hr>
 	<h2>{{ events["events"][i]["name"] }}</h2>
 	<hr>
@@ -81,7 +79,6 @@
 </body>
 	
 <div id="moded" class="modalEdit">
-	<form>
 		EVENT NAME:<br>
 		<input type="text" id="edName" runat="server"> 
 		<br> 
@@ -92,7 +89,6 @@
 		<textarea id="edDesc" runat="server"></textarea> 
 		<br><br> 
 		<button type="submit" value="Submit" onclick="edFrontEv()">Submit</button>
-	</form>
 	<button onclick="document.getElementById('moded').style.display='none'">close</button>
 </div>
 

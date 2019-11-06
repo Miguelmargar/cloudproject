@@ -2,6 +2,7 @@ import os, json, errno, time
 
 
 class Events:
+    flag = "no"
     
     def __init__(self):
         self.file_name = "events.json"
@@ -23,11 +24,11 @@ class Events:
             self.file.close()
             time.sleep(0.5)
             os.remove(self.search_file_name)
+            Events.flag = "no"
             
             return self.data         
-        
-    
-    
+
+
     def create_ev(self, name, date, desc):
         
         with open(self.file_name) as self.file:
@@ -84,6 +85,7 @@ class Events:
 
 
     def search_event(self, str):
+        Events.flag = "yes"
         
         with open(self.search_file_name) as self.file:
             self.search_data = json.load(self.file)
