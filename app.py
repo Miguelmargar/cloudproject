@@ -103,6 +103,15 @@ def archive_event():
     return redirect("/")
 
 
+@app.route("/archSeEvent", methods=['GET', 'POST'])
+def archive_event_search():
+    num = request.args.get('num')
+    
+    i = Events()
+    arch_sea = i.arch_eve_sear(num)
+
+    return redirect("/")
+
 if __name__ == '__main__':
     app.run(debug=True)
     

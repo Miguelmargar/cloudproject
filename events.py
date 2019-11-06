@@ -215,7 +215,19 @@ class Events:
             json.dump(self.a_data, self.file)
         self.file.close()
             
-            
-            
+    
+    def arch_eve_sear(self, num):
+        num = int(num)    
+        
+        with open(self.archive_name) as self.file:
+            self.a_data = json.load(self.file) 
+            self.a_data["events"].append(Events.s_data["events"][num]) 
+        self.file.close()
+        
+        with open(self.archive_name, "w") as self.file:
+            json.dump(self.a_data, self.file)
+        self.file.close()
+        
+        self.del_event_sear(num)
             
             

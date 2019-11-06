@@ -107,3 +107,13 @@ function archEv(num) {
 	window.location.reload();
 	alert("Event archived");
 }
+
+function arEvSear(num) {
+	$.getJSON($SCRIPT_ROOT + '/archSeEvent', {
+		num
+	 },
+     function(response) {
+     });
+	window.location.reload();
+	alert("Event archived");
+}
