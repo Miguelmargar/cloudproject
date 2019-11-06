@@ -3,6 +3,7 @@ import os, json, errno, time
 
 class Events:
     flag = "no"
+    s_data = None
     
     def __init__(self):
         self.file_name = "events.json"
@@ -62,6 +63,25 @@ class Events:
         self.file.close()
 
 
+    def del_event_sear(self, num):
+        num = int(num)
+        
+
+        with open(self.file_name) as self.file:
+            self.data = json.load(self.file)             
+        self.file.close()
+
+        for i, k in enumerate(self.data["events"]):
+            if k == Events.s_data["events"][num]:
+                del self.data["events"][i]
+                          
+        with open(self.file_name, "w") as self.file:
+            json.dump(self.data, self.file)
+        self.file.close()
+        
+        Events.s_data = None
+        
+
     def edit_event(self, num, name, date, desc):
         num = int(num)
         
@@ -84,8 +104,7 @@ class Events:
         self.file.close()
 
 
-    def search_event(self, str):
-        
+    def search_event(self, str):  
         
         with open(self.search_file_name) as self.file:
             self.search_data = json.load(self.file)
@@ -101,6 +120,7 @@ class Events:
 
         if len(self.search_data["events"]) > 0:
             Events.flag = "yes"
+            Events.s_data = self.search_data
 
         with open(self.search_file_name, "w") as self.search_file:
             json.dump(self.search_data, self.search_file)

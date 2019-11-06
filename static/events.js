@@ -30,6 +30,15 @@ function delEv(num) {
 	window.location.reload();
 }
 
+function delEvSear(num) {
+	$.getJSON($SCRIPT_ROOT + '/deleteEventSearch', {
+		num
+	 },
+     function(response) {
+     });
+	window.location.reload();
+}
+
 
 function editEv(num) {
 	document.getElementById('moded').style.display='block';

@@ -52,7 +52,11 @@
 	{% if flag == "no" %}
 	<button type="submit" value="Edit" onclick="editEv({{ i }})">Edit</button>
 	<button type="submit" value="Delete" onclick="delEv({{ i }})">Delete</button>
-
+	
+	{% elif flag == "yes" %}
+	<button type="submit" value="Edit" onclick="editEvSear({{ i }})">Edit</button>
+	<button type="submit" value="Delete" onclick="delEvSear({{ i }})">Delete</button>
+	
 	{% endif %}
 	<hr>
 	<h2>{{ events["events"][i]["name"] }}</h2>

@@ -47,6 +47,16 @@ def delete_event():
     return redirect("/")
 
 
+@app.route("/deleteEventSearch", methods=['GET', 'POST'])
+def delete_event_search():
+    num = request.args.get("num")
+    
+    d = Events()
+    dele_sear = d.del_event_sear(num)
+    
+    return redirect("/")
+
+
 @app.route("/editEvent", methods=['GET', 'POST'])
 def edit_event():
     num = request.args.get('ed_num')
@@ -54,8 +64,8 @@ def edit_event():
     date = request.args.get('ed_date')
     desc = request.args.get('ed_description')
 
-    d = Events()
-    edi = d.edit_event(num, name, date, desc)
+    e = Events()
+    edi = e.edit_event(num, name, date, desc)
 
     return redirect("/")
 
@@ -64,8 +74,8 @@ def edit_event():
 def search_event():
     searched = request.args.get('sear')
 
-    e = Events()
-    sea = e.search_event(searched)
+    f = Events()
+    sea = f.search_event(searched)
 
     return redirect("/")
 
