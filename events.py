@@ -85,7 +85,7 @@ class Events:
 
 
     def search_event(self, str):
-        Events.flag = "yes"
+        
         
         with open(self.search_file_name) as self.file:
             self.search_data = json.load(self.file)
@@ -98,6 +98,9 @@ class Events:
         for i in self.data["events"]:
             if i["name"] == str:
                 self.search_data["events"].append(i)
+
+        if len(self.search_data["events"]) > 0:
+            Events.flag = "yes"
 
         with open(self.search_file_name, "w") as self.search_file:
             json.dump(self.search_data, self.search_file)
