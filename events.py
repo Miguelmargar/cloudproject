@@ -65,7 +65,6 @@ class Events:
 
     def del_event_sear(self, num):
         num = int(num)
-        
 
         with open(self.file_name) as self.file:
             self.data = json.load(self.file)             
@@ -99,6 +98,29 @@ class Events:
         
         self.file.close()
              
+        with open(self.file_name, "w") as self.file:
+            json.dump(self.data, self.file)
+        self.file.close()
+
+
+    def edit_event_sear(self, num, name, date, desc):
+        num = int(num)
+        
+        with open(self.file_name) as self.file:
+            self.data = json.load(self.file)             
+        self.file.close()
+
+        for i, k in enumerate(self.data["events"]):
+            if k == Events.s_data["events"][num]:
+                if len(name) > 0:
+                    self.data["events"][i]["name"] = name
+    
+                if len(date) > 0:
+                    self.data["events"][i]["date"] = date
+    
+                if len(desc) > 0:
+                    self.data["events"][i]["desc"] = desc
+
         with open(self.file_name, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()

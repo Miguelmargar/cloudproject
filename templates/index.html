@@ -24,6 +24,7 @@
 			
 	</header>
 	
+<!-- Modal for creating events -->
 	<div id="modal" class="modalTop">
 			EVENT NAME:<br>
 			<input type="text" id="Name" value="Shopping" runat="server"> 
@@ -81,7 +82,8 @@
 
 
 </body>
-	
+
+<!-- Modal for editing main screen events -->	
 <div id="moded" class="modalEdit">
 		EVENT NAME:<br>
 		<input type="text" id="edName" runat="server"> 
@@ -94,6 +96,21 @@
 		<br><br> 
 		<button type="submit" value="Submit" onclick="edFrontEv()">Submit</button>
 	<button onclick="document.getElementById('moded').style.display='none'">close</button>
+</div>
+
+<!-- Modal for editing searched events -->
+<div id="modese" class="modalSe">
+		EVENT NAME:<br>
+		<input type="text" id="edSeNa" runat="server"> 
+		<br> 
+		EVENT DATE:<br> 
+		<input type="text" id="edSeDa" runat="server">
+		<br>
+		EVENT DESCRIPTION:<br>
+		<textarea id="edSeDe" runat="server"></textarea> 
+		<br><br> 
+		<button type="submit" value="Submit" onclick="edSearEv()">Submit</button>
+	<button onclick="document.getElementById('modese').style.display='none'">close</button>
 </div>
 
 <script src="../static/events.js"></script>

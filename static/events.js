@@ -2,6 +2,7 @@ var name;
 var date;
 var description;
 var ed_num;
+var ed_num_sear;
 var frontSearch;
 
 function creEv() {
@@ -55,6 +56,27 @@ function edFrontEv() {
 		ed_name,
 		ed_date,
 		ed_description
+	 },
+     function(response) {
+     });
+	window.location.reload();
+}
+
+function editEvSear(num) {
+	document.getElementById('modese').style.display='block';
+	ed_num_sear = num;
+}
+
+function edSearEv() {
+	ed_se_na = document.getElementById("edSeNa").value;
+	ed_se_da = document.getElementById("edSeDa").value;
+	ed_se_des = document.getElementById("edSeDe").value;
+	
+	$.getJSON($SCRIPT_ROOT + '/editSeEvent', {
+		ed_num_sear,
+		ed_se_na,
+		ed_se_da,
+		ed_se_des
 	 },
      function(response) {
      });

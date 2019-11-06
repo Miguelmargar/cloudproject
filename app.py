@@ -70,12 +70,25 @@ def edit_event():
     return redirect("/")
 
 
+@app.route("/editSeEvent", methods=['GET', 'POST'])
+def edit_event_search():
+    num = request.args.get('ed_num_sear')
+    name = request.args.get('ed_se_na')
+    date = request.args.get('ed_se_da')
+    desc = request.args.get('ed_se_des')
+    
+    f = Events()
+    edi_sear = f.edit_event_sear(num, name, date, desc)
+    
+    return redirect("/")
+    
+
 @app.route("/searchEvent", methods=['GET', 'POST'])
 def search_event():
     searched = request.args.get('sear')
 
-    f = Events()
-    sea = f.search_event(searched)
+    g = Events()
+    sea = g.search_event(searched)
 
     return redirect("/")
 
