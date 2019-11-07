@@ -15,20 +15,25 @@ class Events:
         
         self.check_if_db()
         
-        if self.check_if_search() == False:
+        if Events.flag == "no":
             with open(self.file_name) as self.file:
                 self.data = json.load(self.file)
             self.file.close()
             return self.data
-        else:
+        elif Events.flag == "search" and self.check_if_search() == True:
             with open(self.search_file_name) as self.file:
                 self.data = json.load(self.file)
             self.file.close()
             time.sleep(0.5)
             os.remove(self.search_file_name)
             Events.flag = "no"
+        elif Events.flag == "archive":
+            with open(self.archive_name) as self.file:
+                self.data = json.load(self.file)
+            self.file.close()
+            Events.flag = "no"
             
-            return self.data         
+        return self.data         
 
 
     def create_ev(self, name, date, desc):
@@ -80,6 +85,20 @@ class Events:
         self.file.close()
         
         Events.s_data = None
+ 
+    def del_event_arch(self, num):
+        num = int(num)
+        
+        with open(self.archive_name) as self.file:
+            self.data = json.load(self.file)
+            
+            del self.data["events"][num]
+            
+        self.file.close()
+        
+        with open(self.archive_name, "w") as self.file:
+            json.dump(self.data, self.file)
+        self.file.close()
         
 
     def edit_event(self, num, name, date, desc):
@@ -142,7 +161,7 @@ class Events:
                 self.search_data["events"].append(i)
 
         if len(self.search_data["events"]) > 0:
-            Events.flag = "yes"
+            Events.flag = "search"
             Events.s_data = self.search_data
 
         with open(self.search_file_name, "w") as self.search_file:
@@ -229,5 +248,9 @@ class Events:
         self.file.close()
         
         self.del_event_sear(num)
+        
+    
+    def display_arch(self):
+        Events.flag = "archive"
             
             

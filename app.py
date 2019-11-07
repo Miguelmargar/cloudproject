@@ -13,11 +13,8 @@ app = Flask(__name__)
 def index():
     
     a = Events()
-    
-    if a.flag == "yes":
-        flag = "yes"
-    else:
-        flag = "no"
+
+    flag = a.flag
     
     events = a.show_events() 
     eveLen = len(events["events"])
@@ -111,6 +108,36 @@ def archive_event_search():
     arch_sea = i.arch_eve_sear(num)
 
     return redirect("/")
+
+
+@app.route("/showArchive")
+def show_archive():
+    
+    j = Events()
+    show_arch = j.display_arch()
+    
+    return redirect("/") 
+
+
+@app.route("/deleteEvArch", methods=['GET', 'POST'])
+def delete_event_arch():
+    num = request.args.get("num")
+    
+    k = Events()
+    dele_arch = k.del_event_arch(num)
+    
+    return redirect("/")
+
+
+@app.route("/shareEvent", methods=['GET', 'POST'])
+def share_event():
+    num = request.args.get("num")
+    
+    l = Events()
+    share = l.share_eve(num)
+    
+    return redirect("/")
+
 
 if __name__ == '__main__':
     app.run(debug=True)

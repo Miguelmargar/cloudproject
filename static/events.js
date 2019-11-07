@@ -42,6 +42,16 @@ function delEvSear(num) {
 	alert("Event Deleted");
 }
 
+function delEvArch(num) {
+	$.getJSON($SCRIPT_ROOT + '/deleteEvArch', {
+		num
+	 },
+     function(response) {
+     });
+	window.location.reload();
+	alert("Event Deleted");
+}
+
 
 function editEv(num) {
 	document.getElementById('moded').style.display='block';
@@ -110,6 +120,16 @@ function archEv(num) {
 
 function arEvSear(num) {
 	$.getJSON($SCRIPT_ROOT + '/archSeEvent', {
+		num
+	 },
+     function(response) {
+     });
+	window.location.reload();
+	alert("Event archived");
+}
+
+function shareEv(num) {
+	$.getJSON($SCRIPT_ROOT + '/shareEvent', {
 		num
 	 },
      function(response) {
