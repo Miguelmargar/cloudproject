@@ -22,6 +22,17 @@ def index():
     return render_template('index.html', events=events, eveLen=eveLen, flag=flag)
 
 
+@app.route("/signUp", methods=['GET', 'POST'])
+def sign_user():
+    name = request.args.get('name')
+    passw = request.args.get('pass')
+
+    bb = Events()
+    signup = bb.sign_user_up(name, passw)
+
+    return jsonify(signup)
+
+
 @app.route("/createEvent", methods=['GET', 'POST'])
 def create_event():
     name = request.args.get('name')

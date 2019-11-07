@@ -1,9 +1,35 @@
-var name;
-var date;
-var description;
 var ed_num;
 var ed_num_sear;
 var frontSearch;
+
+
+function signUp() {
+	name = document.getElementById("signName").value;
+	pass = document.getElementById("signPass").value;
+	
+	$.getJSON($SCRIPT_ROOT + '/signUp', {
+		name,
+		pass
+	 },
+     function(response) {
+		 resp = response;
+		 if (resp == "created") {
+			 alert("Your Account has been created")
+		 } else if (resp == "exists") {
+			 alert("User Name already exists - Please try a different one!")
+		 }
+     });
+	window.location.reload();
+}
+
+
+
+
+
+
+
+
+
 
 function creEv() {
 	document.getElementById("modal").style.display="none";

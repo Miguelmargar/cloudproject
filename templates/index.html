@@ -15,13 +15,28 @@
 <body>
 
 	<header>
-		<h1><a href="/">Event Organiser</a></h1>
-		<h3 onclick="document.getElementById('modal').style.display='block'">Create
-			Event</h3>
-		<h3><a href="/showArchive">Archive</a></h3>
-		<h3>Search Event</h3>
-		<input type="text" id="search" runat="server">
-		<button type="submit" value="search" onclick="search()">Search</button>			
+		<div class="nav">
+			<h1><a href="/">Event Organiser</a></h1>
+			<h3 onclick="document.getElementById('modal').style.display='block'">Create
+				Event</h3>
+			<h3><a href="/showArchive">Archive</a></h3>
+			<h3>Search Event</h3>
+			<input type="text" id="search" runat="server">
+			<button type="submit" value="search" onclick="search()">Search</button>
+		</div>
+		<div class="admin">
+			<div class="adl">
+				<input type="text" value="miguel" id="signName" runat="server">
+				<input type="text" value="12345" id="signPass" runat="server">
+				<button type="submit" value="singUp" onclick="signUp()">Signup</button>
+			</div>
+			<div class="adr">
+				<input type="text" value="user name" id="logName" runat="server">
+				<input type="text" value="password" id="logPass" runat="server">
+				<button type="submit" value="logIn" onclick="logIn()">Login</button>
+			</div>
+		</div>
+					
 	</header>
 	
 <!-- Modal for creating events -->

@@ -8,10 +8,40 @@ class Events:
     s_data = None
     
     def __init__(self):
+        self.main_file = "main.json"
         self.file_name = "events.json"
         self.search_file_name = "search_events.json"
         self.archive_name = "archive.json"
         
+
+    def sign_user_up(self, name, passw):
+        self.name = name
+        self.passw = passw
+        
+        self.check_if_db()
+        
+        with open(self.main_file) as self.file:
+            self.main_data = json.load(self.file)
+        self.file.close()
+        
+        
+        if self.name not in self.main_data["users"].keys():
+            self.main_data["users"][self.name] = {"password": self.passw,
+                                                  "events": [],
+                                                  "searched": [],
+                                                  "archived": []
+                                                  }
+                    
+            with open(self.main_file, "w") as self.file:
+                json.dump(self.main_data, self.file)
+            self.file.close()
+            return "created"
+        else:
+            return "exists"
+            
+        
+        
+
 
     def show_events(self):
         
@@ -172,6 +202,16 @@ class Events:
         
 
     def check_if_db(self):
+        
+        if not os.path.exists(self.main_file):
+            self.new_file = open(self.main_file, 'w+')
+            print("xxxxxx MAIN FILE CREATED xxxxxx")
+            self.new_file.close()
+            
+            with open(self.main_file, "w") as self.file:
+                json.dump({"users":{}}, self.file)
+            self.file.close()
+            
         if not os.path.exists(self.file_name):
             self.new_file = open(self.file_name, 'w+')
             print("xxxxxxxx FILE CREATED xxxxxxxx")

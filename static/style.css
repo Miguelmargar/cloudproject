@@ -10,6 +10,11 @@ header {
 	background-color: grey;
 }
 
+.nav {
+	display: inline-block;
+	width: 48vw;
+}
+
 header h1 {
 	display: inline-block;
 }
@@ -33,10 +38,31 @@ header h3:hover {
 	cursor: pointer;
 }
 
-header form {
+.admin {
+	width: 48vw;
 	display: inline-block;
+	text-align: right;
 }
 
+.adl {
+	margin-right: 10px;
+	display: inline-block;
+	text-align: right;
+}
+
+.adl input {
+	display: block;
+}
+
+.adr {
+	margin-left: 10px;
+	display: inline-block;
+	text-align: right;
+}
+
+.adr input {
+	display: block;
+}
 main {
 	height: auto;
 	width: 100%;
