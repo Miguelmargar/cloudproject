@@ -12,7 +12,7 @@ class Events:
         self.file_name = "events.json"
         self.search_file_name = "search_events.json"
         self.archive_name = "archive.json"
-        
+        self.check_if_db()
 
     def sign_user_up(self, name, passw):
         self.name = name
@@ -39,31 +39,82 @@ class Events:
         else:
             return "exists"
             
+    
+    def log_user_in(self, name, passw):
+        self.name = name
+        self.passw = passw
         
+        with open(self.main_file) as self.file:
+            self.main_data = json.load(self.file)
+        self.file.close()
         
+        if self.name in self.main_data["users"].keys():
+            if self.main_data["users"][self.name]["password"] == self.passw:
+                
+                if not os.path.exists(self.name + self.passw + ".json"):
+                    self.new_file = open(self.name + self.passw + ".json", 'w+')
+                    print("Database loaded")
+                    self.new_file.close()
+                    
+                    with open(self.name + self.passw + ".json", "w") as self.file:
+                        json.dump(self.main_data["users"][self.name], self.file)
+                    self.file.close()
+                
+                return "loggedin"
+            else:
+                return "passerr"
+        else:
+            return "nameerr"
+        
+    
+    def log_user_out(self, name, passw):
+        self.name = name
+        self.passw = passw
+        
+        with open(self.name + self.passw + ".json") as self.file:
+            self.data_user = json.load(self.file)
+        self.file.close()
 
+        with open(self.main_file) as self.file:
+            self.data = json.load(self.file)
+        self.file.close()
+        
+        self.data["users"][self.name] = self.data_user
 
-    def show_events(self):
+        with open(self.main_file, "w") as self.file:
+            json.dump(self.data, self.file)
+        self.file.close()
         
-        self.check_if_db()
         
-        if Events.flag == "no":
-            with open(self.file_name) as self.file:
-                self.data = json.load(self.file)
-            self.file.close()
-            return self.data
-        elif Events.flag == "search" and self.check_if_search() == True:
-            with open(self.search_file_name) as self.file:
-                self.data = json.load(self.file)
-            self.file.close()
-            time.sleep(0.5)
-            os.remove(self.search_file_name)
-            Events.flag = "no"
-        elif Events.flag == "archive":
-            with open(self.archive_name) as self.file:
-                self.data = json.load(self.file)
-            self.file.close()
-            Events.flag = "no"
+    
+        
+    def show_events(self, name, passw):
+        self.name = name
+        self.passw = passw
+        
+        
+        
+        with open(self.name + self.passw + ".json") as self.file:
+            self.data = json.load(self.file)
+        self.file.close()
+                
+#         if Events.flag == "no":
+#             with open(self.file_name) as self.file:
+#                 self.data = json.load(self.file)
+#             self.file.close()
+#             return self.data
+#         elif Events.flag == "search" and self.check_if_search() == True:
+#             with open(self.search_file_name) as self.file:
+#                 self.data = json.load(self.file)
+#             self.file.close()
+#             time.sleep(0.5)
+#             os.remove(self.search_file_name)
+#             Events.flag = "no"
+#         elif Events.flag == "archive":
+#             with open(self.archive_name) as self.file:
+#                 self.data = json.load(self.file)
+#             self.file.close()
+#             Events.flag = "no"
             
         return self.data         
 

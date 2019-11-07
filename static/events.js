@@ -1,6 +1,8 @@
 var ed_num;
 var ed_num_sear;
 var frontSearch;
+var namelog;
+var passlog;
 
 
 function signUp() {
@@ -14,7 +16,7 @@ function signUp() {
      function(response) {
 		 resp = response;
 		 if (resp == "created") {
-			 alert("Your Account has been created")
+			 alert("Your Account has been created - You can login now")
 		 } else if (resp == "exists") {
 			 alert("User Name already exists - Please try a different one!")
 		 }
@@ -22,6 +24,42 @@ function signUp() {
 	window.location.reload();
 }
 
+function logIn() {
+	namelog = document.getElementById("logName").value;
+	passlog = document.getElementById("logPass").value;
+	
+	$.getJSON($SCRIPT_ROOT + '/logIn', {
+		namelog,
+		passlog
+	 },
+     function(response) {
+		 resp = response;
+		 if (resp == "loggedin") {
+			 alert("You are now logged in")
+		 } else if (resp == "passerr") {
+			 alert("Wrong Password, please try again")
+		 } else if (resp == "nameerr") {
+			 alert("User name given does not exist, please sign up or try again")
+		 }
+     });
+	$.getJSON($SCRIPT_ROOT + '/loggedMain', {
+		namelog,
+		passlog
+	 },
+     function(response) {
+     });
+	window.location.reload();
+}
+
+function logout() {
+	$.getJSON($SCRIPT_ROOT + '/logout', {
+		namelog,
+		passlog
+	 },
+     function(response) {
+     });
+	
+}
 
 
 

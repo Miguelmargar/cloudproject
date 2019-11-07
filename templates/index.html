@@ -13,7 +13,6 @@
 </head>
 
 <body>
-
 	<header>
 		<div class="nav">
 			<h1><a href="/">Event Organiser</a></h1>
@@ -24,17 +23,21 @@
 			<input type="text" id="search" runat="server">
 			<button type="submit" value="search" onclick="search()">Search</button>
 		</div>
-		<div class="admin">
-			<div class="adl">
-				<input type="text" value="miguel" id="signName" runat="server">
-				<input type="text" value="12345" id="signPass" runat="server">
-				<button type="submit" value="singUp" onclick="signUp()">Signup</button>
-			</div>
-			<div class="adr">
-				<input type="text" value="user name" id="logName" runat="server">
-				<input type="text" value="password" id="logPass" runat="server">
-				<button type="submit" value="logIn" onclick="logIn()">Login</button>
-			</div>
+			<div class="admin">
+			{% if logged == "no" %}
+				<div class="adl">
+					<input type="text" value="miguel" id="signName" runat="server">
+					<input type="text" value="12345" id="signPass" runat="server">
+					<button type="submit" value="singUp" onclick="signUp()">Signup</button>
+				</div>
+				<div class="adr">
+					<input type="text" value="miguel" id="logName" runat="server">
+					<input type="text" value="12345" id="logPass" runat="server">
+					<button type="submit" value="logIn" onclick="logIn()">Login</button>
+				</div>
+			{% elif logged == "yes" %}
+				<button type="submit" value="logout" onclick="logout()">Logout</button>
+			{% endif %}
 		</div>
 					
 	</header>
@@ -55,52 +58,13 @@
 	</div>
 
 	<main>	
-		{% if eveLen == 0 %}
-		
-			<h1>NO EVENTS - Please click on create event to add event</h1>
-			
-		{% else %}
-			{% if flag == "no" %}
-				<h1>MAIN VIEW</h1>
-			{% elif flag == "search" %}
-				<h1>SEARCH VIEW</h1>
-			{% elif flag == "archive" %}
-				<h1>ARCHIVE VIEW</h1>
-			{% endif %}
-			
-			{% for i in range(0, eveLen) %}
-			
-				<div class="event">
-				
-					{% if flag == "no" %}
-						<button type="submit" value="Edit" onclick="editEv({{ i }})">Edit</button>
-						<button type="submit" value="Delete" onclick="delEv({{ i }})">Delete</button>
-						<button type="submit" value="Archive" onclick="archEv({{ i }})">Archive</button>
-						<button type="submit" value="Share" onclick="shareEv({{ i }})">Share</button>
-					
-					{% elif flag == "search" %}
-						<button type="submit" value="Edit" onclick="editEvSear({{ i }})">Edit</button>
-						<button type="submit" value="Delete" onclick="delEvSear({{ i }})">Delete</button>
-						<button type="submit" value="Archive" onclick="arEvSear({{ i }})">Archive</button>
-					
-					{% elif flag == "archive" %}
-						<button type="submit" value="Delete" onclick="delEvArch({{ i }})">Delete</button>
-					
-					{% endif %}
-					
-					<hr>
-					<h2>{{ events["events"][i]["name"] }}</h2>
-					<hr>
-					<h2>WHEN:</h2>
-					<p>{{ events["events"][i]["date"] }}</p>
-					<hr>
-					<h2>COMMENTS:</h2>
-					<p>{{ events["events"][i]["desc"] }}</p>
-				
-				</div>
-				
-			{% endfor %}		
-		{% endif %} 
+		{% if logged == "no" %}
+			<h1>LANDING PAGE - PLEASE SING UP OR SIGN IN TO CONTINUE</h1>
+		{% elif logged == "yes" %}
+			<h1>YOU ARE LOGGED IN</h1>
+		{% endif %}
+
+	
 	
 	</main>
 

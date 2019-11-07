@@ -3,6 +3,7 @@ from events import *
 from flask.globals import request
 from _ast import Try
 from _overlapped import NULL
+from encodings import undefined
 
 
 app = Flask(__name__)
@@ -11,26 +12,72 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    
+    global a
     a = Events()
+    logged = "no"
+    events = {}
 
-    flag = a.flag
+    try:
+        if len(det) == 2:
+            logged = "yes"
+            events = a.show_events(det[0], det[1])
+            print(events)
+    except:
+        pass    
     
-    events = a.show_events() 
-    eveLen = len(events["events"])
+    eveLen = len(events) 
     
-    return render_template('index.html', events=events, eveLen=eveLen, flag=flag)
+#     flag = a.flag
+     
+#     return render_template('index.html', events=events, eveLen=eveLen, flag=flag)
+    
+    return render_template('index.html', logged=logged, eveLen=eveLen)
 
 
 @app.route("/signUp", methods=['GET', 'POST'])
 def sign_user():
     name = request.args.get('name')
     passw = request.args.get('pass')
-
-    bb = Events()
-    signup = bb.sign_user_up(name, passw)
+    
+    signup = a.sign_user_up(name, passw)
 
     return jsonify(signup)
+
+
+@app.route("/logIn", methods=['GET', 'POST'])
+def log_user():
+    name = request.args.get('name')
+    passw = request.args.get('pass') 
+
+    login = a.log_user_in(name, passw)
+    
+    return jsonify(login)
+
+@app.route("/loggedMain", methods=['GET', 'POST'])
+def show_main():
+    name = request.args.get('name')
+    passw = request.args.get('pass')
+    
+    global det
+    det = [name, passw]
+    return redirect("/")
+
+
+@app.route("/logout", methods=['GET', 'POST'])
+def log_user_out():
+    name = request.args.get('name')
+    passw = request.args.get('pass')
+    
+    out = a.log_user_out(name, passw)
+
+    det = Null
+
+    return redirect("/")
+
+
+
+
+
 
 
 @app.route("/createEvent", methods=['GET', 'POST'])
