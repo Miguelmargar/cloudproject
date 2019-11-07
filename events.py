@@ -1,4 +1,6 @@
 import os, json, errno, time
+from tweepy import OAuthHandler, API, Cursor
+from passw import *
 
 
 class Events:
@@ -252,5 +254,25 @@ class Events:
     
     def display_arch(self):
         Events.flag = "archive"
+        
+        
+    def share_eve(self, num):
+        num = int(num)
+        
+        auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
+        api = API(auth)
+        
+        with open(self.file_name) as self.file:
+            self.data = json.load(self.file)
+        self.file.close()
+        
+        name = self.data["events"][num]["name"]
+        when = self.data["events"][num]["date"]
+        details = self.data["events"][num]["desc"]
+
+        str = "New event: " + name + " on " + when + ". Details: " + details
+        
+        api.update_status(str)
             
             

@@ -135,5 +135,5 @@ function shareEv(num) {
      function(response) {
      });
 	window.location.reload();
-	alert("Event archived");
+	alert("Event Shared in Tweeter");
 }
