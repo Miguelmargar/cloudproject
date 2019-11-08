@@ -15,23 +15,25 @@ def index():
     global a
     a = Events()
     logged = "no"
-    events = {}
+    events = {"events": []}
 
     try:
         if len(det) == 2:
             logged = "yes"
         else:
             logged = "no"
+        
         events = a.show_events(det[0], det[1])
+        print(events)
     except:
         pass    
-    eveLen = len(events) 
+    eveLen = len(events["events"]) 
     
 #     flag = a.flag
      
 #     return render_template('index.html', events=events, eveLen=eveLen, flag=flag)
     
-    return render_template('index.html', logged=logged, eveLen=eveLen)
+    return render_template('index.html', logged=logged, eveLen=eveLen, events=events)
 
 
 @app.route("/signUp", methods=['GET', 'POST'])
@@ -49,6 +51,8 @@ def log_user():
     name = request.args.get('namelog')
     passw = request.args.get('passlog') 
 
+    print(a.user_name)
+
     login = a.log_user_in(name, passw)
 
     return jsonify(login)
@@ -57,7 +61,7 @@ def log_user():
 def show_main():
     global name_in
     global passw_in
-    
+
     name_in = request.args.get('namelog')
     passw_in = request.args.get('passlog')
 
@@ -76,21 +80,22 @@ def log_user_out():
     return redirect("/")
 
 
-
-
-
-
-
 @app.route("/createEvent", methods=['GET', 'POST'])
 def create_event():
     name = request.args.get('name')
     date = request.args.get('date')
     desc = request.args.get('description')
-     
-    b = Events()
-    create = b.create_ev(name, date, desc)
+    
+    file_name = name_in + passw_in + ".json"
+    
+    a = Events()
+    create = a.create_ev(name, date, desc, file_name)
      
     return redirect("/")
+ 
+ 
+ 
+ 
  
  
 @app.route("/deleteEvent", methods=['GET', 'POST'])

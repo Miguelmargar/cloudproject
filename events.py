@@ -8,6 +8,8 @@ class Events:
     s_data = None
     
     def __init__(self):
+        self.user_name = ""
+        self.user_password = ""
         self.main_file = "main.json"
         self.file_name = "events.json"
         self.search_file_name = "search_events.json"
@@ -81,13 +83,11 @@ class Events:
                   
         self.data["users"][self.name] = self.data_user
         
-        print(self.data)
-
         with open(self.main_file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
          
-        
+        os.remove(self.name + self.passw + ".json")        
     
         
     def show_events(self, name, passw):
@@ -121,9 +121,9 @@ class Events:
         return self.data         
 
 
-    def create_ev(self, name, date, desc):
+    def create_ev(self, name, date, desc, file):
         
-        with open(self.file_name) as self.file:
+        with open(file) as self.file:
             self.data = json.load(self.file)
             
             self.eventCount = len(self.data["events"])
@@ -134,7 +134,7 @@ class Events:
                                         })
             self.file.close()
             
-        with open(self.file_name, "w") as self.file:
+        with open(file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
 

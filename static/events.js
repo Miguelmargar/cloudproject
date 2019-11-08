@@ -59,14 +59,6 @@ function logout() {
 	window.location.reload();
 }
 
-
-
-
-
-
-
-
-
 function creEv() {
 	document.getElementById("modal").style.display="none";
 		
@@ -83,6 +75,13 @@ function creEv() {
      });
 	window.location.reload();
 }
+
+
+
+
+
+
+
 
 function delEv(num) {
 	$.getJSON($SCRIPT_ROOT + '/deleteEvent', {
