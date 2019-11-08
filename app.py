@@ -185,10 +185,8 @@ def archive_event_search():
 @app.route("/showArchive")
 def show_archive():
     
-    file_name = name_in + passw_in + ".json"
-    
     j = Events()
-    show_arch = j.display_arch(file_name)
+    show_arch = j.display_arch()
     
     return redirect("/") 
 

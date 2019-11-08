@@ -92,8 +92,7 @@ class Events:
         
     def show_events(self, name, passw):
         self.name = name
-        self.passw = passw
-        
+        self.passw = passw  
         
         if Events.flag == "no":
             with open(self.name + self.passw + ".json") as self.file:
@@ -115,7 +114,12 @@ class Events:
             Events.flag = "no"
             return Events.s_data
         
-        
+        elif Events.flag == "archive":
+            with open(self.name + self.passw + ".json") as self.file:
+                self.data = json.load(self.file)             
+            self.file.close()
+            Events.flag = "no"
+            return self.data["archived"]
         
 #         if Events.flag == "no":
 #             with open(self.file_name) as self.file:
@@ -135,7 +139,6 @@ class Events:
 #             self.file.close()
 #             Events.flag = "no"
             
-        return self.data         
 
 
     def create_ev(self, name, date, desc, file):
@@ -304,39 +307,20 @@ class Events:
             with open(self.archive_name, "w") as self.file:
                 json.dump({"events":[]}, self.file)
             self.file.close()
-
-
-    def check_if_search(self):
-        
-        with open(self.search_file_name) as self.search_file:
-            self.search_data = json.load(self.search_file)
-            self.search_file.close()
-            if len(self.search_data["events"]) > 0:
-                return True
-            else:
-                return False
             
             
-    def arch_eve(self, num):
+    def arch_eve(self, num, file):
         num = int(num)
         
-        with open(self.file_name) as self.file:
+        with open(file) as self.file:
             self.data = json.load(self.file) 
         self.file.close()     
-        
-        with open(self.archive_name) as self.file:
-            self.a_data = json.load(self.file)  
-        self.file.close()
 
-        self.a_data["events"].append(self.data["events"][num])
+        self.data["archived"].append(self.data["events"][num])
         del self.data["events"][num]
         
-        with open(self.file_name, "w") as self.file:
+        with open(file, "w") as self.file:
             json.dump(self.data, self.file)
-        self.file.close()
-        
-        with open(self.archive_name, "w") as self.file:
-            json.dump(self.a_data, self.file)
         self.file.close()
             
     
