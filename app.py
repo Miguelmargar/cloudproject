@@ -4,6 +4,7 @@ from flask.globals import request
 from _ast import Try
 from _overlapped import NULL
 from encodings import undefined
+from enum import Flag
 
 
 app = Flask(__name__)
@@ -24,16 +25,21 @@ def index():
             logged = "no"
         
         events = a.show_events(det[0], det[1])
-        print(events)
     except:
         pass    
     eveLen = len(events) 
     
-#     flag = a.flag
-     
-#     return render_template('index.html', events=events, eveLen=eveLen, flag=flag)
-    
-    return render_template('index.html', logged=logged, eveLen=eveLen, events=events)
+    try:
+        if total_flag == "no":
+            flag = "no"
+        if total_flag == "search":
+            flag = "search"
+        if total_flag == "archive":
+            flag = "archive"
+    except:
+        flag = "no"
+
+    return render_template('index.html', logged=logged, eveLen=eveLen, events=events, flag=flag)
 
 
 @app.route("/signUp", methods=['GET', 'POST'])
@@ -154,7 +160,10 @@ def search_event():
 
     g = Events()
     sea = g.search_event(searched, file_name)
-
+    
+    global total_flag
+    total_flag = g.flag
+    
     return redirect("/")
 
 
@@ -188,6 +197,9 @@ def show_archive():
     j = Events()
     show_arch = j.display_arch()
     
+    global total_flag
+    total_flag = j.flag
+    
     return redirect("/") 
 
 
@@ -199,6 +211,8 @@ def delete_event_arch():
     
     k = Events()
     dele_arch = k.del_event_arch(num, file_name)
+    
+    
     
     return redirect("/")
 

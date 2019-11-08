@@ -120,26 +120,7 @@ class Events:
             self.file.close()
             Events.flag = "no"
             return self.data["archived"]
-        
-#         if Events.flag == "no":
-#             with open(self.file_name) as self.file:
-#                 self.data = json.load(self.file)
-#             self.file.close()
-#             return self.data
-#         elif Events.flag == "search" and self.check_if_search() == True:
-#             with open(self.search_file_name) as self.file:
-#                 self.data = json.load(self.file)
-#             self.file.close()
-#             time.sleep(0.5)
-#             os.remove(self.search_file_name)
-#             Events.flag = "no"
-#         elif Events.flag == "archive":
-#             with open(self.archive_name) as self.file:
-#                 self.data = json.load(self.file)
-#             self.file.close()
-#             Events.flag = "no"
             
-
 
     def create_ev(self, name, date, desc, file):
         
@@ -174,34 +155,32 @@ class Events:
         self.file.close()
 
 
-    def del_event_sear(self, num):
+    def del_event_sear(self, num, file):
         num = int(num)
-
-        with open(self.file_name) as self.file:
+        
+        with open(file) as self.file:
             self.data = json.load(self.file)             
         self.file.close()
-
-        for i, k in enumerate(self.data["events"]):
-            if k == Events.s_data["events"][num]:
-                del self.data["events"][i]
+        print(Events.s_data)
+        
+        self.data["events"].remove(Events.s_data[num])
                           
-        with open(self.file_name, "w") as self.file:
+        with open(file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
         
         Events.s_data = None
  
-    def del_event_arch(self, num):
+    def del_event_arch(self, num, file):
         num = int(num)
         
-        with open(self.archive_name) as self.file:
+        with open(file) as self.file:
             self.data = json.load(self.file)
+        self.file.close()    
             
-            del self.data["events"][num]
+        del self.data["archived"][num]
             
-        self.file.close()
-        
-        with open(self.archive_name, "w") as self.file:
+        with open(file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
         
@@ -267,7 +246,7 @@ class Events:
   
         with open(file, "w") as self.file:
             json.dump(self.data, self.file)
-        self.search_file.close()
+        self.file.close()
         
 
     def check_if_db(self):

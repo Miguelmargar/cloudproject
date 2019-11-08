@@ -69,11 +69,20 @@
 			{% else %}
 				{% for i in range(0, eveLen) %}
 					<div class="event">
-						<button type="submit" value="Edit" onclick="editEv({{ i }})">Edit</button>
-						<button type="submit" value="Delete" onclick="delEv({{ i }})">Delete</button>
-						<button type="submit" value="Archive" onclick="archEv({{ i }})">Archive</button>
-						<button type="submit" value="Share" onclick="shareEv({{ i }})">Share</button>
-		
+						{% if flag == "no" %}
+							<button type="submit" value="Edit" onclick="editEv({{ i }})">Edit</button>
+							<button type="submit" value="Delete" onclick="delEv({{ i }})">Delete</button>
+							<button type="submit" value="Archive" onclick="archEv({{ i }})">Archive</button>
+							<button type="submit" value="Share" onclick="shareEv({{ i }})">Share</button>
+						{% elif flag == "search" %}
+							<button type="submit" value="Edit" onclick="editEvSear({{ i }})">Edit</button>
+							<button type="submit" value="Delete" onclick="delEvSear({{ i }})">Delete</button>
+							<button type="submit" value="Archive" onclick="arEvSear({{ i }})">Archive</button>
+						{% elif flag == "archive" %}
+							<button type="submit" value="Delete" onclick="delEvArch({{ i }})">Delete</button>
+						{% endif %}
+					
+					
 						<hr>
 						<h2>{{ events[i]["name"] }}</h2>
 						<hr>

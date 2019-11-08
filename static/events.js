@@ -76,13 +76,6 @@ function creEv() {
 	window.location.reload();
 }
 
-
-
-
-
-
-
-
 function delEv(num) {
 	$.getJSON($SCRIPT_ROOT + '/deleteEvent', {
 		num
