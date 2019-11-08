@@ -71,19 +71,19 @@ class Events:
         self.name = name
         self.passw = passw
         
-        with open(self.name + self.passw + ".json") as self.file:
-            self.data_user = json.load(self.file)
-        self.file.close()
-
-        with open(self.main_file) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
-        
-        self.data["users"][self.name] = self.data_user
-
-        with open(self.main_file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
+#         with open(self.name + self.passw + ".json") as self.file:
+#             self.data_user = json.load(self.file)
+#         self.file.close()
+# 
+#         with open(self.main_file) as self.file:
+#             self.data = json.load(self.file)
+#         self.file.close()
+#         
+#         self.data["users"][self.name] = self.data_user
+# 
+#         with open(self.main_file, "w") as self.file:
+#             json.dump(self.data, self.file)
+#         self.file.close()
         
         
     

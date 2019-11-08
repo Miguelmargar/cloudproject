@@ -20,11 +20,11 @@ def index():
     try:
         if len(det) == 2:
             logged = "yes"
-            events = a.show_events(det[0], det[1])
-            print(events)
+        else:
+            logged = "no"
+        events = a.show_events(det[0], det[1])
     except:
         pass    
-    
     eveLen = len(events) 
     
 #     flag = a.flag
@@ -46,32 +46,33 @@ def sign_user():
 
 @app.route("/logIn", methods=['GET', 'POST'])
 def log_user():
-    name = request.args.get('name')
-    passw = request.args.get('pass') 
+    name = request.args.get('namelog')
+    passw = request.args.get('passlog') 
 
     login = a.log_user_in(name, passw)
-    
+
     return jsonify(login)
 
 @app.route("/loggedMain", methods=['GET', 'POST'])
 def show_main():
-    name = request.args.get('name')
-    passw = request.args.get('pass')
+    global name_in
+    global passw_in
     
+    name_in = request.args.get('namelog')
+    passw_in = request.args.get('passlog')
+
     global det
-    det = [name, passw]
+    det = [name_in, passw_in]
     return redirect("/")
 
 
 @app.route("/logout", methods=['GET', 'POST'])
 def log_user_out():
-    name = request.args.get('name')
-    passw = request.args.get('pass')
     
-    out = a.log_user_out(name, passw)
-
-    det = Null
-
+    out = a.log_user_out(name_in, passw_in)
+    global det
+    det = ""
+    
     return redirect("/")
 
 

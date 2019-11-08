@@ -53,12 +53,10 @@ function logIn() {
 
 function logout() {
 	$.getJSON($SCRIPT_ROOT + '/logout', {
-		namelog,
-		passlog
 	 },
      function(response) {
      });
-	
+	window.location.reload();
 }
 
 
