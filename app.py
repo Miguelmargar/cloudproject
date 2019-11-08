@@ -15,7 +15,7 @@ def index():
     global a
     a = Events()
     logged = "no"
-    events = {"events": []}
+    events = []
 
     try:
         if len(det) == 2:
@@ -27,7 +27,7 @@ def index():
         print(events)
     except:
         pass    
-    eveLen = len(events["events"]) 
+    eveLen = len(events) 
     
 #     flag = a.flag
      
@@ -50,8 +50,6 @@ def sign_user():
 def log_user():
     name = request.args.get('namelog')
     passw = request.args.get('passlog') 
-
-    print(a.user_name)
 
     login = a.log_user_in(name, passw)
 
@@ -94,16 +92,14 @@ def create_event():
     return redirect("/")
  
  
- 
- 
- 
- 
 @app.route("/deleteEvent", methods=['GET', 'POST'])
 def delete_event():
     num = request.args.get('num')
      
+    file_name = name_in + passw_in + ".json" 
+    
     c = Events()
-    dele = c.del_event(num)
+    dele = c.del_event(num, file_name)
      
     return redirect("/")
 
@@ -112,8 +108,10 @@ def delete_event():
 def delete_event_search():
     num = request.args.get("num")
     
+    file_name = name_in + passw_in + ".json"
+    
     d = Events()
-    dele_sear = d.del_event_sear(num)
+    dele_sear = d.del_event_sear(num, file_name)
     
     return redirect("/")
 
@@ -125,8 +123,10 @@ def edit_event():
     date = request.args.get('ed_date')
     desc = request.args.get('ed_description')
 
+    file_name = name_in + passw_in + ".json"
+
     e = Events()
-    edi = e.edit_event(num, name, date, desc)
+    edi = e.edit_event(num, name, date, desc, file_name)
 
     return redirect("/")
 
@@ -138,8 +138,10 @@ def edit_event_search():
     date = request.args.get('ed_se_da')
     desc = request.args.get('ed_se_des')
     
+    file_name = name_in + passw_in + ".json"
+    
     f = Events()
-    edi_sear = f.edit_event_sear(num, name, date, desc)
+    edi_sear = f.edit_event_sear(num, name, date, desc, file_name)
     
     return redirect("/")
     
@@ -148,8 +150,10 @@ def edit_event_search():
 def search_event():
     searched = request.args.get('sear')
 
+    file_name = name_in + passw_in + ".json"
+
     g = Events()
-    sea = g.search_event(searched)
+    sea = g.search_event(searched, file_name)
 
     return redirect("/")
 
@@ -158,8 +162,10 @@ def search_event():
 def archive_event():
     num = request.args.get('num')
     
+    file_name = name_in + passw_in + ".json"
+    
     h = Events()
-    arch = h.arch_eve(num)
+    arch = h.arch_eve(num, file_name)
     
     return redirect("/")
 
@@ -168,8 +174,10 @@ def archive_event():
 def archive_event_search():
     num = request.args.get('num')
     
+    file_name = name_in + passw_in + ".json"
+    
     i = Events()
-    arch_sea = i.arch_eve_sear(num)
+    arch_sea = i.arch_eve_sear(num, file_name)
 
     return redirect("/")
 
@@ -177,8 +185,10 @@ def archive_event_search():
 @app.route("/showArchive")
 def show_archive():
     
+    file_name = name_in + passw_in + ".json"
+    
     j = Events()
-    show_arch = j.display_arch()
+    show_arch = j.display_arch(file_name)
     
     return redirect("/") 
 
@@ -187,8 +197,10 @@ def show_archive():
 def delete_event_arch():
     num = request.args.get("num")
     
+    file_name = name_in + passw_in + ".json"
+    
     k = Events()
-    dele_arch = k.del_event_arch(num)
+    dele_arch = k.del_event_arch(num, file_name)
     
     return redirect("/")
 
@@ -196,6 +208,8 @@ def delete_event_arch():
 @app.route("/shareEvent", methods=['GET', 'POST'])
 def share_event():
     num = request.args.get("num")
+    
+    file_name = name_in + passw_in + ".json"
     
     l = Events()
     share = l.share_eve(num)

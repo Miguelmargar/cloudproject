@@ -95,11 +95,28 @@ class Events:
         self.passw = passw
         
         
+        if Events.flag == "no":
+            with open(self.name + self.passw + ".json") as self.file:
+                self.data = json.load(self.file)
+            self.file.close()
+            return self.data["events"]
         
-        with open(self.name + self.passw + ".json") as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
-                
+        elif Events.flag == "search" and len(Events.s_data) > 0:
+                        
+            with open(self.name + self.passw + ".json") as self.file:
+                self.data = json.load(self.file)             
+            self.file.close()
+  
+            self.data["searched"] = []
+  
+            with open(self.name + self.passw + ".json", "w") as self.file:
+                json.dump(self.data, self.file)
+            self.file.close()
+            Events.flag = "no"
+            return Events.s_data
+        
+        
+        
 #         if Events.flag == "no":
 #             with open(self.file_name) as self.file:
 #                 self.data = json.load(self.file)
@@ -139,17 +156,17 @@ class Events:
         self.file.close()
 
         
-    def del_event(self, num):
+    def del_event(self, num, file):
         num = int(num)
         
-        with open(self.file_name) as self.file:
+        with open(file) as self.file:
             self.data = json.load(self.file)
              
             del self.data["events"][num] 
              
         self.file.close()
              
-        with open(self.file_name, "w") as self.file:
+        with open(file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
 
@@ -186,10 +203,10 @@ class Events:
         self.file.close()
         
 
-    def edit_event(self, num, name, date, desc):
+    def edit_event(self, num, name, date, desc, file):
         num = int(num)
         
-        with open(self.file_name) as self.file:
+        with open(file) as self.file:
             self.data = json.load(self.file)
 
             if len(name) > 0:
@@ -203,7 +220,7 @@ class Events:
         
         self.file.close()
              
-        with open(self.file_name, "w") as self.file:
+        with open(file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
 
@@ -231,26 +248,22 @@ class Events:
         self.file.close()
 
 
-    def search_event(self, str):  
+    def search_event(self, str, file):        
         
-        with open(self.search_file_name) as self.file:
-            self.search_data = json.load(self.file)
-        self.file.close()      
-        
-        with open(self.file_name) as self.file:
+        with open(file) as self.file:
             self.data = json.load(self.file)
         self.file.close()
         
         for i in self.data["events"]:
             if i["name"] == str:
-                self.search_data["events"].append(i)
-
-        if len(self.search_data["events"]) > 0:
+                self.data["searched"].append(i)
+ 
+        if len(self.data["searched"]) > 0:
             Events.flag = "search"
-            Events.s_data = self.search_data
-
-        with open(self.search_file_name, "w") as self.search_file:
-            json.dump(self.search_data, self.search_file)
+            Events.s_data = self.data["searched"]
+  
+        with open(file, "w") as self.file:
+            json.dump(self.data, self.file)
         self.search_file.close()
         
 
@@ -295,16 +308,13 @@ class Events:
 
     def check_if_search(self):
         
-        if not os.path.exists(self.search_file_name):
-            return False
-        else:
-            with open(self.search_file_name) as self.search_file:
-                self.search_data = json.load(self.search_file)
-                self.search_file.close()
-                if len(self.search_data["events"]) > 0:
-                    return True
-                else:
-                    return False
+        with open(self.search_file_name) as self.search_file:
+            self.search_data = json.load(self.search_file)
+            self.search_file.close()
+            if len(self.search_data["events"]) > 0:
+                return True
+            else:
+                return False
             
             
     def arch_eve(self, num):

@@ -75,13 +75,13 @@
 						<button type="submit" value="Share" onclick="shareEv({{ i }})">Share</button>
 		
 						<hr>
-						<h2>{{ events["events"][i]["name"] }}</h2>
+						<h2>{{ events[i]["name"] }}</h2>
 						<hr>
 						<h2>WHEN:</h2>
-						<p>{{ events["events"][i]["date"] }}</p>
+						<p>{{ events[i]["date"] }}</p>
 						<hr>
 						<h2>COMMENTS:</h2>
-						<p>{{ events["events"][i]["desc"] }}</p>
+						<p>{{ events[i]["desc"] }}</p>
 					</div>
 				{% endfor %}		
 			{% endif %}
