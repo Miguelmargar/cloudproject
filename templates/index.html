@@ -62,7 +62,13 @@
 			<h1>LANDING PAGE - PLEASE SING UP OR SIGN IN TO CONTINUE</h1>
 		{% elif logged == "yes" %}
 			<h1>YOU ARE LOGGED IN</h1>
-		
+			{% if flag == "no" %}
+				<h1>MAIN VIEW</h1>
+			{% elif flag == "search" %}
+				<h1>SEARCH VIEW</h1>
+			{% elif flag == "archive" %}
+				<h1>ARCHIVE VIEW</h1>
+			{% endif %}
 
 			{% if eveLen == 0 %}
 				<h1>NO EVENTS - Please click on create event to add event</h1>

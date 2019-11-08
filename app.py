@@ -15,9 +15,8 @@ app = Flask(__name__)
 def index():
     global a
     a = Events()
-    logged = "no"
     events = []
-
+    
     try:
         if len(det) == 2:
             logged = "yes"
@@ -26,19 +25,21 @@ def index():
         
         events = a.show_events(det[0], det[1])
     except:
-        pass    
+        logged = "no"   
+    
     eveLen = len(events) 
     
     try:
-        if total_flag == "no":
+        print(state)
+        if state == "no":
             flag = "no"
-        if total_flag == "search":
+        elif state == "search":
             flag = "search"
-        if total_flag == "archive":
+        elif state == "archive":
             flag = "archive"
     except:
         flag = "no"
-
+    
     return render_template('index.html', logged=logged, eveLen=eveLen, events=events, flag=flag)
 
 
@@ -161,9 +162,9 @@ def search_event():
     g = Events()
     sea = g.search_event(searched, file_name)
     
-    global total_flag
-    total_flag = g.flag
-    
+    global state
+    state = g.flag
+
     return redirect("/")
 
 
@@ -196,9 +197,6 @@ def show_archive():
     
     j = Events()
     show_arch = j.display_arch()
-    
-    global total_flag
-    total_flag = j.flag
     
     return redirect("/") 
 
