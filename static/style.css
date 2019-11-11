@@ -15,6 +15,18 @@ header {
 	width: 48vw;
 }
 
+.nav form {
+	display: inline-block;
+}
+
+.nav input {
+	display: inline-block;
+}
+
+#sear {
+	display: inline-block;
+}
+
 header h1 {
 	display: inline-block;
 }
@@ -63,6 +75,7 @@ header h3:hover {
 .adr input {
 	display: block;
 }
+
 main {
 	height: auto;
 	width: 100%;
@@ -78,6 +91,10 @@ main {
 	height: 350px;
 	word-wrap: break-word;
 	overflow: auto;
+}
+
+.event form {
+	display: inline-block;
 }
 
 footer {

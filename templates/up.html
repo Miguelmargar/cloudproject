@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+{% if sign == "created" %}
+	<h1>ACCOUNT SUCCESFULLY CREATED</h1>
+{% elif sign == "exists" %}
+	<h1>NAME ALREADY IN USE PLEASE TRY A DIFFERENT NAME</h1>
+{% endif %}
+
+{% endblock %}
+

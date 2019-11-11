@@ -1,0 +1,99 @@
+{% extends "index.html" %}
+
+{% block header %}
+	{% if login == "loggedin" %}
+		<div class="nav">
+			<h1><a href="/show_main">Event Organiser</a></h1>
+			<h3 onclick="document.getElementById('modal').style.display='block'">Create
+				Event</h3>
+			<h3><a href="/show_archive">Archive</a></h3>
+			<h3><a href="/show_archive">Shared With Me</a></h3>
+			<div id="sear">
+			<h3>Search Event</h3>
+			<form method="GET" action="/searchEvent" enctype="multipart/form-data">
+				<input type="text" name="search" runat="server">
+				<button type="submit" value="search">Search</button>
+			</form>
+			</div>
+		</div>
+		<div class="adr">
+			<form method="GET" action="/logOut" enctype="multipart/form-data">
+				<button type="submit" value="logout">Logout</button>
+			</form>
+		</div>
+	{% else %}
+		<div class="adl">
+			<form method="POST" action="/signUp" enctype="multipart/form-data">
+				<input type="text" value="miguel" name="signName" id="signName" runat="server">
+				<input type="text" value="12345" name="signPass" id="signPass" runat="server">
+				<button type="submit" value="singUp">Signup</button>
+			</form>
+		</div>
+		<div class="adr">
+			<form method="POST" action="/logIn" enctype="multipart/form-data">
+				<input type="text" value="miguel" name="logName" id="logName" runat="server">
+				<input type="text" value="12345" name="logPass" id="logPass" runat="server">
+				<button type="submit" value="logIn">Login</button>
+			</form>
+		</div>
+	{% endif %}
+{% endblock %}
+
+
+{% block content %}
+	{% if login == "loggedin" %}
+		<h1>WELCOME {{name}}, YOU ARE NOW LOGGED IN</h1>
+		{% if in_search == "no" and in_arch == "no" %}
+			<h1>MAIN EVENTS PAGE</h1>
+		{% endif %}
+		
+		{% if in_search == "yes" %}
+			<h1>SEARCHED EVENTS</h1>
+		{% endif %}
+		{% if in_arch == "yes" %}
+			<h1>ARCHIVE</h1>
+		{% endif %}
+		
+		
+		
+		{% for i in events %}
+		<div class="event">
+			
+			{% if in_arch == "no" %}
+			<button type="submit" name="edit" value="{{ i }}" onclick="getOldDetails({{ i }})">Edit</button>
+
+			<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
+				<button type="submit" name="delete" value="{{ i }}">Delete</button>
+			</form>
+			
+			<form method="POST" action="/archive_event" enctype="multipart/form-data">
+				<button type="submit" name="archive" value="{{ i }}">Archive</button>
+			</form>
+			
+			<form method="POST" action="" enctype="multipart/form-data">
+				<button type="submit" name="share" value="{{ i }}">Share</button>
+			</form>
+			{% endif %}
+			{% if in_arch == "yes" %}
+				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
+					<button type="submit" name="delete" value="{{ i }}arch">Delete</button>
+				</form>
+			{% endif %}
+			
+			<hr>
+			<h2>{{ i["name"] }}</h2>
+			<hr>
+			<h2>WHEN:</h2>
+			<p>{{ i["date"] }}</p>
+			<hr>
+			<h2>COMMENTS:</h2>
+			<p>{{ i["desc"] }}</p>
+		</div>
+		{% endfor %}
+		
+	{% elif login == "passerr" %}
+		<h1>PASSWORD INCORRECT</h1>
+	{% elif login == "nameerr" %}
+		<h1>NAME INCORRECT</h1>
+	{% endif %}
+{% endblock %}

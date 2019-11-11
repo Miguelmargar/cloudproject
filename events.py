@@ -1,31 +1,42 @@
-import os, json, errno, time
-from tweepy import OAuthHandler, API, Cursor, TweepError
-from passw import *
+import os, json
 
 
 class Events:
-    flag = "no"
-    s_data = None
+    name = ""
+    passw = ""
+    login = ""
+    file = ""
+    sea = "no"
+    arch = "no"
+    old_name = ""
+    old_date = ""
+    old_desc = ""
     
     def __init__(self):
-        self.user_name = ""
-        self.user_password = ""
         self.main_file = "main.json"
-        self.file_name = "events.json"
-        self.search_file_name = "search_events.json"
-        self.archive_name = "archive.json"
         self.check_if_db()
 
+    
+    
+    def check_if_db(self):
+        
+        if not os.path.exists(self.main_file):
+            self.new_file = open(self.main_file, 'w+')
+            print("xxxxxx MAIN FILE CREATED xxxxxx")
+            self.new_file.close()
+            
+            with open(self.main_file, "w") as self.file:
+                json.dump({"users":{}}, self.file)
+            self.file.close()
+        
+            
     def sign_user_up(self, name, passw):
         self.name = name
         self.passw = passw
-        
-        self.check_if_db()
-        
+                
         with open(self.main_file) as self.file:
             self.main_data = json.load(self.file)
         self.file.close()
-        
         
         if self.name not in self.main_data["users"].keys():
             self.main_data["users"][self.name] = {"password": self.passw,
@@ -40,11 +51,15 @@ class Events:
             return "created"
         else:
             return "exists"
-            
-    
+        
+        
     def log_user_in(self, name, passw):
         self.name = name
         self.passw = passw
+        
+        Events.file = self.name + self.passw + ".json"
+        Events.name = self.name
+        Events.passw = self.passw
         
         with open(self.main_file) as self.file:
             self.main_data = json.load(self.file)
@@ -53,27 +68,27 @@ class Events:
         if self.name in self.main_data["users"].keys():
             if self.main_data["users"][self.name]["password"] == self.passw:
                 
-                if not os.path.exists(self.name + self.passw + ".json"):
+                if not os.path.exists(Events.file):
                     self.new_file = open(self.name + self.passw + ".json", 'w+')
                     print("Database loaded")
                     self.new_file.close()
                     
-                    with open(self.name + self.passw + ".json", "w") as self.file:
+                    with open(Events.file, "w") as self.file:
                         json.dump(self.main_data["users"][self.name], self.file)
                     self.file.close()
-                
+                Events.login = "loggedin"
                 return "loggedin"
             else:
+                Events.login = "passerr"
                 return "passerr"
         else:
+            Events.login = "nameerr"
             return "nameerr"
         
-    
-    def log_user_out(self, name, passw):
-        self.name = name
-        self.passw = passw
         
-        with open(self.name + self.passw + ".json") as self.file:
+    def log_user_out(self):
+        
+        with open(Events.file) as self.file:
             self.data_user = json.load(self.file)
         self.file.close()
   
@@ -86,45 +101,18 @@ class Events:
         with open(self.main_file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
+        
+        os.remove(Events.file)
+        
+        Events.name = ""
+        Events.passw = ""
+        Events.login = ""
+        Events.file = ""
          
-        os.remove(self.name + self.passw + ".json")        
-    
         
-    def show_events(self, name, passw):
-        self.name = name
-        self.passw = passw  
+    def create_ev(self, name, date, desc):
         
-        if Events.flag == "no":
-            with open(self.name + self.passw + ".json") as self.file:
-                self.data = json.load(self.file)
-            self.file.close()
-            return self.data["events"]
-        
-        elif Events.flag == "search" and len(Events.s_data) > 0:
-                        
-            with open(self.name + self.passw + ".json") as self.file:
-                self.data = json.load(self.file)             
-            self.file.close()
-  
-            self.data["searched"] = []
-  
-            with open(self.name + self.passw + ".json", "w") as self.file:
-                json.dump(self.data, self.file)
-            self.file.close()
-            Events.flag = "no"
-            return Events.s_data
-        
-        elif Events.flag == "archive":
-            with open(self.name + self.passw + ".json") as self.file:
-                self.data = json.load(self.file)             
-            self.file.close()
-            Events.flag = "no"
-            return self.data["archived"]
-            
-
-    def create_ev(self, name, date, desc, file):
-        
-        with open(file) as self.file:
+        with open(Events.file) as self.file:
             self.data = json.load(self.file)
             
             self.eventCount = len(self.data["events"])
@@ -135,87 +123,98 @@ class Events:
                                         })
             self.file.close()
             
-        with open(file, "w") as self.file:
+        with open(Events.file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
-
         
-    def del_event(self, num, file):
-        num = int(num)
+    
+    def show_events(self):
         
-        with open(file) as self.file:
+        with open(Events.file) as self.file:
             self.data = json.load(self.file)
-             
-            del self.data["events"][num] 
-             
-        self.file.close()
-             
-        with open(file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
-
-
-    def del_event_sear(self, num, file):
-        num = int(num)
-        
-        with open(file) as self.file:
-            self.data = json.load(self.file)             
-        self.file.close()
-        print(Events.s_data)
-        
-        self.data["events"].remove(Events.s_data[num])
-                          
-        with open(file, "w") as self.file:
-            json.dump(self.data, self.file)
         self.file.close()
         
-        Events.s_data = None
- 
-    def del_event_arch(self, num, file):
-        num = int(num)
-        
-        with open(file) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()    
+        if Events.arch == "no":
+            if Events.sea == "no":
+                return self.data["events"]
             
-        del self.data["archived"][num]
+            elif Events.sea == "yes":
+                temp_search = self.data["searched"] 
+                self.clear_search()
+                 
+                return temp_search
+                
+        elif Events.arch == "yes":
+            return self.data["archived"]  
             
-        with open(file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
-        
+            
+    
+    def del_event(self, event):
 
-    def edit_event(self, num, name, date, desc, file):
-        num = int(num)
+        section = "events"
+        if event[-4:] == "arch":
+            section = "archived"
+            Events.arch = "yes"
         
-        with open(file) as self.file:
+        with open(Events.file) as self.file:
             self.data = json.load(self.file)
-
-            if len(name) > 0:
-                self.data["events"][num]["name"] = name
-
-            if len(date) > 0:
-                self.data["events"][num]["date"] = date
-
-            if len(desc) > 0:
-                self.data["events"][num]["desc"] = desc
-        
         self.file.close()
-             
-        with open(file, "w") as self.file:
+        
+        for i, k in enumerate(self.data[section]):
+            if str(k) == event[:-4]:
+                del self.data[section][i]
+        
+        with open(Events.file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
-
-
-    def edit_event_sear(self, num, name, date, desc):
-        num = int(num)
         
-        with open(self.file_name) as self.file:
-            self.data = json.load(self.file)             
+        
+    def search(self, word):
+        
+        with open(Events.file) as self.file:
+            self.data = json.load(self.file)
         self.file.close()
+        
+        for i in self.data["events"]:
+            if i["name"] == word:
+                self.data["searched"].append(i)
+                
+        with open(Events.file, "w") as self.file:
+            json.dump(self.data, self.file)
+        self.file.close()
+        
+        Events.sea = "yes"
+   
+        
+    def clear_search(self):
+        
+        with open(Events.file) as self.file:
+            self.data = json.load(self.file)
+        self.file.close()
+        
+        self.data["searched"] = []
+        
+        with open(Events.file, "w") as self.file:
+            json.dump(self.data, self.file)
+        self.file.close()
+        
+    
+    def get_old_details(self, old_name, old_date, old_desc):
+        Events.old_name = old_name
+        Events.old_date = old_date
+        Events.old_desc = old_desc
 
+    
+    
+    def edit_event(self, name, date, desc):
+        
+        with open(Events.file) as self.file:
+            self.data = json.load(self.file)
+        self.file.close()
+        
         for i, k in enumerate(self.data["events"]):
-            if k == Events.s_data["events"][num]:
+            if k["name"] == Events.old_name and k["date"] == Events.old_date and k["desc"] == Events.old_desc:
+                
                 if len(name) > 0:
                     self.data["events"][i]["name"] = name
     
@@ -224,123 +223,36 @@ class Events:
     
                 if len(desc) > 0:
                     self.data["events"][i]["desc"] = desc
-
-        with open(self.file_name, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
-
-
-    def search_event(self, str, file):        
         
-        with open(file) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
-        
-        for i in self.data["events"]:
-            if i["name"] == str:
-                self.data["searched"].append(i)
- 
-        if len(self.data["searched"]) > 0:
-            Events.flag = "search"
-            Events.s_data = self.data["searched"]
-  
-        with open(file, "w") as self.file:
+        with open(Events.file, "w") as self.file:
             json.dump(self.data, self.file)
         self.file.close()
         
-
-    def check_if_db(self):
         
-        if not os.path.exists(self.main_file):
-            self.new_file = open(self.main_file, 'w+')
-            print("xxxxxx MAIN FILE CREATED xxxxxx")
-            self.new_file.close()
-            
-            with open(self.main_file, "w") as self.file:
-                json.dump({"users":{}}, self.file)
-            self.file.close()
-            
-        if not os.path.exists(self.file_name):
-            self.new_file = open(self.file_name, 'w+')
-            print("xxxxxxxx FILE CREATED xxxxxxxx")
-            self.new_file.close()
-            
-            with open(self.file_name, "w") as self.file:
-                json.dump({"events":[]}, self.file)
-            self.file.close()
-            
-        if not os.path.exists(self.search_file_name):
-            self.new_file = open(self.search_file_name, 'w+')
-            print("xxxx SEARCH FILE CREATED xxxx")
-            self.new_file.close()
-            
-            with open(self.search_file_name, "w") as self.file:
-                json.dump({"events":[]}, self.file)
-            self.file.close()
-            
-        if not os.path.exists(self.archive_name):
-            self.new_file = open(self.archive_name, 'w+')
-            print("xxxx ARCIVE FILE CREATED xxxx")
-            self.new_file.close()
-            
-            with open(self.archive_name, "w") as self.file:
-                json.dump({"events":[]}, self.file)
-            self.file.close()
-            
-            
-    def arch_eve(self, num, file):
-        num = int(num)
-        
-        with open(file) as self.file:
+    def arch_eve(self, event): 
+               
+        with open(Events.file) as self.file:
             self.data = json.load(self.file) 
         self.file.close()     
 
-        self.data["archived"].append(self.data["events"][num])
-        del self.data["events"][num]
+        for i, k in enumerate(self.data["events"]):
+            if str(k) == event:
+                self.data["archived"].append(self.data["events"][i])
+                del self.data["events"][i]
         
-        with open(file, "w") as self.file:
+        with open(Events.file, "w") as self.file:
             json.dump(self.data, self.file)
-        self.file.close()
-            
-    
-    def arch_eve_sear(self, num):
-        num = int(num)    
-        
-        with open(self.archive_name) as self.file:
-            self.a_data = json.load(self.file) 
-            self.a_data["events"].append(Events.s_data["events"][num]) 
-        self.file.close()
-        
-        with open(self.archive_name, "w") as self.file:
-            json.dump(self.a_data, self.file)
-        self.file.close()
-        
-        self.del_event_sear(num)
-        
-    
-    def display_arch(self):
-        Events.flag = "archive"
+        self.file.close()   
         
         
-    def share_eve(self, num):
-        num = int(num)
+    def show_arch(self):
+        Events.arch = "yes"
         
-        try:
-            auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-            auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
-            api = API(auth)
-            
-            with open(self.file_name) as self.file:
-                self.data = json.load(self.file)
-            self.file.close()
-            
-            name = self.data["events"][num]["name"]
-            when = self.data["events"][num]["date"]
-            details = self.data["events"][num]["desc"]
-    
-            str = "New event: " + name + " on " + when + ". Details: " + details
-            
-            api.update_status(str)
-        except TweepError as e:
-            print(e)
-            
+        
+        
+        
+        
+        
+        
+        
+        
