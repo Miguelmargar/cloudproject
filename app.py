@@ -1,8 +1,9 @@
-from flask import Flask, render_template, redirect, request, jsonify
+from flask import Flask, flash, render_template, redirect, request, jsonify
 from events import *
 
 
 app = Flask(__name__)
+app.secret_key = "abc"
 
 @app.route('/')
 def index():
@@ -19,6 +20,10 @@ def sign_user():
     a = Events()
     sign = a.sign_user_up(name, passw)
     
+    if sign == "exists":
+        flash("Name already exists")
+    
+
     return render_template("/up.html", sign=sign)
 
 
@@ -43,11 +48,13 @@ def show_main():
     name = Events.name
     in_search = Events.sea
     in_arch = Events.arch
+    in_share = Events.share
     
     Events.sea = "no"
     Events.arch = "no"
+    Events.share = "no"
     
-    return render_template("/in.html", login=login, name=name, events=events, in_search=in_search, in_arch=in_arch)
+    return render_template("/in.html", login=login, name=name, events=events, in_search=in_search, in_arch=in_arch, in_share=in_share)
 
 
 @app.route("/createEvent", methods=['POST'])
@@ -134,6 +141,38 @@ def show_archive():
     a.show_arch()
     
     return redirect("/show_main")
+
+
+@app.route("/get_sha_det", methods=['GET'])
+def get_share_details():
+    sha_name = request.args.get('sha_na')
+    sha_date = request.args.get('sha_da')
+    sha_desc = request.args.get('sha_desc')
+
+    a = Events()
+    a.get_share_details(sha_name, sha_date, sha_desc)
+    
+    return redirect("/show_main")
+
+
+@app.route("/share_with", methods=['POST'])
+def share_with():
+    share_user = request.form.get('shareName')
+
+    a = Events()
+    is_shared = a.share_with(share_user)
+    
+    return redirect("/show_main")
+ 
+ 
+@app.route("/show_shared_with")
+def show_shared_with():
+     
+    a = Events()
+    a.show_shared_with()
+     
+    return redirect("/show_main")
+
     
     
     

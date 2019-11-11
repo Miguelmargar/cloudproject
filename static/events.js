@@ -12,3 +12,18 @@ function getOldDetails(eve) {
     function(response) {
     });	
 }
+
+function shareWithDetails(eve) {
+	document.getElementById('share').style.display='block';
+	sha_na = eve["name"];
+	sha_da = eve["date"];
+	sha_desc = eve["desc"];
+
+	$.getJSON($SCRIPT_ROOT + '/get_sha_det', {
+		sha_na,
+		sha_da,
+		sha_desc
+	 },
+    function(response) {
+    });
+}

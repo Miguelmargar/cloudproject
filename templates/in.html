@@ -7,7 +7,7 @@
 			<h3 onclick="document.getElementById('modal').style.display='block'">Create
 				Event</h3>
 			<h3><a href="/show_archive">Archive</a></h3>
-			<h3><a href="/show_archive">Shared With Me</a></h3>
+			<h3><a href="/show_shared_with">Shared WITH Me</a></h3>
 			<div id="sear">
 			<h3>Search Event</h3>
 			<form method="GET" action="/searchEvent" enctype="multipart/form-data">
@@ -43,7 +43,7 @@
 {% block content %}
 	{% if login == "loggedin" %}
 		<h1>WELCOME {{name}}, YOU ARE NOW LOGGED IN</h1>
-		{% if in_search == "no" and in_arch == "no" %}
+		{% if in_search == "no" and in_arch == "no" and share == "no" %}
 			<h1>MAIN EVENTS PAGE</h1>
 		{% endif %}
 		
@@ -53,14 +53,16 @@
 		{% if in_arch == "yes" %}
 			<h1>ARCHIVE</h1>
 		{% endif %}
-		
+		{% if in_share == "yes" %}
+			<h1>SHARED WITH ME</h1>
+		{% endif %}
 		
 		
 		{% for i in events %}
 		<div class="event">
 			
-			{% if in_arch == "no" %}
-			<button type="submit" name="edit" value="{{ i }}" onclick="getOldDetails({{ i }})">Edit</button>
+			{% if in_arch == "no" and in_share == "no" %}
+			<button type="submit" name="edit" onclick="getOldDetails({{ i }})">Edit</button>
 
 			<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
 				<button type="submit" name="delete" value="{{ i }}">Delete</button>
@@ -70,13 +72,18 @@
 				<button type="submit" name="archive" value="{{ i }}">Archive</button>
 			</form>
 			
-			<form method="POST" action="" enctype="multipart/form-data">
-				<button type="submit" name="share" value="{{ i }}">Share</button>
-			</form>
+			<button type="submit" name="share" onclick="shareWithDetails({{ i }})">Share</button>
+			
 			{% endif %}
 			{% if in_arch == "yes" %}
 				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
 					<button type="submit" name="delete" value="{{ i }}arch">Delete</button>
+				</form>
+			{% endif %}
+			
+			{% if in_share == "yes" %}
+				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
+					<button type="submit" name="delete" value="{{ i }}share">Delete</button>
 				</form>
 			{% endif %}
 			
@@ -88,6 +95,12 @@
 			<hr>
 			<h2>COMMENTS:</h2>
 			<p>{{ i["desc"] }}</p>
+			{% if in_share == "yes" %}
+			<hr>
+			<h2>FROM</h2>
+			<p>{{ i["from"] }}</p>
+			{% endif %}
+			
 		</div>
 		{% endfor %}
 		

@@ -8,9 +8,13 @@ class Events:
     file = ""
     sea = "no"
     arch = "no"
+    share = "no"
     old_name = ""
     old_date = ""
     old_desc = ""
+    sha_name = ""
+    sha_date = ""
+    sha_desc = ""
     
     def __init__(self):
         self.main_file = "main.json"
@@ -42,7 +46,8 @@ class Events:
             self.main_data["users"][self.name] = {"password": self.passw,
                                                   "events": [],
                                                   "searched": [],
-                                                  "archived": []
+                                                  "archived": [],
+                                                  "shared_with": []
                                                   }
                     
             with open(self.main_file, "w") as self.file:
@@ -134,7 +139,7 @@ class Events:
             self.data = json.load(self.file)
         self.file.close()
         
-        if Events.arch == "no":
+        if Events.arch == "no" and Events.share == "no":
             if Events.sea == "no":
                 return self.data["events"]
             
@@ -146,7 +151,8 @@ class Events:
                 
         elif Events.arch == "yes":
             return self.data["archived"]  
-            
+        elif Events.share == "yes":
+            return self.data["shared_with"]
             
     
     def del_event(self, event):
@@ -155,13 +161,18 @@ class Events:
         if event[-4:] == "arch":
             section = "archived"
             Events.arch = "yes"
+            event = event[:-4]
+        elif event[-5:] == "share":
+            section = "shared_with"
+            Events.share = "yes"
+            event = event[:-5]
         
         with open(Events.file) as self.file:
             self.data = json.load(self.file)
         self.file.close()
         
         for i, k in enumerate(self.data[section]):
-            if str(k) == event[:-4]:
+            if str(k) == event:
                 del self.data[section][i]
         
         with open(Events.file, "w") as self.file:
@@ -203,7 +214,6 @@ class Events:
         Events.old_name = old_name
         Events.old_date = old_date
         Events.old_desc = old_desc
-
     
     
     def edit_event(self, name, date, desc):
@@ -248,10 +258,37 @@ class Events:
     def show_arch(self):
         Events.arch = "yes"
         
+   
+    def get_share_details(self, name, date, desc):
+        Events.sha_name = name
+        Events.sha_date = date
+        Events.sha_desc = desc
+   
         
+    def share_with(self, user):
         
+        with open(self.main_file) as self.file:
+            self.main_data = json.load(self.file) 
+        self.file.close()
         
+        if user in self.main_data["users"].keys():
+             
+            self.main_data["users"][user]["shared_with"].append({
+                                        "name": Events.sha_name, 
+                                        "date": Events.sha_date,
+                                        "desc": Events.sha_desc,
+                                        "from": Events.name,
+                                        "to": user
+                                        })
+             
+        with open(self.main_file, "w") as self.file:
+            json.dump(self.main_data, self.file)
+        self.file.close()
         
+    
+    def show_shared_with(self):
+        Events.share = "yes"
+    
         
         
         

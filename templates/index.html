@@ -85,6 +85,18 @@
 	</form>
 </div>
 
+<div id="share" class="modalSh">
+	<form method="POST" action="/share_with" enctype="multipart/form-data">
+		SHARE WITH?:<br>
+		<input type="text" name="shareName" runat="server"> 
+		<br> 
+		<br>
+		<button type="submit" value="Submit">Submit</button>
+		<button onclick="document.getElementById('share').style.display='none'">close</button>
+	</form>
+</div>
+
+
 <script src="../static/events.js"></script>
 
 </html>
