@@ -163,6 +163,12 @@ def share_with():
     a = Events()
     is_shared = a.share_with(share_user)
     
+    if is_shared == True:
+        flash("Your Event has been shared with '%s'" % share_user)
+    else:
+        flash("Error Sharing, Name '%s' does not exist, please check for spelling mistakes" % share_user)
+
+    
     return redirect("/show_main")
  
  

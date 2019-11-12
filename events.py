@@ -280,11 +280,15 @@ class Events:
                                         "from": Events.name,
                                         "to": user
                                         })
-             
-        with open(self.main_file, "w") as self.file:
-            json.dump(self.main_data, self.file)
-        self.file.close()
+            with open(self.main_file, "w") as self.file:
+                json.dump(self.main_data, self.file)
+            self.file.close()
         
+            return True
+
+        else:
+            return False
+            
     
     def show_shared_with(self):
         Events.share = "yes"
