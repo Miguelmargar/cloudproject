@@ -3,7 +3,7 @@ from events import *
 
 
 app = Flask(__name__)
-app.secret_key = "abc"
+app.secret_key = "flashKey"
 
 @app.route('/')
 def index():
@@ -20,11 +20,12 @@ def sign_user():
     a = Events()
     sign = a.sign_user_up(name, passw)
     
-    if sign == "exists":
-        flash("Name already exists")
-    
+    if sign == "created":
+        flash("%s, Your Account Has Been Created" % name.capitalize())
+    elif sign == "exists":
+        flash("Name '%s' is Already Taken, Please try a different one!" % name)
 
-    return render_template("/up.html", sign=sign)
+    return redirect("/")
 
 
 @app.route("/logIn", methods=['POST'])
