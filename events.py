@@ -1,297 +1,327 @@
-import os, json
+import os, pymysql, sys
+from passw import *
 
 
 class Events:
-    name = ""
-    passw = ""
-    login = ""
-    file = ""
-    sea = "no"
-    arch = "no"
-    share = "no"
-    old_name = ""
-    old_date = ""
-    old_desc = ""
-    sha_name = ""
-    sha_date = ""
-    sha_desc = ""
     
     def __init__(self):
-        self.main_file = "main.json"
-        self.check_if_db()
-
-    
-    
-    def check_if_db(self):
-        
-        if not os.path.exists(self.main_file):
-            self.new_file = open(self.main_file, 'w+')
-            print("xxxxxx MAIN FILE CREATED xxxxxx")
-            self.new_file.close()
+        self.name = ""
+        self.login = ""
+        self.file = ""
+        self.sea_word = ""
             
-            with open(self.main_file, "w") as self.file:
-                json.dump({"users":{}}, self.file)
-            self.file.close()
-        
             
     def sign_user_up(self, name, passw):
-        self.name = name
-        self.passw = passw
-                
-        with open(self.main_file) as self.file:
-            self.main_data = json.load(self.file)
-        self.file.close()
+        user = dbuser
+        password = db_key
+        host = dbhost
+        database = dbname
+         
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
+            
+        query = """SELECT user_name
+                FROM cloudproject_miguel.users
+                WHERE cloudproject_miguel.users.user_name = %s
+                    and cloudproject_miguel.users.password = %s"""   
         
-        if self.name not in self.main_data["users"].keys():
-            self.main_data["users"][self.name] = {"password": self.passw,
-                                                  "events": [],
-                                                  "searched": [],
-                                                  "archived": [],
-                                                  "shared_with": []
-                                                  }
-                    
-            with open(self.main_file, "w") as self.file:
-                json.dump(self.main_data, self.file)
-            self.file.close()
-            return "created"
-        else:
+        cur = con.cursor()
+        cur.execute(query, (name, passw),)
+        data = cur.fetchall()
+        cur.close()
+        
+        if len(data) > 0:
             return "exists"
+        elif len(data) == 0:
+            try:
+                insert = """INSERT INTO users ( user_name, password)
+                            VALUES
+                            (%s, %s);"""
+                
+                cur = con.cursor()
+                cur.execute(insert, (name, passw),)
+                cur.close()
+                con.commit()
+                return "created"
+            except:
+                return "exists"
         
         
     def log_user_in(self, name, passw):
-        self.name = name
-        self.passw = passw
+        user = dbuser
+        password = db_key
+        host = dbhost
+        database = dbname
+         
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
         
-        Events.file = self.name + self.passw + ".json"
-        Events.name = self.name
-        Events.passw = self.passw
         
-        with open(self.main_file) as self.file:
-            self.main_data = json.load(self.file)
-        self.file.close()
-        
-        if self.name in self.main_data["users"].keys():
-            if self.main_data["users"][self.name]["password"] == self.passw:
-                
-                if not os.path.exists(Events.file):
-                    self.new_file = open(self.name + self.passw + ".json", 'w+')
-                    print("Database loaded")
-                    self.new_file.close()
+        query = """SELECT user_name
+                FROM users
+                WHERE users.user_name = %s"""
                     
-                    with open(Events.file, "w") as self.file:
-                        json.dump(self.main_data["users"][self.name], self.file)
-                    self.file.close()
-                Events.login = "loggedin"
-                return "loggedin"
-            else:
-                Events.login = "passerr"
-                return "passerr"
-        else:
-            Events.login = "nameerr"
+        cur = con.cursor()
+        cur.execute(query, (name),)
+        data = cur.fetchall()
+        cur.close()
+        
+        if len(data) < 1 or data[0][0] != name:
+            self.login = "nameerr"
             return "nameerr"
+         
+        query = """SELECT password
+                FROM cloudproject_miguel.users
+                WHERE cloudproject_miguel.users.password = %s"""
+                      
+        cur = con.cursor()
+        cur.execute(query, (passw),)
+        data = cur.fetchall()
+        cur.close()
+
+        if len(data) < 1 or data[0][0] != passw:
+            self.login = "passerr"
+            return "passerr"
+        
+        self.name = name
+        self.login = "loggedin"
+        return "loggedin"
         
         
     def log_user_out(self):
         
-        with open(Events.file) as self.file:
-            self.data_user = json.load(self.file)
-        self.file.close()
-  
-        with open(self.main_file) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
-                  
-        self.data["users"][self.name] = self.data_user
+        self.name = ""
+        self.login = ""
+
         
-        with open(self.main_file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
-        
-        os.remove(Events.file)
-        
-        Events.name = ""
-        Events.passw = ""
-        Events.login = ""
-        Events.file = ""
+    def create_ev(self, name, date, descr):
+        user = dbuser
+        password = db_key
+        host = dbhost
+        database = dbname
          
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
+
+        insert = "INSERT INTO events (user_name,name,date,descr) VALUES (%s,%s,%s,%s);"
         
-    def create_ev(self, name, date, desc):
-        
-        with open(Events.file) as self.file:
-            self.data = json.load(self.file)
-            
-            self.eventCount = len(self.data["events"])
-            self.data["events"].append({
-                                        "name":name, 
-                                        "date":date,
-                                        "desc":desc
-                                        })
-            self.file.close()
-            
-        with open(Events.file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
+        cur = con.cursor()
+        cur.execute(insert, (self.name,name,date,descr),)
+        cur.close()
+        con.commit()
         
     
     def show_events(self):
+        user = dbuser
+        password = db_key
+        host = dbhost
+        database = dbname
+         
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
         
-        with open(Events.file) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
-        
-        if Events.arch == "no" and Events.share == "no":
-            if Events.sea == "no":
-                return self.data["events"]
+        if self.login == "loggedin":
+            query = """SELECT name, date, descr
+                    FROM events
+                    WHERE events.user_name = %s"""
+            try:
+                cur = con.cursor()
+                cur.execute(query, (self.name),)
+                data = cur.fetchall()
+                cur.close()
+                return data
+            except:
+                return ()
+                            
+        elif self.login == "loginsea":
+            query = """SELECT name, date, descr
+                    FROM events
+                    WHERE events.name = %s
+                    and events.user_name = %s"""
+            try:
+                cur = con.cursor()
+                cur.execute(query, (self.sea_word, self.name),)
+                data = cur.fetchall()
+                cur.close()
+                return data
+            except:
+                return ()
+                                 
+        elif self.login == "loginarch":
+            query = """SELECT name, date, descr
+                        FROM archived
+                        WHERE archived.user_name = %s"""
+            try:
+                cur = con.cursor()
+                cur.execute(query, (self.name),)
+                data = cur.fetchall()
+                cur.close()
+                return data
             
-            elif Events.sea == "yes":
-                temp_search = self.data["searched"] 
-                self.clear_search()
-                 
-                return temp_search
-                
-        elif Events.arch == "yes":
-            return self.data["archived"]  
-        elif Events.share == "yes":
-            return self.data["shared_with"]
+            except:
+                return ()  
+        
+        elif self.login == "loginsha":
+            query = """SELECT name, date, descr, fromName
+                    FROM shared_with
+                    WHERE shared_with.toName = %s"""
+            try:
+                cur = con.cursor()
+                cur.execute(query, (self.name),)
+                data = cur.fetchall()
+                cur.close()
+                return data
+            except:
+                return ()
             
     
-    def del_event(self, event):
+    def del_event(self, info):
+        print(info)
+        user = dbuser
+        password = db_key
+        host = dbhost
+        database = dbname
 
+        info = info.replace("'", "")
+        info = info[1:-1].split(",")
+        info = [i.strip() for i in info]
+        
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
+        
         section = "events"
-        if event[-4:] == "arch":
+        if info[4] == "loginarch":
             section = "archived"
-            Events.arch = "yes"
-            event = event[:-4]
-        elif event[-5:] == "share":
+        elif info[4] == "loginsha":
             section = "shared_with"
-            Events.share = "yes"
-            event = event[:-5]
+
+        name = info[0]
+        date = info[1]
+        descr = info[2]    
         
-        with open(Events.file) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
+        if info[4] == "loggedin" or info[4] == "loginsea" or info[4] == "loginarch":
+            delete = "DELETE FROM " + section + " WHERE user_name='" + info[3] + "' and name='"+ name + "' and date='" + date + "' and descr='" + descr + "';" 
+        else:
+            delete = "DELETE FROM " + section + " WHERE name='"+ name + "' and date='" + date + "' and descr='" + descr + "' and fromName='" + info[5] + "' and toName='" + info[3] + "';" 
         
-        for i, k in enumerate(self.data[section]):
-            if str(k) == event:
-                del self.data[section][i]
+        cur = con.cursor()
+        cur.execute(delete)
+        cur.close()
+        con.commit()
         
-        with open(Events.file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
+        self.name = info[3]
+        self.login = info[4]
         
         
     def search(self, word):
-        
-        with open(Events.file) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
-        
-        for i in self.data["events"]:
-            if i["name"] == word:
-                self.data["searched"].append(i)
-                
-        with open(Events.file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
-        
-        Events.sea = "yes"
-   
-        
-    def clear_search(self):
-        
-        with open(Events.file) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
-        
-        self.data["searched"] = []
-        
-        with open(Events.file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
-        
-    
-    def get_old_details(self, old_name, old_date, old_desc):
-        Events.old_name = old_name
-        Events.old_date = old_date
-        Events.old_desc = old_desc
+        self.sea_word = word
+        self.login = "loginsea"
     
     
-    def edit_event(self, name, date, desc):
+    def edit_event(self, name, date, descr, old_details):
+        user = dbuser
+        password = db_key
+        host = dbhost
+        database = dbname
         
-        with open(Events.file) as self.file:
-            self.data = json.load(self.file)
-        self.file.close()
+        old_details = old_details.split(",")
+         
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
         
-        for i, k in enumerate(self.data["events"]):
-            if k["name"] == Events.old_name and k["date"] == Events.old_date and k["desc"] == Events.old_desc:
-                
-                if len(name) > 0:
-                    self.data["events"][i]["name"] = name
-    
-                if len(date) > 0:
-                    self.data["events"][i]["date"] = date
-    
-                if len(desc) > 0:
-                    self.data["events"][i]["desc"] = desc
-        
-        with open(Events.file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()
-        
-        
-    def arch_eve(self, event): 
-               
-        with open(Events.file) as self.file:
-            self.data = json.load(self.file) 
-        self.file.close()     
+        update = "UPDATE events SET name = '" + name + "', date = '" + date + "', descr = '" + descr + "' WHERE name = '" + old_details[0] + "' and user_name = '" + old_details[3] + "' and date = '" + old_details[1] + "' and descr = '" + old_details[2] + "'"
+        cur = con.cursor()
+        cur.execute(update)
+        cur.close()
+        con.commit()
 
-        for i, k in enumerate(self.data["events"]):
-            if str(k) == event:
-                self.data["archived"].append(self.data["events"][i])
-                del self.data["events"][i]
+        self.name = old_details[3]
+        self.login = old_details[4]
         
-        with open(Events.file, "w") as self.file:
-            json.dump(self.data, self.file)
-        self.file.close()   
         
+    def arch_eve(self, info):
+        self.info = info 
+        user = dbuser
+        password = db_key
+        host = dbhost
+        database = dbname
+         
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
+        
+        info = info.replace("'", "")
+        info = info[1:-1].split(",")
+        info = [i.strip() for i in info]
+        
+        name = info[0]
+        date = info[1]
+        descr = info[2]
+         
+        insert = "INSERT INTO archived (user_name,name,date,descr) VALUES (%s,%s,%s,%s);"
+        cur = con.cursor()
+        cur.execute(insert, (info[3], name, date, descr),)
+        cur.close()
+        con.commit()       
+        
+        self.del_event(self.info)
         
     def show_arch(self):
-        Events.arch = "yes"
-        
-   
-    def get_share_details(self, name, date, desc):
-        Events.sha_name = name
-        Events.sha_date = date
-        Events.sha_desc = desc
+        self.login = "loginarch"
    
         
-    def share_with(self, user):
+    def share_with(self, user_sha, user_eve):
+        user = dbuser
+        password = db_key
+        host = dbhost
+        database = dbname
+         
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
         
-        with open(self.main_file) as self.file:
-            self.main_data = json.load(self.file) 
-        self.file.close()
-        
-        if user in self.main_data["users"].keys():
-             
-            self.main_data["users"][user]["shared_with"].append({
-                                        "name": Events.sha_name, 
-                                        "date": Events.sha_date,
-                                        "desc": Events.sha_desc,
-                                        "from": Events.name,
-                                        "to": user
-                                        })
-            with open(self.main_file, "w") as self.file:
-                json.dump(self.main_data, self.file)
-            self.file.close()
-        
-            return True
+        query = """SELECT user_name
+                FROM users
+                WHERE users.user_name = %s"""
 
-        else:
+        cur = con.cursor()
+        cur.execute(query, (user_sha),)
+        data = cur.fetchall()
+        cur.close()
+        
+        details = user_eve.split(",")
+
+        if len(data) < 1 or data[0][0] != user_sha:
+            self.name = details[3]
+            self.login = details[4]
             return False
+        else:
+            insert = "INSERT INTO shared_with (name, date, descr, fromName, toName) VALUES (%s, %s, %s, %s, %s)"
+            cur = con.cursor()
+            cur.execute(insert, (details[0], details[1], details[2], details[3], user_sha),)
+            cur.close()
+            con.commit()
+            self.name = details[3]
+            self.login = details[4]
+            return True       
             
     
     def show_shared_with(self):
-        Events.share = "yes"
+        self.login = "loginsha"
     
         
         

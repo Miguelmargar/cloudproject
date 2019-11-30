@@ -1,18 +1,18 @@
 {% extends "index.html" %}
 
 {% block header %}
-	{% if login == "loggedin" %}
+	{% if login == "loggedin" or login == "loginsea" or login == "loginsha" or login == "loginarch" %}
 		<div class="nav">
 			<h1><a href="/show_main">Event Organiser</a></h1>
-			<h3 onclick="document.getElementById('modal').style.display='block'">Create
+			<h3 onclick="createEve()">Create
 				Event</h3>
 			<h3><a href="/show_archive">Archive</a></h3>
 			<h3><a href="/show_shared_with">Shared WITH Me</a></h3>
 			<div id="sear">
 			<h3>Search Event</h3>
-			<form method="GET" action="/searchEvent" enctype="multipart/form-data">
-				<input type="text" name="search" runat="server">
-				<button type="submit" value="search">Search</button>
+			<form method="GET" action="/searchEvent">
+				<input type="text" name="search" placeholder="Event Name">
+				<button type="submit" name="sea_deta" value="{{ name }}">Search</button>
 			</form>
 			</div>
 		</div>
@@ -41,7 +41,7 @@
 
 {% block content %}
 	
-	{% if login == "loggedin" %}
+	{% if login == "loggedin" or login == "loginsea" or login == "loginsha" or login == "loginarch"  %}
 		<h1>WELCOME {{name}}, YOU ARE NOW LOGGED IN</h1>
 		
 		{% with messages = get_flashed_messages() %}
@@ -52,17 +52,17 @@
 			{% endif %}
 		{% endwith %}
 		
-		{% if in_search == "no" and in_arch == "no" and share == "no" %}
+		{% if login == "loggedin" %}
 			<h1>MAIN EVENTS PAGE</h1>
 		{% endif %}
 		
-		{% if in_search == "yes" %}
+		{% if login == "loginsea" %}
 			<h1>SEARCHED EVENTS</h1>
 		{% endif %}
-		{% if in_arch == "yes" %}
+		{% if login == "loginarch" %}
 			<h1>ARCHIVE</h1>
 		{% endif %}
-		{% if in_share == "yes" %}
+		{% if login == "loginsha" %}
 			<h1>SHARED WITH ME</h1>
 		{% endif %}
 		
@@ -70,52 +70,46 @@
 		{% for i in events %}
 		<div class="event">
 			
-			{% if in_arch == "no" and in_share == "no" %}
-			<button type="submit" name="edit" onclick="getOldDetails({{ i }})">Edit</button>
+			{% if login == "loggedin" or login == "loginsea" %}
+			<button type="submit" name="edit" onclick="getOldDetails({{ [i[0], i[1], i[2], name, login] }})">Edit</button>
 
 			<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
-				<button type="submit" name="delete" value="{{ i }}">Delete</button>
+				<button type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login }}">Delete</button>
 			</form>
 			
 			<form method="POST" action="/archive_event" enctype="multipart/form-data">
-				<button type="submit" name="archive" value="{{ i }}">Archive</button>
+				<button type="submit" name="archive" value="{{ i[0], i[1], i[2], name, login }}">Archive</button>
 			</form>
-			
-			<button type="submit" name="share" onclick="shareWithDetails({{ i }})">Share</button>
-			
+			<button type="submit" name="share" onclick="shareWithDetails({{ [i[0], i[1], i[2], name, login] }})">Share</button>
+
 			{% endif %}
-			{% if in_arch == "yes" %}
+			{% if login == "loginarch" %}
 				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
-					<button type="submit" name="delete" value="{{ i }}arch">Delete</button>
+					<button type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login }}">Delete</button>
 				</form>
 			{% endif %}
 			
-			{% if in_share == "yes" %}
+			{% if login == "loginsha" %}
 				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
-					<button type="submit" name="delete" value="{{ i }}share">Delete</button>
+					<button type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login, i[3] }}">Delete</button>
 				</form>
 			{% endif %}
 			
 			<hr>
-			<h2>{{ i["name"] }}</h2>
+			<h2>{{ i[0] }}</h2>
 			<hr>
 			<h2>WHEN:</h2>
-			<p>{{ i["date"] }}</p>
+			<p>{{ i[1] }}</p>
 			<hr>
 			<h2>COMMENTS:</h2>
-			<p>{{ i["desc"] }}</p>
-			{% if in_share == "yes" %}
+			<p>{{ i[2] }}</p>
+			{% if login == "loginsha" %}
 			<hr>
 			<h2>FROM</h2>
-			<p>{{ i["from"] }}</p>
+			<p>{{ i[3] }}</p>
 			{% endif %}
 			
 		</div>
 		{% endfor %}
-		
-	{% elif login == "passerr" %}
-		<h1>PASSWORD INCORRECT</h1>
-	{% elif login == "nameerr" %}
-		<h1>NAME INCORRECT</h1>
 	{% endif %}
 {% endblock %}

@@ -113,6 +113,10 @@ footer {
 	display: none;
 }
 
+#modal form {
+	display: inline-block;
+}
+
 .modalEdit {
 	width: 350px;
 	height: auto;
@@ -133,6 +137,9 @@ footer {
 	display: none;
 }
 
+#moded form {
+	display: inline-block;
+}
 
 textarea {
 	height: 200px;

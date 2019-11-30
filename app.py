@@ -1,14 +1,15 @@
-from flask import Flask, flash, render_template, redirect, request, jsonify
+from flask import Flask, flash, render_template, redirect, request
 from events import *
 
 
+
 app = Flask(__name__)
-app.secret_key = "flashKey"
+app.secret_key = flash_key
 
 @app.route('/')
 def index():
-    
-    Events()
+    global a
+    a = Events()
     
     return render_template("index.html")
 
@@ -17,7 +18,6 @@ def sign_user():
     name = request.form.get("signName")
     passw = request.form.get("signPass")
     
-    a = Events()
     sign = a.sign_user_up(name, passw)
     
     if sign == "created":
@@ -33,29 +33,23 @@ def log_user():
     name = request.form.get("logName")
     passw = request.form.get("logPass")
         
-    a = Events()
     login = a.log_user_in(name, passw)
     if login == "loggedin":
         return redirect("/show_main")
     else:
-        return "ACCOUNT DOES NOT EXISTS - PLEASE TRY A DIFFERENT NAME"
+        flash("ACCOUNT DOES NOT EXISTS - PLEASE TRY A DIFFERENT NAME")
+        return redirect("/")
     
 @app.route("/show_main")
 def show_main():
     
-    a = Events()
     events = a.show_events()
-    login = Events.login
-    name = Events.name
-    in_search = Events.sea
-    in_arch = Events.arch
-    in_share = Events.share
+    login = a.login
+    name = a.name
     
-    Events.sea = "no"
-    Events.arch = "no"
-    Events.share = "no"
+    a.login = "loggedin"
     
-    return render_template("/in.html", login=login, name=name, events=events, in_search=in_search, in_arch=in_arch, in_share=in_share)
+    return render_template("/in.html", login=login, name=name, events=events)
 
 
 @app.route("/createEvent", methods=['POST'])
@@ -64,20 +58,16 @@ def create_event():
     date = request.form.get('date')
     desc = request.form.get('desc')
 
-    a = Events()
     a.create_ev(name, date, desc)
-    login = Events.login
-    user = Events.name
     
     return redirect("/show_main")
 
 
 @app.route("/deleteEvent", methods=['POST'])
 def delete_event():
-    event = request.form["delete"]
+    info = request.form["delete"]
 
-    a = Events()
-    a.del_event(event)
+    a.del_event(info)
     
     return redirect("/show_main")
     
@@ -85,7 +75,6 @@ def delete_event():
 @app.route("/logOut", methods=['GET'])
 def log_user_out():  
     
-    a = Events()
     a.log_user_out()
     
     return redirect("/")
@@ -93,23 +82,12 @@ def log_user_out():
 
 @app.route("/searchEvent", methods=['GET'])
 def search_event():
-    name = request.args.get('search')
+    word = request.args.get('search')
+    user_name = request.args.get('sea_deta')
 
-    a = Events()
-    a.search(name)
+    a.search(word)
+    a.name = user_name
 
-    return redirect("/show_main")
-
-
-@app.route("/get_old_details", methods=['GET', 'POST'])
-def get_old_details():
-    old_name = request.args.get('old_name')
-    old_date = request.args.get('old_date')
-    old_desc = request.args.get('old_desc')
-    
-    a = Events()
-    a.get_old_details(old_name, old_date, old_desc)
-        
     return redirect("/show_main")
     
 
@@ -118,19 +96,18 @@ def edit_event():
     new_name = request.form.get('edName')
     new_date = request.form.get('edDate')
     new_desc = request.form.get('edDesc')
-    
-    a = Events() 
-    a.edit_event(new_name, new_date, new_desc)
+    old_details = request.form.get('ed_event')
+
+    a.edit_event(new_name, new_date, new_desc, old_details)
      
     return redirect("/show_main")
 
 
 @app.route("/archive_event", methods=['POST'])
 def archive_event():
-    event = request.form["archive"]
+    info = request.form["archive"]
         
-    a = Events()
-    a.arch_eve(event)
+    a.arch_eve(info)
 
     return redirect("/show_main")
 
@@ -138,20 +115,7 @@ def archive_event():
 @app.route("/show_archive")
 def show_archive():
     
-    a = Events()
     a.show_arch()
-    
-    return redirect("/show_main")
-
-
-@app.route("/get_sha_det", methods=['GET'])
-def get_share_details():
-    sha_name = request.args.get('sha_na')
-    sha_date = request.args.get('sha_da')
-    sha_desc = request.args.get('sha_desc')
-
-    a = Events()
-    a.get_share_details(sha_name, sha_date, sha_desc)
     
     return redirect("/show_main")
 
@@ -159,15 +123,14 @@ def get_share_details():
 @app.route("/share_with", methods=['POST'])
 def share_with():
     share_user = request.form.get('shareName')
-
-    a = Events()
-    is_shared = a.share_with(share_user)
+    share_details = request.form.get('sha_event')
+    
+    is_shared = a.share_with(share_user, share_details)
     
     if is_shared == True:
         flash("Your Event has been shared with '%s'" % share_user)
     else:
         flash("Error Sharing, Name '%s' does not exist, please check for spelling mistakes" % share_user)
-
     
     return redirect("/show_main")
  
@@ -175,14 +138,11 @@ def share_with():
 @app.route("/show_shared_with")
 def show_shared_with():
      
-    a = Events()
     a.show_shared_with()
      
     return redirect("/show_main")
 
     
     
-    
-
 if __name__ == '__main__':
     app.run(debug=True)

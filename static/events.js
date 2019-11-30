@@ -1,29 +1,25 @@
+function createEve() {
+	document.getElementById('modal').style.display='block';
+	document.getElementById('moded').style.display='none';
+	document.getElementById('share').style.display='none';
+}
+
 function getOldDetails(eve) {
+	document.getElementById('share').style.display='none';
+	document.getElementById('modal').style.display='none';
 	document.getElementById('moded').style.display='block';
-	old_name = eve["name"];
-	old_date = eve["date"];
-	old_desc = eve["desc"];
+
+	document.getElementById('ed_event').value = eve;
 	
-	$.getJSON($SCRIPT_ROOT + '/get_old_details', {
-		old_name,
-		old_date,
-		old_desc
-	 },
-    function(response) {
-    });	
+	document.getElementById('edName').value = eve[0];
+	document.getElementById('edDate').value = eve[1];
+	document.getElementById('edDesc').value = eve[2];
 }
 
 function shareWithDetails(eve) {
 	document.getElementById('share').style.display='block';
-	sha_na = eve["name"];
-	sha_da = eve["date"];
-	sha_desc = eve["desc"];
-
-	$.getJSON($SCRIPT_ROOT + '/get_sha_det', {
-		sha_na,
-		sha_da,
-		sha_desc
-	 },
-    function(response) {
-    });
+	document.getElementById('modal').style.display='none';
+	document.getElementById('moded').style.display='none';
+	
+	document.getElementById('sha_event').value = eve;
 }
