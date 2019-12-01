@@ -23,3 +23,8 @@ function shareWithDetails(eve) {
 	
 	document.getElementById('sha_event').value = eve;
 }
+
+
+function showArch() {
+	document.getElementById("archform").submit()
+}

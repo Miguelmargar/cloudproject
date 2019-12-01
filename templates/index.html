@@ -22,15 +22,15 @@
 			<div class="admin">
 				<div class="adl">
 					<form method="POST" action="/signUp">
-						<input type="text" value="miguel" name="signName">
-						<input type="text" value="12345" name="signPass">
+						<input type="text" placeholder="User Name" name="signName">
+						<input type="text" placeholder="Password" name="signPass">
 						<button type="submit" value="singUp">Signup</button>
 					</form>
 				</div>
 				<div class="adr">
 					<form method="POST" action="/logIn" enctype="multipart/form-data">
-						<input type="text" value="miguel" name="logName" runat="server">
-						<input type="text" value="12345" name="logPass" runat="server">
+						<input type="text" placeholder="User Name" name="logName" runat="server">
+						<input type="text" placeholder="Password" name="logPass" runat="server">
 						<button type="submit" value="logIn">Login</button>
 					</form>
 				</div>
@@ -42,14 +42,15 @@
 	<div id="modal" class="modalTop">
 		<form method="POST" action="/createEvent" enctype="multipart/form-data">
 			EVENT NAME:<br>
-			<input type="text" name="name" value="Shopping" required> 
+			<input type="text" name="name" placeholder="Event Name" required> 
 			<br> 
 			EVENT DATE:<br> 
-			<input type="text" name="date" value="Tomorrow" required>
+			<input type="text" name="date" placeholder="When" required>
 			<br>
 			EVENT DESCRIPTION:<br>
 			<textarea name="desc" required></textarea> 
 			<br><br> 
+			<input type="hidden" id="cre_event" name="cre_event" value="{{ name, login }}">
 			<button type="submit" value="Submit">Submit</button>
 		</form>
 		<button onclick="document.getElementById('modal').style.display='none'">close</button>

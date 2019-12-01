@@ -1,5 +1,6 @@
-from flask import Flask, flash, render_template, redirect, request
+from flask import Flask, flash, render_template, redirect, request, url_for
 from events import *
+from ctypes.test.test_pickling import name
 
 
 
@@ -34,7 +35,7 @@ def log_user():
     passw = request.form.get("logPass")
         
     login = a.log_user_in(name, passw)
-    if login == "loggedin":
+    if a.login == "loggedin":
         return redirect("/show_main")
     else:
         flash("ACCOUNT DOES NOT EXISTS - PLEASE TRY A DIFFERENT NAME")
@@ -43,13 +44,23 @@ def log_user():
 @app.route("/show_main")
 def show_main():
     
-    events = a.show_events()
     login = a.login
     name = a.name
+    events = a.show_events()
+
     
     a.login = "loggedin"
     
     return render_template("/in.html", login=login, name=name, events=events)
+
+@app.route("/home")
+def home():
+    name = request.get('value')
+    name = name.replace("'", "")
+    
+    a.name = name
+    
+    return redirect("/show_main")
 
 
 @app.route("/createEvent", methods=['POST'])
@@ -57,8 +68,9 @@ def create_event():
     name = request.form.get('name')
     date = request.form.get('date')
     desc = request.form.get('desc')
+    user_det = request.form.get('cre_event')
 
-    a.create_ev(name, date, desc)
+    a.create_ev(name, date, desc, user_det)
     
     return redirect("/show_main")
 
@@ -114,8 +126,9 @@ def archive_event():
 
 @app.route("/show_archive")
 def show_archive():
+    name = request.args.get('value')
     
-    a.show_arch()
+    a.show_arch(name)
     
     return redirect("/show_main")
 
@@ -137,8 +150,9 @@ def share_with():
  
 @app.route("/show_shared_with")
 def show_shared_with():
+    name = request.args.get('value')
      
-    a.show_shared_with()
+    a.show_shared_with(name)
      
     return redirect("/show_main")
 

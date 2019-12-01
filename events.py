@@ -7,8 +7,6 @@ class Events:
     def __init__(self):
         self.name = ""
         self.login = ""
-        self.file = ""
-        self.sea_word = ""
             
             
     def sign_user_up(self, name, passw):
@@ -89,21 +87,23 @@ class Events:
         
         self.name = name
         self.login = "loggedin"
-        return "loggedin"
         
         
     def log_user_out(self):
-        
         self.name = ""
         self.login = ""
 
         
-    def create_ev(self, name, date, descr):
+    def create_ev(self, name, date, descr, user_det):
         user = dbuser
         password = db_key
         host = dbhost
         database = dbname
-         
+        
+        user_det = user_det.replace("'", "")
+        user_det = user_det[1:-1].split(",")
+        user_det = [i.strip() for i in user_det]
+
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
         except Exception as e:
@@ -112,9 +112,12 @@ class Events:
         insert = "INSERT INTO events (user_name,name,date,descr) VALUES (%s,%s,%s,%s);"
         
         cur = con.cursor()
-        cur.execute(insert, (self.name,name,date,descr),)
+        cur.execute(insert, (user_det[0],name,date,descr),)
         cur.close()
         con.commit()
+        
+        self.name = user_det[0]
+        self.login = user_det[1]
         
     
     def show_events(self):
@@ -184,7 +187,6 @@ class Events:
             
     
     def del_event(self, info):
-        print(info)
         user = dbuser
         password = db_key
         host = dbhost
@@ -279,9 +281,10 @@ class Events:
         
         self.del_event(self.info)
         
-    def show_arch(self):
+    def show_arch(self, name):
         self.login = "loginarch"
-   
+        name = name.replace("'", "")
+        self.name = name
         
     def share_with(self, user_sha, user_eve):
         user = dbuser
@@ -320,9 +323,10 @@ class Events:
             return True       
             
     
-    def show_shared_with(self):
+    def show_shared_with(self, name):
         self.login = "loginsha"
-    
+        name = name.replace("'", "")
+        self.name = name
         
         
         
