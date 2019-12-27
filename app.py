@@ -6,6 +6,7 @@ from ctypes.test.test_pickling import name
 
 app = Flask(__name__)
 app.secret_key = flash_key
+app.config['TESTING'] = True
 
 @app.route('/')
 def index():

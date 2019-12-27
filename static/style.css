@@ -4,77 +4,69 @@ body {
 	padding: 0;
 }
 
+/*-----------------header-----------------------*/
+
 header {
-	height: auto;
+	height: 80px;
 	width: 100%;
-	background-color: grey;
+	background-color: #fff;
+	color: #327792;
 }
 
 .nav {
+	text-align: center;
+	vertical-align: top;
+	height: 100%;
 	display: inline-block;
-	width: 48vw;
-}
-
-.nav form {
-	display: inline-block;
-}
-
-.nav input {
-	display: inline-block;
-}
-
-#sear {
-	display: inline-block;
+	width: 49%;
 }
 
 header h1 {
 	display: inline-block;
 }
 
+a {
+	transition: color 1s;
+}
+
 a, a:visited, a:active {
 	text-decoration: none;
-	color: black;
+	color: #328d92;
 }
 
 a:hover {
-	color: white;
-}
-
-header h3 {
-	display: inline-block;
-	margin-left: 10px;
-}
-
-header h3:hover {
-	color: red;
-	cursor: pointer;
+	color: black;
 }
 
 .admin {
-	width: 48vw;
+	height: 100%;
+	width: 49%;
 	display: inline-block;
-	text-align: right;
+	text-align: center;
 }
 
-.adl {
-	margin-right: 10px;
+.admin h3 {
 	display: inline-block;
-	text-align: right;
+	margin: 35px 25px 0 0;
+	transition: color 1s;
 }
 
-.adl input {
-	display: block;
+.admin h3:hover {
+	cursor: pointer;
+	color: black;
 }
 
-.adr {
-	margin-left: 10px;
-	display: inline-block;
-	text-align: right;
-}
+/*-----------------end headder-----------------*/
 
-.adr input {
-	display: block;
-}
+
+
+
+
+
+
+
+
+
 
 main {
 	height: auto;

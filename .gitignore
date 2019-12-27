@@ -1,2 +1,2 @@
-*.json
 passw.py
+__pycache__
