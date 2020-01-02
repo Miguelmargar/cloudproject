@@ -34,7 +34,7 @@ def sign_user():
 def log_user():
     name = request.form.get("logName")
     passw = request.form.get("logPass")
-        
+    
     login = a.log_user_in(name, passw)
     if a.login == "loggedin":
         return redirect("/show_main")

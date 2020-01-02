@@ -56,24 +56,66 @@ a:hover {
 	color: black;
 }
 
-/*-----------------end headder-----------------*/
-
-
-
-
-
-
-
-
-
-
+/*-----------------end header-----------------*/
 
 main {
-	height: auto;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 20px 0px 10px 0px; 
+	background-color: #c7f1ed;
 	width: 100%;
-	background-color: yellow;
 	text-align: center;
 }
+
+.main {
+	height: 300px;
+	margin-bottom: 15px;
+}
+
+.pic {
+	float: left;
+	width: 49%;
+	height: inherit;
+	display: inline-block;
+}
+
+.pic img, .pic2 img {
+	height: inherit;
+}
+
+.points {
+	color: #327792;
+	display: inline-block;
+	width: 49%;
+	text-align: left;
+}
+
+li {
+	margin-top: 35px;
+}
+
+.pic2 {
+	float: right;
+	width: 49%;
+	height: inherit;
+	display: inline-block;
+}
+
+ul {
+	list-style-type: none;
+}
+
+#ul {
+	text-align: right;
+}
+
+.tick {
+	color: black;
+}
+
+
+
+
 
 .event {
 	background-color: lightblue;

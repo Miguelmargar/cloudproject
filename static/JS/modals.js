@@ -3,23 +3,38 @@ var modal;
 function openMod(which) {
 	if (which == "in") {
 		var form = document.getElementById("form");
-		var action = form.setAttribute("action", "/LogIn");
+		form.setAttribute("action", "/logIn");
 		
 		var h2 = document.getElementById("sign");
 		h2.innerHTML = "Sign In";
 		
-		var button = document.getElementById("form");
+		var button = document.getElementById("formbut");
 		button.innerHTML = "Sign In";
+		
+		var inName = document.getElementById("modU");
+		inName.setAttribute("name", "logName");
+		
+		var inPass = document.getElementById("modP");
+		inPass.setAttribute("name", "logPass");
+		
 	} else {
 		var form = document.getElementById("form");
-		var action = form.setAttribute("action", "/signUp");
+		form.setAttribute("action", "/signUp");
 		
 		var h2 = document.getElementById("sign");
 		h2.innerHTML = "Sign Up";
 		
-		var button = document.getElementById("form");
+		var button = document.getElementById("formbut");
 		button.innerHTML = "Sign Up";
+		
+		var inName = document.getElementById("modU");
+		inName.setAttribute("name", "signName");
+		
+		var inPass = document.getElementById("modP");
+		inPass.setAttribute("name", "signPass");
 	}
+	var check = document.getElementById("form").getAttribute("value");
+	console.log(check);
 	modal = document.getElementById("myModal");
 	modal.style.display = "block";
 }

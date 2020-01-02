@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EVENT ORGANISER</title>
+<title>TASK ORGANISER</title>
 <link rel="stylesheet" href="../static/CSS/style.css">
 <link rel="stylesheet" href="../static/CSS/modalStyle.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -18,7 +18,7 @@
 	<header>
 		{% block header %}
 			<div class="nav">
-				<h1><a href="/">Event Organiser</a></h1>
+				<h1><a href="/">Task Organiser</a></h1>
 			</div>
 			<div class="admin">
 				<h3 id="signup" onclick="openMod('up')">Sign Up</h3>
@@ -26,7 +26,6 @@
 			</div>	
 		{% endblock %}		
 	</header>
-	
 	<!-- Modal for creating events -->
 	<div id="modal" class="modalTop">
 		<form method="POST" action="/createEvent" enctype="multipart/form-data">
@@ -83,11 +82,35 @@
         			{% for message in messages %}
             			<h1>{{ message }}</h1>
         			{% endfor %}
-        		{% else %}
-        			<h1>LANDING PAGE - PLEASE SING UP OR SIGN IN TO CONTINUE</h1>
     			{% endif %}
 			{% endwith %}
 		{% endblock %}
+		<div class="main">
+			<div class="pic">
+				<img src="../static/index.png">
+			</div>
+			<div class="points">
+				<ul>
+					<li><h2>Create and Add Tasks <span class="tick">&#10003;</span></h2></li>
+					<li><h2>Amend Your Tasks <span class="tick">&#10003;</span></h2></li>
+					<li><h2>Share Your Tasks with Friends or Family <span class="tick">&#10003;</span></h2></li>
+					<li><h2>Archive Your Tasks <span class="tick">&#10003;</span></h2></li>
+				</ul>
+			</div>
+		</div>
+		<div class="main">
+			<div class="points">
+				<ul id="ul">
+					<li><h2>Create and Add Tasks <span class="tick">&#10003;</span></h2></li>
+					<li><h2>Amend Your Tasks <span class="tick">&#10003;</span></h2></li>
+					<li><h2>Share Your Tasks with Friends or Family <span class="tick">&#10003;</span></h2></li>
+					<li><h2>Archive Your Tasks <span class="tick">&#10003;</span></h2></li>
+				</ul>
+			</div>
+			<div class="pic2">
+				<img src="../static/index.png">
+			</div>
+		</div>
 	</main>
 
 	<footer>
@@ -101,12 +124,12 @@
 		<div class="signtop">
 			<h2 id="sign">Sign Up</h2>
 		</div>
-		<form method="POST" action="/signUp">
+		<form id="form" method="POST" action="/signUp">
 			<h3>User Name:</h3>
-			<input type="text" placeholder="User Name" name="upName" required>
+			<input id="modU" type="text" placeholder="User Name" name="upName" required>
 			<h3>Password</h3>
-			<input type="password" placeholder="Password" name="upPass" required>
-			<button id="form" type="submit" value="singUp">Sign Up</button>
+			<input id="modP" type="password" placeholder="Password" name="upPass" required>
+			<button id="formbut" type="submit" value="singUp">Sign Up</button>
 			<span class="close">&times;</span>
 		</form>
 	</div>
