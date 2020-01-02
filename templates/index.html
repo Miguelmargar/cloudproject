@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>EVENT ORGANISER</title>
-<link rel="stylesheet" href="../static/style.css">
-<link rel="stylesheet" href="../static/modalStyle.css">
+<link rel="stylesheet" href="../static/CSS/style.css">
+<link rel="stylesheet" href="../static/CSS/modalStyle.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script type=text/javascript>
@@ -97,22 +97,22 @@
 
 <div id="myModal" class="modal">
   <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="close">&times;</span>
-      <h2>Modal Header</h2>
-    </div>
-    <div class="modal-body">
-      <p>Some text in the Modal Body</p>
-      <p>Some other text...</p>
-    </div>
-    <div class="modal-footer">
-      <h3>Modal Footer</h3>
-    </div>
-  </div>
+	<div class="sign">
+		<div class="signtop">
+			<h2>Sign Up</h2>
+		</div>
+		<form method="POST" action="/signUp">
+			<h3>User Name:</h3>
+			<input type="text" placeholder="User Name" name="upName" required>
+			<h3>Password</h3>
+			<input type="password" placeholder="Password" name="upPass" required>
+			<button type="submit" value="singUp">Sign Up</button>
+			<span class="close">&times;</span>
+		</form>
+	</div>
 </div>
 
-<script src="../static/modals.js"></script>
-<script src="../static/events.js"></script>
+<script src="../static/JS/modals.js"></script>
+<script src="../static/JS/events.js"></script>
 
 </html>
