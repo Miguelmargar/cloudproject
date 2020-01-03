@@ -121,7 +121,7 @@ main {
 }
 
 li {
-	margin-top: 35px;
+	margin-top: 17px;
 }
 
 .pic2 {
@@ -140,7 +140,33 @@ ul {
 }
 
 .tick {
-	color: black;
+	font-size:35px;
+	color: #c7f1ed;
+	animation: mytick 3s;
+	animation-fill-mode: forwards;
+}
+
+.points ul li:nth-child(1) h2 span {
+	animation-delay: 1s;
+}
+
+.points ul li:nth-child(2) h2 span {
+	animation-delay: 2s;
+}
+
+.points ul li:nth-child(3) h2 span {
+	animation-delay: 3s;
+}
+
+.points ul li:nth-child(4) h2 span {
+	animation-delay: 4s;
+}
+
+@keyframes mytick {
+	0% {color: #c7f1ed;}
+	/*50% {color: black;}
+	100% {color: #c7f1ed;}*/
+	100% {color: black;}
 }
 
 /*-----------------messages end---------------*/
