@@ -124,6 +124,33 @@ li {
 	margin-top: 17px;
 }
 
+li h2 {
+	color: #c7f1ed;
+	animation: mypoint 2s;
+	animation-fill-mode: forwards;
+}
+
+.points ul li:nth-child(1) h2 {
+	animation-delay: 1s;
+}
+
+.points ul li:nth-child(2) h2 {
+	animation-delay: 2s;
+}
+
+.points ul li:nth-child(3) h2 {
+	animation-delay: 3s;
+}
+
+.points ul li:nth-child(4) h2 {
+	animation-delay: 4s;
+}
+
+@keyframes mypoint {
+	0% {color: #c7f1ed;}
+	100% {color: #327792;}
+}
+
 .pic2 {
 	float: right;
 	width: 49%;
@@ -142,24 +169,24 @@ ul {
 .tick {
 	font-size:35px;
 	color: #c7f1ed;
-	animation: mytick 3s;
+	animation: mytick 2s;
 	animation-fill-mode: forwards;
 }
 
 .points ul li:nth-child(1) h2 span {
-	animation-delay: 1s;
+	animation-delay: 6s;
 }
 
 .points ul li:nth-child(2) h2 span {
-	animation-delay: 2s;
+	animation-delay: 7s;
 }
 
 .points ul li:nth-child(3) h2 span {
-	animation-delay: 3s;
+	animation-delay: 8s;
 }
 
 .points ul li:nth-child(4) h2 span {
-	animation-delay: 4s;
+	animation-delay: 9s;
 }
 
 @keyframes mytick {
@@ -200,8 +227,6 @@ footer h2 {
 .event form {
 	display: inline-block;
 }
-
-
 
 .modalTop {
 	width: 350px;
