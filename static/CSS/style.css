@@ -57,25 +57,54 @@ a:hover {
 }
 
 /*-----------------end header-----------------*/
+/*-----------------messages-------------------*/
+
+.error {
+	width: 80%;
+	margin: auto;
+	background-color: #ff8080;
+	border-radius: 8px;
+	padding: 8px;
+	margin-bottom: 20px;
+}
+
+.good {
+	background-color: #82ff82;
+}
+
+.error h1 {
+	margin: 0px;
+}
+
+/*-----------------messages end----------------*/
+/*-----------------main index.html-------------*/
 
 main {
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
-	padding: 20px 0px 10px 0px; 
-	background-color: #c7f1ed;
+	padding: 20px 0px 20px 0px; 
 	width: 100%;
 	text-align: center;
 }
 
 .main {
-	height: 300px;
+	border: 5px solid #b2b2b2;
+	margin: auto;
+	padding: 10px 0px 10px 0px;
+	border-radius:15px;
+	width: 80%;
+	background-color: #c7f1ed;
 	margin-bottom: 15px;
+}
+
+.otherColor {
+	background-color: #bbffbb;
 }
 
 .pic {
 	float: left;
 	width: 49%;
-	height: inherit;
+	height: 300px;
 	display: inline-block;
 }
 
@@ -84,6 +113,7 @@ main {
 }
 
 .points {
+	height: 300px;
 	color: #327792;
 	display: inline-block;
 	width: 49%;
@@ -97,7 +127,7 @@ li {
 .pic2 {
 	float: right;
 	width: 49%;
-	height: inherit;
+	height: 300px;
 	display: inline-block;
 }
 
@@ -113,9 +143,23 @@ ul {
 	color: black;
 }
 
+/*-----------------messages end---------------*/
+/*-----------------footer---------------------*/
 
+footer {
+	margin: 0px;
+	height: auto;
+	width: 100%;
+	background-color: #c9c9c9;
+	text-align: center;
+	padding: 15px 0px 15px 0px;
+}
 
+footer h2 {
+	margin: 0px;
+}
 
+/*-----------------footer end-----------------*/
 
 .event {
 	background-color: lightblue;
@@ -131,11 +175,7 @@ ul {
 	display: inline-block;
 }
 
-footer {
-	height: auto;
-	width: 100%;
-	background-color: grey;
-}
+
 
 .modalTop {
 	width: 350px;

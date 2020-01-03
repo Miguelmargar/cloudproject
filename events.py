@@ -21,9 +21,9 @@ class Events:
             sys.exit(e)
             
         query = """SELECT user_name
-                FROM cloudproject_miguel.users
-                WHERE cloudproject_miguel.users.user_name = %s
-                    and cloudproject_miguel.users.password = %s"""   
+                FROM eventmanager.users
+                WHERE eventmanager.users.user_name = %s
+                    and eventmanager.users.password = %s"""   
         
         cur = con.cursor()
         cur.execute(query, (name, passw),)
@@ -73,8 +73,8 @@ class Events:
             return "nameerr"
          
         query = """SELECT password
-                FROM cloudproject_miguel.users
-                WHERE cloudproject_miguel.users.password = %s"""
+                FROM eventmanager.users
+                WHERE eventmanager.users.password = %s"""
                       
         cur = con.cursor()
         cur.execute(query, (passw),)

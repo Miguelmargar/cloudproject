@@ -77,10 +77,16 @@
 
 	<main>	
 		{% block content %}
-			{% with messages = get_flashed_messages() %}
+			{% with messages = get_flashed_messages(with_categories=true) %}
     			{% if messages %}
-        			{% for message in messages %}
-            			<h1>{{ message }}</h1>
+        			{% for category, message in messages %}
+        				{% if category == "error" %}
+        					<div class="error">
+        				{% else %}
+        					<div class="error good">
+        				{% endif %}
+								<h1>{{ message }}</h1>        				
+        					</div>
         			{% endfor %}
     			{% endif %}
 			{% endwith %}
@@ -98,7 +104,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="main">
+		<div class="main otherColor">
 			<div class="points">
 				<ul id="ul">
 					<li><h2>Create and Add Tasks <span class="tick">&#10003;</span></h2></li>

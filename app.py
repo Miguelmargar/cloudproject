@@ -23,9 +23,9 @@ def sign_user():
     sign = a.sign_user_up(name, passw)
     
     if sign == "created":
-        flash("%s, Your Account Has Been Created" % name.capitalize())
+        flash("%s, Your Account Has Been Created" % name.capitalize(), "good")
     elif sign == "exists":
-        flash("Name '%s' is Already Taken, Please try a different one!" % name)
+        flash("Name '%s' Is Already Taken, Please Try a Different One!" % name, "error")
 
     return redirect("/")
 
