@@ -25,11 +25,8 @@ header h1 {
 	display: inline-block;
 }
 
-a {
-	transition: color 1s;
-}
-
 a, a:visited, a:active {
+	transition: color 1s;
 	text-decoration: none;
 	color: #328d92;
 }
@@ -56,6 +53,26 @@ a:hover {
 	color: black;
 }
 
+#he_name {
+	color: #fb4f6c;
+	padding-left: 45px;
+	display: inline-block;
+}
+
+#b, #b:visited, #b:active{
+	transition: color 1s;
+	border: 0px;
+	background-color: white;
+	text-decoration: none;
+	color: #328d92;
+	outline: none;
+}
+
+#b:hover {
+	cursor: pointer;
+	color: black;
+}
+
 /*-----------------end header-----------------*/
 /*-----------------messages-------------------*/
 
@@ -77,12 +94,58 @@ a:hover {
 }
 
 /*-----------------messages end----------------*/
-/*-----------------main index.html-------------*/
+
+/*-----------------main------------------------*/
+/*-----------------events actions*/
+
+.evsacts {
+	margin: auto;
+	width: 80%;
+	text-align: center;
+	color: #fb4f6c;
+	border-bottom: 5px solid #b2b2b2;
+}
+
+.evsacts h3 {
+	transition: color 0.5s;
+	margin-right: 25px;
+	display: inline-block;
+}
+
+.evsacts h3:hover {
+	cursor: pointer;
+	color: black;
+}
+
+.evsacts h3 a {
+	transition: color 0.5s;
+	color: inherit;
+}
+
+.evsacts h3 a:hover {
+	color: black;
+}
+
+#sear {
+	margin-left: 75px;
+	display: inline-block;
+}
+
+#sear h3 {
+	margin-right: 10px;
+}
+
+.evsacts form {
+	display: inline-block;
+}
+
+/*-------------events actions end*/
+
 
 main {
-	border-top: 1px solid black;
+	border-top: 5px solid #b2b2b2;
 	border-bottom: 1px solid black;
-	padding: 20px 0px 20px 0px; 
+	padding: 25px 0px 20px 0px; 
 	width: 100%;
 	text-align: center;
 }
@@ -93,12 +156,12 @@ main {
 	padding: 10px 0px 10px 0px;
 	border-radius:15px;
 	width: 70%;
-	background-color: #c7f1ed;
+	background-color: #dff7f4;
 	margin-bottom: 15px;
 }
 
 .otherColor {
-	background-color: #bbffbb;
+	background-color: #ceffce;
 }
 
 .pic {
@@ -115,14 +178,10 @@ main {
 
 .points {
 	height: 300px;
-	color: #c7f1ed;
+	color: #dff7f4;
 	display: inline-block;
 	width: 49%;
 	text-align: left;
-}
-
-li {
-	/*margin-top: 17px;*/
 }
 
 li h2 {
@@ -168,7 +227,7 @@ ul {
 
 #ul {
 	text-align: right;
-	color: #bbffbb;
+	color: #ceffce;
 }
 
 .tick {
@@ -180,19 +239,19 @@ ul {
 }
 
 .points ul li:nth-child(1) span {
-	animation-delay: 6s;
+	animation-delay: 5s;
 }
 
 .points ul li:nth-child(2) span {
-	animation-delay: 7s;
+	animation-delay: 6s;
 }
 
 .points ul li:nth-child(3) span {
-	animation-delay: 8s;
+	animation-delay: 7s;
 }
 
 .points ul li:nth-child(4) span {
-	animation-delay: 9s;
+	animation-delay: 8s;
 }
 
 @keyframes mytick {
@@ -200,38 +259,69 @@ ul {
 	100% {color: black;}
 }
 
-/*-----------------messages end---------------*/
-/*-----------------footer---------------------*/
-
-footer {
-	margin: 0px;
-	height: auto;
-	width: 100%;
-	background-color: #c9c9c9;
-	text-align: center;
-	padding: 15px 0px 15px 0px;
-}
-
-footer h2 {
-	color: #8c8c8c;
-	margin: 0px;
-}
-
-/*-----------------footer end-----------------*/
+/*--------------Each Event-----------------*/
 
 .event {
-	background-color: lightblue;
+	color: #327792;
+	box-sizing: border-box;
+	background-color: #dff7f4;
 	display: inline-block;
-	padding: 10px 5px 10px 5px; 
-	width: 250px;
+	width: 270px;
 	height: 350px;
 	word-wrap: break-word;
 	overflow: auto;
+	border: 5px solid #b2b2b2;
+	border-radius: 15px;
+	transition: border-color 1s, color 1s;
+}
+
+.event:hover {
+	border-color: black;
+	color: black;
+}
+
+.evName {
+	margin: 0px;
+	background-color: white;
+	width: 100%;
+	border-radius: 10px 10px 0px 0px;
+	padding: 10px 0px 10px 0px;
+}
+
+.evDate {
+	width: 100%;
+	height: 10%;
+	border-bottom: 1px solid black;
+}
+
+.evDetails {
+	width: 100%;
+	height: 50%;
+	border-bottom: 1px solid black;
 }
 
 .event form {
 	display: inline-block;
 }
+
+.evButton {
+	border-radius: 5px;
+	border: none;
+	padding: 7px;
+	color: inherit;
+	background-color: #e6e6e6;
+	margin-right: 2px;
+	margin-left: 2px;
+	font-size: 15px;
+	font-weight: bold;
+	transition: background-color 1s;
+}
+
+.evButton:hover {
+	background-color: #6bc5e7;
+}
+
+/*--------------Each Event end-------------*/
 
 .modalTop {
 	width: 350px;
@@ -275,3 +365,24 @@ textarea {
 	height: 200px;
 	width: 200px;
 }
+
+
+/*-----------------main end---------------*/
+/*-----------------footer---------------------*/
+
+footer {
+	margin: 0px;
+	height: 124px;
+	width: 100%;
+	background-color: #c9c9c9;
+	text-align: center;
+	padding: 15px 0px 15px 0px;
+}
+
+footer h2 {
+	color: #8c8c8c;
+	margin: 0px;
+}
+
+/*-----------------footer end-----------------*/
+

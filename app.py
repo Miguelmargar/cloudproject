@@ -39,7 +39,7 @@ def log_user():
     if a.login == "loggedin":
         return redirect("/show_main")
     else:
-        flash("ACCOUNT DOES NOT EXISTS - PLEASE TRY A DIFFERENT NAME")
+        flash("ACCOUNT DOES NOT EXISTS - PLEASE TRY A DIFFERENT NAME", "error")
         return redirect("/")
     
 @app.route("/show_main")
@@ -54,10 +54,9 @@ def show_main():
     
     return render_template("/in.html", login=login, name=name, events=events)
 
-@app.route("/home")
+@app.route("/home", methods=['GET'])
 def home():
-    name = request.get('value')
-    name = name.replace("'", "")
+    name = request.args.get('value')
     
     a.name = name
     
@@ -89,6 +88,8 @@ def delete_event():
 def log_user_out():  
     
     a.log_user_out()
+    
+    flash("You Have Successfully Logged Out")
     
     return redirect("/")
 

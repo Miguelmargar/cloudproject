@@ -6,10 +6,10 @@ function openMod(which) {
 		form.setAttribute("action", "/logIn");
 		
 		var h2 = document.getElementById("sign");
-		h2.innerHTML = "Sign In";
+		h2.innerHTML = "Log In";
 		
 		var button = document.getElementById("formbut");
-		button.innerHTML = "Sign In";
+		button.innerHTML = "Log In";
 		
 		var inName = document.getElementById("modU");
 		inName.setAttribute("name", "logName");

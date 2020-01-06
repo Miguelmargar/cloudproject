@@ -1,0 +1,95 @@
+{% extends "index.html" %}
+
+
+{% block header %}
+	{% if login == "loggedin" or login == "loginsea" or login == "loginsha" or login == "loginarch" %}
+		<div class="nav">
+				<h1><a href="/home?value={{ name }}">Task Organiser</a></h1>
+				<h3 id="he_name">{{ name }}</h3>
+			</div>
+			<div class="admin">
+				<form method="GET" action="/logOut">
+					<button id="b" type="submit" value="logout"><h3>Logout</h3></button>
+				</form>
+			</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<div class="evsacts">
+		<h3 onclick="createEve()">Create Event</h3>
+		<h3><a href="/show_archive?value={{ name }}">Archive</a></h3>
+		<h3><a href="/show_shared_with?value={{ name }}">Shared WITH Me</a></h3>
+		<div id="sear">
+			<h3>Search Event</h3>
+			<form method="GET" action="/searchEvent">
+				<input type="text" name="search" placeholder="Event Name">
+				<button type="submit" name="sea_deta" value="{{ name }}">Search</button>
+			</form>
+		</div>
+	</div>
+	
+	{% if login == "loggedin" or login == "loginsea" or login == "loginsha" or login == "loginarch"  %}
+		
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+   				{% for message in messages %}
+       				<h1>{{ message }}</h1>
+   				{% endfor %}
+			{% endif %}
+		{% endwith %}
+		
+		{% if login == "loggedin" %}
+			<h2>MAIN TASKS</h2>
+		{% endif %}
+		{% if login == "loginsea" %}
+			<h2>SEARCHED TASKS</h2>
+		{% endif %}
+		{% if login == "loginarch" %}
+			<h2>ARCHIVED TASKS</h2>
+		{% endif %}
+		{% if login == "loginsha" %}
+			<h2>TASKS SHARED WITH ME</h2>
+		{% endif %}
+		
+		
+		{% for i in events %}
+		<div class="event">
+			<h2 class="evName">{{ i[0] }}</h2>
+			<p class="evDate">{{ i[1] }}</p>
+			<p class="evDetails">{{ i[2] }}</p>
+			{% if login == "loginsha" %}
+			<p class="evDate">From {{ i[3] }}</p>
+			{% endif %}
+			
+			{% if login == "loggedin" or login == "loginsea" %}
+			<button class="evButton" type="submit" name="edit" onclick="getOldDetails({{ [i[0], i[1], i[2], name, login] }})">Edit</button>
+
+			<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
+				<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login }}">Delete</button>
+			</form>
+			
+			<form method="POST" action="/archive_event" enctype="multipart/form-data">
+				<button class="evButton" type="submit" name="archive" value="{{ i[0], i[1], i[2], name, login }}">Archive</button>
+			</form>
+			<button class="evButton" type="submit" name="share" onclick="shareWithDetails({{ [i[0], i[1], i[2], name, login] }})">Share</button>
+
+			{% endif %}
+			{% if login == "loginarch" %}
+				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
+					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login }}">Delete</button>
+				</form>
+			{% endif %}
+			
+			{% if login == "loginsha" %}
+				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
+					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login, i[3] }}">Delete</button>
+				</form>
+			{% endif %}
+
+			
+		</div>
+		{% endfor %}
+	{% endif %}
+	
+{% endblock %}

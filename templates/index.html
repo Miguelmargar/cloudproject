@@ -21,8 +21,8 @@
 				<h1><a href="/">Task Organiser</a></h1>
 			</div>
 			<div class="admin">
-				<h3 id="signup" onclick="openMod('up')">Sign Up</h3>
-				<h3 id="signin" onclick="openMod('in')">Sign In</h3>
+				<h3 onclick="openMod('up')">Sign Up</h3>
+				<h3 onclick="openMod('in')">Log In</h3>
 			</div>	
 		{% endblock %}		
 	</header>
@@ -74,7 +74,7 @@
 		</form>
 		<button onclick="document.getElementById('share').style.display='none'">close</button>
 	</div>
-
+	
 	<main>	
 		{% block content %}
 			{% with messages = get_flashed_messages(with_categories=true) %}
@@ -90,7 +90,7 @@
         			{% endfor %}
     			{% endif %}
 			{% endwith %}
-		{% endblock %}
+		
 		<div class="main">
 			<div class="pic">
 				<img src="../static/index.png">
@@ -117,6 +117,7 @@
 				<img src="../static/index.png">
 			</div>
 		</div>
+		{% endblock %}
 	</main>
 
 	<footer>
