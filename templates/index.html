@@ -112,23 +112,22 @@
 		</form>
 	</div>
 </div>
+
 <!-- Modal for editing main screen events -->
 <div id="edMod" class="modal">	
 	<div class="modalEdit">
+		<h2>Edit Task</h2>
 		<form method="POST" action="/edit_event" enctype="multipart/form-data">
-			EVENT NAME:<br>
+			<h3>Task Name:</h3>
 			<input type="text" id="edName" name="edName"> 
-			<br> 
-			EVENT DATE:<br> 
+			<h3>Task Date:</h3>
 			<input type="text" id="edDate" name="edDate">
-			<br>
-			EVENT DESCRIPTION:<br>
+			<h3>Task Description:</h3>
 			<textarea id="edDesc" name="edDesc"></textarea> 
-			<br><br> 
 			<input type="hidden" id="ed_event" name="ed_event" value="">
-			<button type="submit" value="Submit">Submit</button>
+			<button type="submit" value="Submit">Edit</button>
+			<span id="edClsBt">&times;</span>
 		</form>
-		<button onclick="document.getElementById('moded').style.display='none'">close</button>
 	</div>
 </div>
 

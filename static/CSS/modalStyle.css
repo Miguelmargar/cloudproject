@@ -120,10 +120,6 @@
 	position: relative;
 }
 
-.modalTop form {
-	padding-left: 20px;
-}
-
 .modalTop h2 {
 	margin: 0px;
 	width: 100%;
@@ -131,6 +127,10 @@
 	border-radius: 8px 8px 0px 0px;
 	text-align: center;
 	padding: 5px 0px 5px 0px;
+}
+
+.modalTop form {
+	padding-left: 20px;
 }
 
 .modalTop h3 {
@@ -194,13 +194,86 @@ textarea {
 }
 
 /*-------------Create task modal end-----------------*/
-
+/*-------------Edit task modal-----------------------*/
 
 .modalEdit {
-	width: 350px;
+	color: #327792;
+	margin: auto;
+	width: 300px;
 	height: auto;
-	background-color: yellow;
+	border-radius: 8px;
+	background-color: #ffffa6;
+	animation-name: animatetop;
+	animation-duration: 0.8s;
+	position: relative;
 }
+
+.modalEdit h2 {
+	margin: 0px;
+	width: 100%;
+	background-color: white;
+	border-radius: 8px 8px 0px 0px;
+	text-align: center;
+	padding: 5px 0px 5px 0px;
+}
+
+.modalEdit form {
+	padding-left: 20px;
+}
+
+.modalEdit h3 {
+	margin: 0;
+	padding-top: 20px;
+}
+
+.modalEdit input {
+	border-radius: 5px;
+	height: 30px;
+	width: 90%;
+	border: 3px solid #ccc;
+	outline: none;
+	padding-left: 10px;
+	transition: border-color 1.5s;
+}
+
+.modalEdit input:hover, .modalEdit input:focus {
+	border-color: black;
+}
+
+.modalEdit button {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: none;
+	color: #327792;
+	height: 40px;
+	width: 80px;
+	transition: 1.5s;
+	font-weight: bold;
+}
+
+.modalEdit button:hover {
+	background-color: #6bc5e7;
+	color: black;
+	cursor: pointer;
+}
+
+.modalEdit form span {
+	float: right;
+	margin-top: 15px;
+	margin-right: 18px;
+	color: #327792;
+	font-size: 35px;
+	font-weight: bold;
+	transition: 1s;
+}
+
+.modalEdit form span:hover {
+	color: black;
+	cursor: pointer;
+}
+/*-------------Edit task modal end-------------------*/
+
 
 .modalSh {
 	width: 350px;
