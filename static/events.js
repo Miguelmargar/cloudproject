@@ -1,16 +1,14 @@
 var modal;
 
 function createEve() {
-	document.getElementById('modal').style.display='block';
-	document.getElementById('moded').style.display='none';
-	document.getElementById('share').style.display='none';
+	modal = document.getElementById('creMod');
+	modal.style.display='block';
 }
 
 function getOldDetails(eve) {
-	document.getElementById('share').style.display='none';
-	document.getElementById('modal').style.display='none';
-	document.getElementById('moded').style.display='block';
-
+	modal = document.getElementById('edMod');
+	modal.style.display='block';
+	
 	document.getElementById('ed_event').value = eve;
 	
 	document.getElementById('edName').value = eve[0];
@@ -19,9 +17,8 @@ function getOldDetails(eve) {
 }
 
 function shareWithDetails(eve) {
-	document.getElementById('share').style.display='block';
-	document.getElementById('modal').style.display='none';
-	document.getElementById('moded').style.display='none';
+	modal = document.getElementById('shaMod');
+	modal.style.display='block';
 	
 	document.getElementById('sha_event').value = eve;
 }
@@ -29,6 +26,7 @@ function shareWithDetails(eve) {
 function showArch() {
 	document.getElementById("archform").submit()
 }
+
 
 function openMod(which) {
 	if (which == "in") {
@@ -70,10 +68,16 @@ function openMod(which) {
 
 //Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
+var creClsBt = document.getElementById("creClsBt");
+
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
+}
+
+creClsBt.onclick = function() {
+	modal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it

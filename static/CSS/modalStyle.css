@@ -100,28 +100,101 @@
 	transition: 1s;
 }
 
-.close:hover,
-.close:focus {
+.close:hover {
 	color: black;
-	text-decoration: none;
 	cursor: pointer;
 }
 
 /*----------------Sign In and Log In modals end---------------*/
 
+/*----------------Create task modal---------------------------*/
 .modalTop {
-	width: 350px;
+	color: #327792;
+	margin: auto;
+	width: 300px;
 	height: auto;
-	background-color: red;
+	border-radius: 8px;
+	background-color: #cdf7ae;
+	animation-name: animatetop;
+	animation-duration: 0.8s;
+	position: relative;
 }
 
-#modal {
-	display: none;
+.modalTop form {
+	padding-left: 20px;
 }
 
-#modal form {
-	display: inline-block;
+.modalTop h2 {
+	margin: 0px;
+	width: 100%;
+	background-color: white;
+	border-radius: 8px 8px 0px 0px;
+	text-align: center;
+	padding: 5px 0px 5px 0px;
 }
+
+.modalTop h3 {
+	margin: 0;
+	padding-top: 20px;
+}
+
+.modalTop input {
+	border-radius: 5px;
+	height: 30px;
+	width: 90%;
+	border: 3px solid #ccc;
+	outline: none;
+	padding-left: 10px;
+	transition: border-color 1.5s;
+}
+
+textarea {
+	border-radius: 5px;
+	height: 200px;
+	width: 91%;
+	border: 3px solid #ccc;
+	transition: border-color 1.5s;
+}
+
+.modalTop input:hover, .modalTop input:focus, textarea:hover, textarea:focus {
+	border-color: black;
+}
+
+.modalTop button {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: none;
+	color: #327792;
+	height: 40px;
+	width: 80px;
+	transition: 1.5s;
+	font-weight: bold;
+}
+
+.modalTop button:hover {
+	background-color: #6bc5e7;
+	color: black;
+	cursor: pointer;
+}
+
+.modalTop form span {
+	float: right;
+	margin-top: 15px;
+	margin-right: 18px;
+	color: #327792;
+	font-size: 35px;
+	font-weight: bold;
+	transition: 1s;
+}
+
+.modalTop form span:hover {
+	color: black;
+	cursor: pointer;
+}
+
+/*-------------Create task modal end-----------------*/
+
 
 .modalEdit {
 	width: 350px;
@@ -135,19 +208,8 @@
 	background-color: green;
 }
 
-#share {
-	display: none;
-}
-
-#moded {
-	display: none;
-}
-
 #moded form {
 	display: inline-block;
 }
 
-textarea {
-	height: 200px;
-	width: 200px;
-}
+
