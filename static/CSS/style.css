@@ -323,51 +323,8 @@ ul {
 
 /*--------------Each Event end-------------*/
 
-.modalTop {
-	width: 350px;
-	height: auto;
-	background-color: red;
-}
-
-#modal {
-	display: none;
-}
-
-#modal form {
-	display: inline-block;
-}
-
-.modalEdit {
-	width: 350px;
-	height: auto;
-	background-color: yellow;
-}
-
-.modalSh {
-	width: 350px;
-	height: auto;
-	background-color: green;
-}
-
-#share {
-	display: none;
-}
-
-#moded {
-	display: none;
-}
-
-#moded form {
-	display: inline-block;
-}
-
-textarea {
-	height: 200px;
-	width: 200px;
-}
-
-
 /*-----------------main end---------------*/
+
 /*-----------------footer---------------------*/
 
 footer {

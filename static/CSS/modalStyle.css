@@ -12,6 +12,8 @@
 	background-color: rgba(0,0,0,0.4);
 }
 
+/*----------------Sign In and Log In modals-------------------*/
+
 .sign {
 	height: 320px;
 	width: 350px;
@@ -103,4 +105,49 @@
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+/*----------------Sign In and Log In modals end---------------*/
+
+.modalTop {
+	width: 350px;
+	height: auto;
+	background-color: red;
+}
+
+#modal {
+	display: none;
+}
+
+#modal form {
+	display: inline-block;
+}
+
+.modalEdit {
+	width: 350px;
+	height: auto;
+	background-color: yellow;
+}
+
+.modalSh {
+	width: 350px;
+	height: auto;
+	background-color: green;
+}
+
+#share {
+	display: none;
+}
+
+#moded {
+	display: none;
+}
+
+#moded form {
+	display: inline-block;
+}
+
+textarea {
+	height: 200px;
+	width: 200px;
 }

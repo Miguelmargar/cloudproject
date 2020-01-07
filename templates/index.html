@@ -26,54 +26,7 @@
 			</div>	
 		{% endblock %}		
 	</header>
-	<!-- Modal for creating events -->
-	<div id="modal" class="modalTop">
-		<form method="POST" action="/createEvent" enctype="multipart/form-data">
-			EVENT NAME:<br>
-			<input type="text" name="name" placeholder="Event Name" required> 
-			<br> 
-			EVENT DATE:<br> 
-			<input type="text" name="date" placeholder="When" required>
-			<br>
-			EVENT DESCRIPTION:<br>
-			<textarea name="desc" required></textarea> 
-			<br><br> 
-			<input type="hidden" id="cre_event" name="cre_event" value="{{ name, login }}">
-			<button type="submit" value="Submit">Submit</button>
-		</form>
-		<button onclick="document.getElementById('modal').style.display='none'">close</button>
-	</div>
 	
-	<!-- Modal for editing main screen events -->	
-	<div id="moded" class="modalEdit">
-		<form method="POST" action="/edit_event" enctype="multipart/form-data">
-			EVENT NAME:<br>
-			<input type="text" id="edName" name="edName"> 
-			<br> 
-			EVENT DATE:<br> 
-			<input type="text" id="edDate" name="edDate">
-			<br>
-			EVENT DESCRIPTION:<br>
-			<textarea id="edDesc" name="edDesc"></textarea> 
-			<br><br> 
-			<input type="hidden" id="ed_event" name="ed_event" value="">
-			<button type="submit" value="Submit">Submit</button>
-		</form>
-		<button onclick="document.getElementById('moded').style.display='none'">close</button>
-	</div>
-	
-	<!-- Modal for sharing event -->
-	<div id="share" class="modalSh">
-		<form style="display:inline-block" method="POST" action="/share_with">
-			SHARE WITH?:<br>
-			<input type="text" name="shareName"> 
-			<br> 
-			<br>
-			<input type="hidden" id="sha_event" name="sha_event" value="">
-			<button type="submit" value="Submit">Submit</button>
-		</form>
-		<button onclick="document.getElementById('share').style.display='none'">close</button>
-	</div>
 	
 	<main>	
 		{% block content %}
@@ -141,6 +94,61 @@
 		</form>
 	</div>
 </div>
+
+<!-- Modal for creating events -->
+<div id="modal" class="modalTop">
+	<form method="POST" action="/createEvent" enctype="multipart/form-data">
+		EVENT NAME:<br>
+		<input type="text" name="name" placeholder="Event Name" required> 
+		<br> 
+		EVENT DATE:<br> 
+		<input type="text" name="date" placeholder="When" required>
+		<br>
+		EVENT DESCRIPTION:<br>
+		<textarea name="desc" required></textarea> 
+		<br><br> 
+		<input type="hidden" id="cre_event" name="cre_event" value="{{ name, login }}">
+		<button type="submit" value="Submit">Submit</button>
+	</form>
+	<button onclick="document.getElementById('modal').style.display='none'">close</button>
+</div>
+
+<!-- Modal for editing main screen events -->	
+<div id="moded" class="modalEdit">
+	<form method="POST" action="/edit_event" enctype="multipart/form-data">
+		EVENT NAME:<br>
+		<input type="text" id="edName" name="edName"> 
+		<br> 
+		EVENT DATE:<br> 
+		<input type="text" id="edDate" name="edDate">
+		<br>
+		EVENT DESCRIPTION:<br>
+		<textarea id="edDesc" name="edDesc"></textarea> 
+		<br><br> 
+		<input type="hidden" id="ed_event" name="ed_event" value="">
+		<button type="submit" value="Submit">Submit</button>
+	</form>
+	<button onclick="document.getElementById('moded').style.display='none'">close</button>
+</div>
+
+<!-- Modal for sharing event -->
+<div id="share" class="modalSh">
+	<form style="display:inline-block" method="POST" action="/share_with">
+		SHARE WITH?:<br>
+		<input type="text" name="shareName"> 
+		<br> 
+		<br>
+		<input type="hidden" id="sha_event" name="sha_event" value="">
+		<button type="submit" value="Submit">Submit</button>
+	</form>
+	<button onclick="document.getElementById('share').style.display='none'">close</button>
+</div>
+
+
+
+
+
+
 
 <script src="../static/JS/modals.js"></script>
 <script src="../static/JS/events.js"></script>
