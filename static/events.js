@@ -97,10 +97,13 @@ window.onclick = function(event) {
 }
 
 $('#radAll').click(function() {
-	  $('#time').slideUp(500);
+	$('#time').slideUp(500);
+	$('#time').val('');
+	  
 })
 
 $('#radSpe').click(function() {
 	  $('#time').slideDown(500);
+	  $('#time').val('00:00');
 })
 

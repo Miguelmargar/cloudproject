@@ -1,5 +1,6 @@
 import os, pymysql, sys
 from passw import *
+from test.datetimetester import DAY
 
 
 class Events:
@@ -94,7 +95,7 @@ class Events:
         self.login = ""
 
         
-    def create_ev(self, name, date, descr, user_det):
+    def create_ev(self, name, date, time, descr, user_det):
         user = dbuser
         password = db_key
         host = dbhost
@@ -103,16 +104,23 @@ class Events:
         user_det = user_det.replace("'", "")
         user_det = user_det[1:-1].split(",")
         user_det = [i.strip() for i in user_det]
+        
+        date = date.split("-")
+        date = [date[2], date[1], date[0]]
+        date = "-".join(date)
 
+        if time == "" or time == "00:00":
+            time = "All Day" 
+        
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
         except Exception as e:
             sys.exit(e)
 
-        insert = "INSERT INTO events (user_name,name,date,descr) VALUES (%s,%s,%s,%s);"
+        insert = "INSERT INTO events (user_name,name,date,time,descr) VALUES (%s,%s,%s,%s,%s);"
         
         cur = con.cursor()
-        cur.execute(insert, (user_det[0],name,date,descr),)
+        cur.execute(insert, (user_det[0],name,date,time,descr),)
         cur.close()
         con.commit()
         

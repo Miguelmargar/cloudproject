@@ -105,11 +105,11 @@
 			<h3>Task Date:</h3> 
 			<input type="date" name="date" required>
 			<h3>Task Time:</h3>
-			<input id="time" type="time" name="date">
+			<input id="time" type="time" name="time" value="00:00">
 			<input id="radSpe" type="radio" name="isTime" value="Specific" checked> Specific Time
 			<input id="radAll" type="radio" name="isTime" value="AllDay"> All day
 			<h3>Task Comments:</h3>
-			<textarea name="desc" required></textarea> 
+			<textarea name="desc" maxlength=150 required></textarea> 
 			<input type="hidden" id="cre_event" name="cre_event" value="{{ name, login }}">
 			<button type="submit" value="Submit">Create</button>
 			<span id="creClsBt">&times;</span>
