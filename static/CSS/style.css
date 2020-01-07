@@ -86,7 +86,7 @@ a:hover {
 }
 
 .good {
-	background-color: #82ff82;
+	background-color: #bdf5af;
 }
 
 .error h1 {
@@ -127,16 +127,48 @@ a:hover {
 }
 
 #sear {
-	margin-left: 75px;
+	margin-left: 60px;
 	display: inline-block;
 }
 
 #sear h3 {
-	margin-right: 10px;
+	margin-right: 0px;
 }
 
 .evsacts form {
 	display: inline-block;
+}
+
+#sear form input {
+	border-radius: 5px;
+	height: 20px;
+	width: 60%;
+	border: 3px solid #ccc;
+	outline: none;
+	padding-left: 10px;
+	transition: border-color 1.5s;
+}
+
+#sear form input:hover, #sear form input:focus {
+	border-color: black;
+}
+
+#sear form button {
+	float: right;
+	border-radius: 5px;
+	border: none;
+	color: #327792;
+	height: 28px;
+	width: 75px;
+	transition: 1.5s;
+	font-weight: bold;
+	outline: none;
+}
+
+#sear form button:hover {
+	background-color: #6bc5e7;
+	color: black;
+	cursor: pointer;
 }
 
 /*-------------events actions end*/
@@ -275,6 +307,10 @@ ul {
 	transition: border-color 1s, color 1s;
 }
 
+.event:nth-child(even) {
+	background-color: #ceffce;
+}
+
 .event:hover {
 	border-color: black;
 	color: black;
@@ -315,6 +351,7 @@ ul {
 	font-size: 15px;
 	font-weight: bold;
 	transition: background-color 1s;
+	outline: none;
 }
 
 .evButton:hover {

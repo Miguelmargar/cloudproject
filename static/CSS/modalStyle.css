@@ -81,6 +81,7 @@
 	width: 80px;
 	transition: 1.5s;
 	font-weight: bold;
+	outline: none;
 }
 
 .sign button:hover {
@@ -98,6 +99,7 @@
 	font-size: 35px;
 	font-weight: bold;
 	transition: 1s;
+	outline: none;
 }
 
 .close:hover {
@@ -148,6 +150,23 @@
 	transition: border-color 1.5s;
 }
 
+#time {
+	display: block;
+	transition: display 1s;
+}
+
+#radSpe, #radAll {
+	height: 15px;
+	width: 10%;
+	margin-top: 10px;
+	vertical-align: bottom;
+	display: inline-block;
+}
+
+#radSpe:hover, #radAll:hover {
+	cursor: pointer;
+}
+
 textarea {
 	border-radius: 5px;
 	height: 200px;
@@ -170,6 +189,7 @@ textarea {
 	width: 80px;
 	transition: 1.5s;
 	font-weight: bold;
+	outline: none;
 }
 
 .modalTop button:hover {
@@ -250,6 +270,7 @@ textarea {
 	width: 80px;
 	transition: 1.5s;
 	font-weight: bold;
+	outline: none;
 }
 
 .modalEdit button:hover {
@@ -329,6 +350,7 @@ textarea {
 	width: 80px;
 	transition: 1.5s;
 	font-weight: bold;
+	outline: none;
 }
 
 .modalSh button:hover {

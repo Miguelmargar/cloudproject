@@ -101,9 +101,13 @@
 		<h2>Create Task</h2>
 		<form method="POST" action="/createEvent" enctype="multipart/form-data">
 			<h3>Task Name:</h3>
-			<input type="text" name="name" placeholder="Event Name" required> 
+			<input type="text" name="name" placeholder="Task Name" required> 
 			<h3>Task Date:</h3> 
-			<input type="text" name="date" placeholder="When" required>
+			<input type="date" name="date" required>
+			<h3>Task Time:</h3>
+			<input id="time" type="time" name="date">
+			<input id="radSpe" type="radio" name="isTime" value="Specific" checked> Specific Time
+			<input id="radAll" type="radio" name="isTime" value="AllDay"> All day
 			<h3>Task Comments:</h3>
 			<textarea name="desc" required></textarea> 
 			<input type="hidden" id="cre_event" name="cre_event" value="{{ name, login }}">
@@ -146,7 +150,6 @@
 </div>
 
 
-<script src="../static/JS/modals.js"></script>
 <script src="../static/events.js"></script>
 
 </html>

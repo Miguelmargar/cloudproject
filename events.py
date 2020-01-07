@@ -192,7 +192,7 @@ class Events:
         host = dbhost
         database = dbname
 
-        info = info.replace("'", "")
+        info = info.replace("'", "").replace("\"", "")
         info = info[1:-1].split(",")
         info = [i.strip() for i in info]
         

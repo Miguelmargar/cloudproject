@@ -95,3 +95,12 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+$('#radAll').click(function() {
+	  $('#time').slideUp(500);
+})
+
+$('#radSpe').click(function() {
+	  $('#time').slideDown(500);
+})
+

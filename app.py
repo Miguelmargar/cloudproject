@@ -69,7 +69,7 @@ def create_event():
     date = request.form.get('date')
     desc = request.form.get('desc')
     user_det = request.form.get('cre_event')
-
+    print(date)
     a.create_ev(name, date, desc, user_det)
     
     return redirect("/show_main")
