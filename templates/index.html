@@ -134,21 +134,16 @@
 <!-- Modal for sharing event -->
 <div id="shaMod" class="modal">
 	<div class="modalSh">
+		<h2>Share Task</h2>
 		<form style="display:inline-block" method="POST" action="/share_with">
-			SHARE WITH?:<br>
+			<h3>Share Task With:</h3>
 			<input type="text" name="shareName"> 
-			<br> 
-			<br>
 			<input type="hidden" id="sha_event" name="sha_event" value="">
 			<button type="submit" value="Submit">Submit</button>
+			<span id="shClsBt">&times;</span>
 		</form>
-		<button onclick="document.getElementById('share').style.display='none'">close</button>
 	</div>
 </div>
-
-
-
-
 
 
 <script src="../static/JS/modals.js"></script>

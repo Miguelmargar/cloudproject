@@ -273,16 +273,84 @@ textarea {
 	cursor: pointer;
 }
 /*-------------Edit task modal end-------------------*/
-
+/*-------------Share task with modal-----------------*/
 
 .modalSh {
-	width: 350px;
+	color: #327792;
+	margin: auto;
+	width: 300px;
 	height: auto;
-	background-color: green;
+	border-radius: 8px;
+	background-color: #ceffce;
+	animation-name: animatetop;
+	animation-duration: 0.8s;
+	position: relative;
 }
 
-#moded form {
-	display: inline-block;
+.modalSh h2 {
+	margin: 0px;
+	width: 100%;
+	background-color: white;
+	border-radius: 8px 8px 0px 0px;
+	text-align: center;
+	padding: 5px 0px 5px 0px;
 }
 
+.modalSh form {
+	padding-left: 20px;
+}
+
+.modalSh h3 {
+	margin: 0;
+	padding-top: 20px;
+}
+
+.modalSh input {
+	border-radius: 5px;
+	height: 30px;
+	width: 90%;
+	border: 3px solid #ccc;
+	outline: none;
+	padding-left: 10px;
+	transition: border-color 1.5s;
+}
+
+.modalSh input:hover, .modalSh input:focus {
+	border-color: black;
+}
+
+.modalSh button {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: none;
+	color: #327792;
+	height: 40px;
+	width: 80px;
+	transition: 1.5s;
+	font-weight: bold;
+}
+
+.modalSh button:hover {
+	background-color: #6bc5e7;
+	color: black;
+	cursor: pointer;
+}
+
+.modalSh form span {
+	float: right;
+	margin-top: 15px;
+	margin-right: 18px;
+	color: #327792;
+	font-size: 35px;
+	font-weight: bold;
+	transition: 1s;
+}
+
+.modalSh form span:hover {
+	color: black;
+	cursor: pointer;
+}
+
+/*-------------Share task with modal end-------------*/
 

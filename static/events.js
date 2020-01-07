@@ -70,7 +70,7 @@ function openMod(which) {
 var span = document.getElementsByClassName("close")[0];
 var creClsBt = document.getElementById("creClsBt");
 var edClsBt = document.getElementById("edClsBt");
-
+var shClsBt = document.getElementById("shClsBt");
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
@@ -82,6 +82,10 @@ creClsBt.onclick = function() {
 }
 
 edClsBt.onclick = function() {
+	modal.style.display = "none";
+}
+
+shClsBt.onclick = function() {
 	modal.style.display = "none";
 }
 
