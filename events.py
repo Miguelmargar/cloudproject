@@ -148,7 +148,6 @@ class Events:
                 data = cur.fetchall()
                 cur.close()
                 return data
-                print(data)
             except:
                 return ()
                             
@@ -199,11 +198,12 @@ class Events:
         password = db_key
         host = dbhost
         database = dbname
-
-        info = info.replace("'", "").replace("\"", "")
-        info = info[1:-1].split(",")
+        
+        info = info.replace("', ", "*,*")
+        info = info.replace("'", "")
+        info = info.replace("\"", "")
+        info = info[1:-1].split("*,*")
         info = [i.strip() for i in info]
-        print(info)
         
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
@@ -244,8 +244,10 @@ class Events:
         password = db_key
         host = dbhost
         database = dbname
-        
-        old_details = old_details.split(",")
+
+        print(old_details)        
+        old_details = old_details.split("*,")
+        print(old_details)
          
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
@@ -253,6 +255,7 @@ class Events:
             sys.exit(e)
         
         old_details[1] = self.format_date(old_details[1])
+        date = self.format_date(date)
         
         update = "UPDATE events SET name = '" + name + "', date = '" + date + "', descr = '" + descr + "' WHERE name = '" + old_details[0] + "' and user_name = '" + old_details[3] + "' and date = '" + old_details[1] + "' and descr = '" + old_details[2] + "'"
         cur = con.cursor()

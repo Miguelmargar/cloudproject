@@ -7,9 +7,9 @@ function createEve() {
 
 function getOldDetails(eve) {
 	modal = document.getElementById('edMod');
-	modal.style.display='block';
+	modal.style.display='block';	
 	
-	document.getElementById('ed_event').value = eve;
+	document.getElementById('ed_event').value = [eve[0] + '*', eve[1] + '*', eve[2] + '*', eve[3] + '*', eve[4]];
 	
 	document.getElementById('edName').value = eve[0];
 	document.getElementById('edDate').value = eve[1];
