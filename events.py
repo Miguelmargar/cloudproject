@@ -105,10 +105,6 @@ class Events:
         user_det = user_det[1:-1].split(",")
         user_det = [i.strip() for i in user_det]
         
-        date = date.split("-")
-        date = [date[2], date[1], date[0]]
-        date = "-".join(date)
-
         if time == "" or time == "00:00":
             time = "All Day" 
         
@@ -140,26 +136,29 @@ class Events:
             sys.exit(e)
         
         if self.login == "loggedin":
-            query = """SELECT name, date, descr
+            
+            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), descr
                     FROM events
-                    WHERE events.user_name = %s"""
+                    WHERE events.user_name = '""" + self.name + "';"
+
             try:
                 cur = con.cursor()
-                cur.execute(query, (self.name),)
+                cur.execute(query)
                 data = cur.fetchall()
                 cur.close()
                 return data
+                print(data)
             except:
                 return ()
                             
         elif self.login == "loginsea":
-            query = """SELECT name, date, descr
+            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), descr
                     FROM events
-                    WHERE events.name = %s
-                    and events.user_name = %s"""
+                    WHERE events.name = '""" + self.sea_word + "' and events.user_name = '" + self.name + "';"
+            
             try:
                 cur = con.cursor()
-                cur.execute(query, (self.sea_word, self.name),)
+                cur.execute(query)
                 data = cur.fetchall()
                 cur.close()
                 return data
@@ -167,12 +166,12 @@ class Events:
                 return ()
                                  
         elif self.login == "loginarch":
-            query = """SELECT name, date, descr
+            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), descr
                         FROM archived
-                        WHERE archived.user_name = %s"""
+                        WHERE archived.user_name = '""" + self.name + "';"
             try:
                 cur = con.cursor()
-                cur.execute(query, (self.name),)
+                cur.execute(query)
                 data = cur.fetchall()
                 cur.close()
                 return data
@@ -181,12 +180,12 @@ class Events:
                 return ()  
         
         elif self.login == "loginsha":
-            query = """SELECT name, date, descr, fromName
+            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), descr, fromName
                     FROM shared_with
-                    WHERE shared_with.toName = %s"""
+                    WHERE shared_with.toName = '""" + self.name + "';"
             try:
                 cur = con.cursor()
-                cur.execute(query, (self.name),)
+                cur.execute(query)
                 data = cur.fetchall()
                 cur.close()
                 return data

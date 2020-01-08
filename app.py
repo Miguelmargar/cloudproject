@@ -48,7 +48,6 @@ def show_main():
     login = a.login
     name = a.name
     events = a.show_events()
-
     
     a.login = "loggedin"
     

@@ -333,6 +333,7 @@ ul {
 .evDetails {
 	width: 100%;
 	height: 50%;
+	margin-bottom: 10px;
 	border-bottom: 1px solid black;
 }
 

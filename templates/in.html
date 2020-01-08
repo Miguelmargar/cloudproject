@@ -56,8 +56,8 @@
 		{% for i in events %}
 		<div class="event">
 			<h2 class="evName">{{ i[0] }}</h2>
-			<p class="evDate">{{ i[1] }}</p>
-			<p class="evDetails">{{ i[2] }}</p>
+			<h3 class="evDate">{{ i[1] }}</h3>
+			<h3 class="evDetails">{{ i[2] }}</h3>
 			{% if login == "loginsha" %}
 			<p class="evDate">From {{ i[3] }}</p>
 			{% endif %}
