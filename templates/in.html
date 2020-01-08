@@ -16,6 +16,21 @@
 {% endblock %}
 
 {% block content %}
+
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+   				{% for category, message in messages %}
+       				{% if category == "error" %}
+        				<div class="error">
+        			{% else %}
+        				<div class="error good">
+        			{% endif %}
+							<h1>{{ message }}</h1>        				
+        				</div>
+   				{% endfor %}
+			{% endif %}
+		{% endwith %}
+
 	<div class="evsacts">
 		<h3 onclick="createEve()">Create Event</h3>
 		<h3><a href="/show_archive?value={{ name }}">Archive</a></h3>
@@ -30,14 +45,6 @@
 	</div>
 	
 	{% if login == "loggedin" or login == "loginsea" or login == "loginsha" or login == "loginarch"  %}
-		
-		{% with messages = get_flashed_messages() %}
-			{% if messages %}
-   				{% for message in messages %}
-       				<h1>{{ message }}</h1>
-   				{% endfor %}
-			{% endif %}
-		{% endwith %}
 		
 		{% if login == "loggedin" %}
 			<h2>MAIN TASKS</h2>

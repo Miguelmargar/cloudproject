@@ -15,7 +15,7 @@
 /*----------------Sign In and Log In modals-------------------*/
 
 .sign {
-	height: 320px;
+	height: auto;
 	width: 350px;
 	background-color: #c7f1ed;
 	margin: auto;
@@ -40,6 +40,8 @@
 .signtop h2 {
 	color: #327792;
 	padding-top: 11px;
+	padding-bottom: 10px;
+	margin: 0px;
 	text-align: center;
 	border-radius: 8px 8px 0px 0px;
 }
@@ -47,9 +49,9 @@
 .sign form {
 	box-sizing: border-box;
 	height: 84%;
-	padding-top: 15px;
 	padding-left: 20px;
 	text-align: left;
+	padding-bottom: 10px;
 }
 
 .sign h3 {
@@ -68,7 +70,7 @@
 	transition: 1.5s;
 }
 
-.sign input:focus {
+.sign input:focus, .sign input:hover {
 	border: 3px solid black;
 }
 

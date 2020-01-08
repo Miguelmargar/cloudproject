@@ -1,4 +1,4 @@
-import os, pymysql, sys
+import os, pymysql, sys, hashlib, binascii
 from passw import *
 from test.datetimetester import DAY
 
@@ -15,7 +15,9 @@ class Events:
         password = db_key
         host = dbhost
         database = dbname
-         
+        
+        passw = self.hash_password(passw)
+        
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
         except Exception as e:
@@ -35,7 +37,7 @@ class Events:
             return "exists"
         elif len(data) == 0:
             try:
-                insert = """INSERT INTO users ( user_name, password)
+                insert = """INSERT INTO users (user_name, password)
                             VALUES
                             (%s, %s);"""
                 
@@ -59,7 +61,6 @@ class Events:
         except Exception as e:
             sys.exit(e)
         
-        
         query = """SELECT user_name
                 FROM users
                 WHERE users.user_name = %s"""
@@ -75,14 +76,14 @@ class Events:
          
         query = """SELECT password
                 FROM eventmanager.users
-                WHERE eventmanager.users.password = %s"""
+                WHERE eventmanager.users.user_name = %s"""
                       
         cur = con.cursor()
-        cur.execute(query, (passw),)
+        cur.execute(query, (name),)
         data = cur.fetchall()
         cur.close()
 
-        if len(data) < 1 or data[0][0] != passw:
+        if len(data) < 1 or not self.verify_password(data[0][0], passw):
             self.login = "passerr"
             return "passerr"
         
@@ -344,4 +345,31 @@ class Events:
         date = [date[2], date[1], date[0]]
         date = "-".join(date)
         return date   
+    
+    
+    def hash_password(self, password):
+        """Hash a password for storing."""
+        
+        salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
+        
+        pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), salt, 100000)
+        
+        pwdhash = binascii.hexlify(pwdhash)
+        
+        return (salt + pwdhash).decode('ascii')
+    
+    
+    def verify_password(self, stored_password, provided_password):
+        """Verify a stored password against one provided by user"""
+        
+        salt = stored_password[:64]
+        
+        stored_password = stored_password[64:]
+        
+        pwdhash = hashlib.pbkdf2_hmac('sha512', provided_password.encode('utf-8'), 
+                salt.encode('ascii'), 100000)
+        
+        pwdhash = binascii.hexlify(pwdhash).decode('ascii')
+        
+        return pwdhash == stored_password
         

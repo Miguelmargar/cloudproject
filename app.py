@@ -36,10 +36,14 @@ def log_user():
     passw = request.form.get("logPass")
     
     login = a.log_user_in(name, passw)
+    
     if a.login == "loggedin":
         return redirect("/show_main")
-    else:
+    elif a.login == "nameerr":
         flash("ACCOUNT DOES NOT EXISTS - PLEASE TRY A DIFFERENT NAME", "error")
+        return redirect("/")
+    elif a.login == "passerr":
+        flash("WRONG PASSWORD - PLEASE TRY CHECKING YOUR PASSWORD", "error")
         return redirect("/")
     
 @app.route("/show_main")
@@ -89,7 +93,7 @@ def log_user_out():
     
     a.log_user_out()
     
-    flash("You Have Successfully Logged Out")
+    flash("You Have Successfully Logged Out", "good")
     
     return redirect("/")
 
@@ -143,9 +147,9 @@ def share_with():
     is_shared = a.share_with(share_user, share_details)
     
     if is_shared == True:
-        flash("Your Event has been shared with '%s'" % share_user)
+        flash("Your Event has been shared with '%s'" % share_user, "good")
     else:
-        flash("Error Sharing, Name '%s' does not exist, please check for spelling mistakes" % share_user)
+        flash("Error Sharing, Name '%s' does not exist, please check for spelling mistakes" % share_user, "error")
     
     return redirect("/show_main")
  
