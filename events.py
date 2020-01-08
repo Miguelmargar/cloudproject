@@ -202,6 +202,7 @@ class Events:
         info = info.replace("'", "").replace("\"", "")
         info = info[1:-1].split(",")
         info = [i.strip() for i in info]
+        print(info)
         
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
@@ -215,11 +216,11 @@ class Events:
             section = "shared_with"
 
         name = info[0]
-        date = info[1]
+        date = self.format_date(info[1])
         descr = info[2]    
         
         if info[4] == "loggedin" or info[4] == "loginsea" or info[4] == "loginarch":
-            delete = "DELETE FROM " + section + " WHERE user_name='" + info[3] + "' and name='"+ name + "' and date='" + date + "' and descr='" + descr + "';" 
+            delete = "DELETE FROM " + section + " WHERE user_name='" + info[3] + "' and name='"+ name + "' and date='" + date + "' and descr='" + descr + "';"
         else:
             delete = "DELETE FROM " + section + " WHERE name='"+ name + "' and date='" + date + "' and descr='" + descr + "' and fromName='" + info[5] + "' and toName='" + info[3] + "';" 
         
@@ -277,7 +278,7 @@ class Events:
         info = [i.strip() for i in info]
         
         name = info[0]
-        date = info[1]
+        date = self.format_date(info[1])
         descr = info[2]
          
         insert = "INSERT INTO archived (user_name,name,date,descr) VALUES (%s,%s,%s,%s);"
@@ -287,11 +288,13 @@ class Events:
         con.commit()       
         
         self.del_event(self.info)
+   
         
     def show_arch(self, name):
         self.login = "loginarch"
         name = name.replace("'", "")
         self.name = name
+   
         
     def share_with(self, user_sha, user_eve):
         user = dbuser
@@ -322,7 +325,7 @@ class Events:
         else:
             insert = "INSERT INTO shared_with (name, date, descr, fromName, toName) VALUES (%s, %s, %s, %s, %s)"
             cur = con.cursor()
-            cur.execute(insert, (details[0], details[1], details[2], details[3], user_sha),)
+            cur.execute(insert, (details[0], self.format_date(details[1]), details[2], details[3], user_sha),)
             cur.close()
             con.commit()
             self.name = details[3]
@@ -335,6 +338,10 @@ class Events:
         name = name.replace("'", "")
         self.name = name
         
-        
-        
+    
+    def format_date(self, date):
+        date = date.split("-")
+        date = [date[2], date[1], date[0]]
+        date = "-".join(date)
+        return date   
         
