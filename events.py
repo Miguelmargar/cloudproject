@@ -252,6 +252,8 @@ class Events:
         except Exception as e:
             sys.exit(e)
         
+        old_details[1] = self.format_date(old_details[1])
+        
         update = "UPDATE events SET name = '" + name + "', date = '" + date + "', descr = '" + descr + "' WHERE name = '" + old_details[0] + "' and user_name = '" + old_details[3] + "' and date = '" + old_details[1] + "' and descr = '" + old_details[2] + "'"
         cur = con.cursor()
         cur.execute(update)
