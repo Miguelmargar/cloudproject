@@ -63,14 +63,19 @@
 		{% for i in events %}
 		<div class="event">
 			<h2 class="evName">{{ i[0] }}</h2>
-			<h3 class="evDate">{{ i[1] }}</h3>
-			<h3 class="evDetails">{{ i[2] }}</h3>
+			<h3 class="evDate">{{ i[1] }}
+				{% if i[2] != "All Day" %}
+					At
+				{% endif %}
+					{{ i[2] }}
+			</h3>
+			<h3 class="evDetails">{{ i[3] }}</h3>
 			{% if login == "loginsha" %}
-			<p class="evDate">From {{ i[3] }}</p>
+			<p class="evDate">From {{ i[4] }}</p>
 			{% endif %}
 
 			{% if login == "loggedin" or login == "loginsea" %}
-				<button class="evButton" type="submit" name="edit" onclick="getOldDetails({{ [i[0], i[1], i[2], name, login] }})">Edit</button>
+				<button class="evButton" type="submit" name="edit" onclick="getOldDetails({{ [i[0], i[1], i[2], i[3], name, login] }})">Edit</button>
 	
 				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
 					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login }}">Delete</button>

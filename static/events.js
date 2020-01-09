@@ -8,12 +8,22 @@ function createEve() {
 function getOldDetails(eve) {
 	modal = document.getElementById('edMod');
 	modal.style.display='block';	
-	
-	document.getElementById('ed_event').value = [eve[0] + '*', eve[1] + '*', eve[2] + '*', eve[3] + '*', eve[4]];
+		
+	document.getElementById('ed_event').value = [eve[0] + '*', eve[1] + '*', eve[2] + '*', eve[3] + '*', eve[4] + '*', eve[5]];
 	
 	document.getElementById('edName').value = eve[0];
 	document.getElementById('edDate').value = eve[1];
-	document.getElementById('edDesc').value = eve[2];
+	if (eve[2] == "All Day") {
+		document.getElementById('edTime').style.display = "none";
+		document.getElementById('edTime').value = "00:00";
+		document.getElementById('edRadAll').checked = true;
+		document.getElementById('edRadSpe').checked = false;
+	} else {
+		document.getElementById('edTime').value = eve[2];
+		document.getElementById('edRadSpe').checked = true;
+		document.getElementById('edRadAll').checked = false;
+	}
+	document.getElementById('edDesc').value = eve[3];
 }
 
 function shareWithDetails(eve) {
@@ -27,7 +37,7 @@ function showArch() {
 	document.getElementById("archform").submit()
 }
 
-
+// Make neccessary amendments to sign up modal when loggin in modal selected
 function openMod(which) {
 	if (which == "in") {
 		var form = document.getElementById("form");
@@ -96,6 +106,7 @@ window.onclick = function(event) {
   }
 }
 
+// if Time in create modal is all day or specific
 $('#radAll').click(function() {
 	$('#time').slideUp(500);
 	$('#time').val('');
@@ -105,5 +116,17 @@ $('#radAll').click(function() {
 $('#radSpe').click(function() {
 	  $('#time').slideDown(500);
 	  $('#time').val('00:00');
+})
+
+// if Time in edit modal is all day or specific
+$('#edRadAll').click(function() {
+	$('#edTime').slideUp(500);
+	$('#edTime').val('');
+	  
+})
+
+$('#edRadSpe').click(function() {
+	  $('#edTime').slideDown(500);
+	  $('#edTime').val('00:00');
 })
 

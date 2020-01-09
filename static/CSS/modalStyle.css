@@ -112,6 +112,7 @@
 /*----------------Sign In and Log In modals end---------------*/
 
 /*----------------Create task modal---------------------------*/
+
 .modalTop {
 	color: #327792;
 	margin: auto;
@@ -260,6 +261,23 @@ textarea {
 
 .modalEdit input:hover, .modalEdit input:focus {
 	border-color: black;
+}
+
+#edTime {
+	display: block;
+	transition: display 1s;
+}
+
+#edRadSpe, #edRadAll {
+	height: 15px;
+	width: 10%;
+	margin-top: 10px;
+	vertical-align: bottom;
+	display: inline-block;
+}
+
+#edRadSpe:hover, #edRadAll:hover {
+	cursor: pointer;
 }
 
 .modalEdit button {

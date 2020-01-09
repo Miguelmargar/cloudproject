@@ -52,7 +52,7 @@ def show_main():
     login = a.login
     name = a.name
     events = a.show_events()
-    
+
     a.login = "loggedin"
     
     return render_template("/in.html", login=login, name=name, events=events)
@@ -113,10 +113,11 @@ def search_event():
 def edit_event():
     new_name = request.form.get('edName')
     new_date = request.form.get('edDate')
+    new_time = request.form.get('edTime')
     new_desc = request.form.get('edDesc')
     old_details = request.form.get('ed_event')
-
-    a.edit_event(new_name, new_date, new_desc, old_details)
+    
+    a.edit_event(new_name, new_date, new_time, new_desc, old_details)
      
     return redirect("/show_main")
 

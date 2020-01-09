@@ -179,6 +179,7 @@ main {
 	border-bottom: 1px solid black;
 	padding: 25px 0px 20px 0px; 
 	width: 100%;
+	min-height: 500px;
 	text-align: center;
 }
 

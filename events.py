@@ -138,7 +138,7 @@ class Events:
         
         if self.login == "loggedin":
             
-            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), descr
+            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                     FROM events
                     WHERE events.user_name = '""" + self.name + "';"
 
@@ -152,7 +152,7 @@ class Events:
                 return ()
                             
         elif self.login == "loginsea":
-            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), descr
+            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                     FROM events
                     WHERE events.name = '""" + self.sea_word + "' and events.user_name = '" + self.name + "';"
             
@@ -166,7 +166,7 @@ class Events:
                 return ()
                                  
         elif self.login == "loginarch":
-            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), descr
+            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                         FROM archived
                         WHERE archived.user_name = '""" + self.name + "';"
             try:
@@ -180,7 +180,7 @@ class Events:
                 return ()  
         
         elif self.login == "loginsha":
-            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), descr, fromName
+            query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr, fromName
                     FROM shared_with
                     WHERE shared_with.toName = '""" + self.name + "';"
             try:
@@ -239,7 +239,7 @@ class Events:
         self.login = "loginsea"
     
     
-    def edit_event(self, name, date, descr, old_details):
+    def edit_event(self, name, date, time, descr, old_details):
         user = dbuser
         password = db_key
         host = dbhost
@@ -257,14 +257,17 @@ class Events:
         old_details[1] = self.format_date(old_details[1])
         date = self.format_date(date)
         
-        update = "UPDATE events SET name = '" + name + "', date = '" + date + "', descr = '" + descr + "' WHERE name = '" + old_details[0] + "' and user_name = '" + old_details[3] + "' and date = '" + old_details[1] + "' and descr = '" + old_details[2] + "'"
+        if time == "" or time == "00:00":
+            time = "All Day"
+        
+        update = "UPDATE events SET name = '" + name + "', date = '" + date + "', time = '" + time + "', descr = '" + descr + "' WHERE name = '" + old_details[0] + "' and user_name = '" + old_details[4] + "' and date = '" + old_details[1] + "' and time = '" + old_details[2] + "' and descr = '" + old_details[3] + "'"
         cur = con.cursor()
         cur.execute(update)
         cur.close()
         con.commit()
 
-        self.name = old_details[3]
-        self.login = old_details[4]
+        self.name = old_details[4]
+        self.login = old_details[5]
         
         
     def arch_eve(self, info):
