@@ -30,7 +30,7 @@ function shareWithDetails(eve) {
 	modal = document.getElementById('shaMod');
 	modal.style.display='block';
 	
-	document.getElementById('sha_event').value = eve;
+	document.getElementById('sha_event').value = [eve[0] + '*', eve[1] + '*', eve[2] + '*', eve[3] + '*', eve[4] + '*', eve[5]];
 }
 
 function showArch() {

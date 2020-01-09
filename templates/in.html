@@ -71,31 +71,32 @@
 			</h3>
 			<h3 class="evDetails">{{ i[3] }}</h3>
 			{% if login == "loginsha" %}
-			<p class="evDate">From {{ i[4] }}</p>
+			<h3 class="evDate">From {{ i[4] }}</h3>
 			{% endif %}
 
 			{% if login == "loggedin" or login == "loginsea" %}
 				<button class="evButton" type="submit" name="edit" onclick="getOldDetails({{ [i[0], i[1], i[2], i[3], name, login] }})">Edit</button>
 	
 				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
-					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login }}">Delete</button>
+					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], name, login }}">Delete</button>
 				</form>
 				
 				<form method="POST" action="/archive_event" enctype="multipart/form-data">
-					<button class="evButton" type="submit" name="archive" value="{{ i[0], i[1], i[2], name, login }}">Archive</button>
+					<button class="evButton" type="submit" name="archive" value="{{ i[0], i[1], i[2], i[3], name, login }}">Archive</button>
 				</form>
-				<button class="evButton" type="submit" name="share" onclick="shareWithDetails({{ [i[0], i[1], i[2], name, login] }})">Share</button>	
+				
+				<button class="evButton" type="submit" name="share" onclick="shareWithDetails({{ [i[0], i[1], i[2], i[3], name, login] }})">Share</button>	
 			{% endif %}
 			
 			{% if login == "loginarch" %}
 				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
-					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login }}">Delete</button>
+					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], name, login }}">Delete</button>
 				</form>
 			{% endif %}
 			
 			{% if login == "loginsha" %}
 				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
-					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], name, login, i[3] }}">Delete</button>
+					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], name, login, i[4]  }}">Delete</button>
 				</form>
 			{% endif %}
 			

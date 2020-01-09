@@ -176,7 +176,7 @@ a:hover {
 
 main {
 	border-top: 5px solid #b2b2b2;
-	border-bottom: 1px solid black;
+	border-bottom: 5px solid #b2b2b2;
 	padding: 25px 0px 20px 0px; 
 	width: 100%;
 	min-height: 500px;

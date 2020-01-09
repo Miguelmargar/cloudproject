@@ -198,40 +198,41 @@ class Events:
         password = db_key
         host = dbhost
         database = dbname
-        
+                
         info = info.replace("', ", "*,*")
         info = info.replace("'", "")
         info = info.replace("\"", "")
         info = info[1:-1].split("*,*")
         info = [i.strip() for i in info]
-        
+            
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
         except Exception as e:
             sys.exit(e)
         
         section = "events"
-        if info[4] == "loginarch":
+        if info[5] == "loginarch":
             section = "archived"
-        elif info[4] == "loginsha":
+        elif info[5] == "loginsha":
             section = "shared_with"
-
+        
         name = info[0]
         date = self.format_date(info[1])
-        descr = info[2]    
+        time = info[2]
+        descr = info[3]    
         
-        if info[4] == "loggedin" or info[4] == "loginsea" or info[4] == "loginarch":
-            delete = "DELETE FROM " + section + " WHERE user_name='" + info[3] + "' and name='"+ name + "' and date='" + date + "' and descr='" + descr + "';"
+        if info[5] == "loggedin" or info[5] == "loginsea" or info[5] == "loginarch":
+            delete = "DELETE FROM " + section + " WHERE user_name='" + info[4] + "' and name='"+ name + "' and date='" + date +  "' and time='" + time + "' and descr='" + descr + "';"
         else:
-            delete = "DELETE FROM " + section + " WHERE name='"+ name + "' and date='" + date + "' and descr='" + descr + "' and fromName='" + info[5] + "' and toName='" + info[3] + "';" 
+            delete = "DELETE FROM " + section + " WHERE name='"+ name + "' and date='" + date + "' and time='" + time + "' and descr='" + descr + "' and fromName='" + info[6] + "' and toName='" + info[4] + "';" 
         
         cur = con.cursor()
         cur.execute(delete)
         cur.close()
         con.commit()
         
-        self.name = info[3]
-        self.login = info[4]
+        self.name = info[4]
+        self.login = info[5]
         
         
     def search(self, word):
@@ -245,9 +246,7 @@ class Events:
         host = dbhost
         database = dbname
 
-        print(old_details)        
         old_details = old_details.split("*,")
-        print(old_details)
          
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
@@ -282,17 +281,20 @@ class Events:
         except Exception as e:
             sys.exit(e)
         
+        info = info.replace("', ", "*,*")
         info = info.replace("'", "")
-        info = info[1:-1].split(",")
+        info = info.replace("\"", "")
+        info = info[1:-1].split("*,*")
         info = [i.strip() for i in info]
         
         name = info[0]
         date = self.format_date(info[1])
-        descr = info[2]
+        time = info[2]
+        descr = info[3]
          
-        insert = "INSERT INTO archived (user_name,name,date,descr) VALUES (%s,%s,%s,%s);"
+        insert = "INSERT INTO archived (user_name,name,date,time,descr) VALUES (%s,%s,%s,%s,%s);"
         cur = con.cursor()
-        cur.execute(insert, (info[3], name, date, descr),)
+        cur.execute(insert, (info[4], name, date, time, descr),)
         cur.close()
         con.commit()       
         
@@ -325,20 +327,20 @@ class Events:
         data = cur.fetchall()
         cur.close()
         
-        details = user_eve.split(",")
+        details = user_eve.split("*,")
 
         if len(data) < 1 or data[0][0] != user_sha:
-            self.name = details[3]
-            self.login = details[4]
+            self.name = details[4]
+            self.login = details[5]
             return False
         else:
-            insert = "INSERT INTO shared_with (name, date, descr, fromName, toName) VALUES (%s, %s, %s, %s, %s)"
+            insert = "INSERT INTO shared_with (name, date, time, descr, fromName, toName) VALUES (%s, %s, %s, %s, %s, %s)"
             cur = con.cursor()
-            cur.execute(insert, (details[0], self.format_date(details[1]), details[2], details[3], user_sha),)
+            cur.execute(insert, (details[0], self.format_date(details[1]), details[2], details[3], details[4], user_sha),)
             cur.close()
             con.commit()
-            self.name = details[3]
-            self.login = details[4]
+            self.name = details[4]
+            self.login = details[5]
             return True       
             
     
