@@ -1,4 +1,4 @@
-import os, pymysql, sys, hashlib, binascii
+import os, pymysql, sys, hashlib, binascii, re
 from passw import *
 from test.datetimetester import DAY
 
@@ -198,13 +198,21 @@ class Events:
         password = db_key
         host = dbhost
         database = dbname
-                
-        info = info.replace("', ", "*,*")
-        info = info.replace("'", "")
-        info = info.replace("\"", "")
-        info = info[1:-1].split("*,*")
-        info = [i.strip() for i in info]
-            
+
+        pat = r"\"(.*?)\"|'(.*?)'"
+        info = re.findall(pat, info)
+
+        final = []
+        for i in info:
+            empty = True
+            for j in i:
+                if len(j) > 0:
+                    final.append(j.replace("'", "\\'"))
+                    empty = False
+            if empty == True:
+                final.append('')
+        info = final
+        
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
         except Exception as e:
@@ -280,12 +288,20 @@ class Events:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
         except Exception as e:
             sys.exit(e)
+
+        pat = r"\"(.*?)\"|'(.*?)'"
+        info = re.findall(pat, info)
         
-        info = info.replace("', ", "*,*")
-        info = info.replace("'", "")
-        info = info.replace("\"", "")
-        info = info[1:-1].split("*,*")
-        info = [i.strip() for i in info]
+        final = []
+        for i in info:
+            empty = True
+            for j in i:
+                if len(j) > 0:
+                    final.append(j.replace("'", "\\'"))
+                    empty = False
+            if empty == True:
+                final.append('')
+        info = final
         
         name = info[0]
         date = self.format_date(info[1])

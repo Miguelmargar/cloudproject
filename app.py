@@ -1,6 +1,5 @@
 from flask import Flask, flash, render_template, redirect, request, url_for
 from events import *
-from ctypes.test.test_pickling import name
 
 
 
