@@ -4,7 +4,7 @@
 {% block header %}
 	{% if login == "loggedin" or login == "loginsea" or login == "loginsha" or login == "loginarch" %}
 		<div class="nav">
-				<h1><a href="/home?value={{ name }}">Task Organiser</a></h1>
+				<h1><a href="/home?value={{ name, 'loggedin' }}">Task Manager</a></h1>
 				<h3 id="he_name">{{ name }}</h3>
 			</div>
 			<div class="admin">
@@ -37,7 +37,7 @@
 		<h3><a href="/show_shared_with?value={{ name }}">Shared WITH Me</a></h3>
 		<div id="sear">
 			<h3>Search Event:</h3>
-			<form method="GET" action="/searchEvent">
+			<form method="POST" action="/searchEvent">
 				<input type="text" name="search" placeholder="Event Name">
 				<button type="submit" name="sea_deta" value="{{ name }}">Search</button>
 			</form>

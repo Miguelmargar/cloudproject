@@ -1,6 +1,5 @@
 import os, pymysql, sys, hashlib, binascii, re
 from passw import *
-from test.datetimetester import DAY
 
 
 class Events:
@@ -89,11 +88,6 @@ class Events:
         
         self.name = name
         self.login = "loggedin"
-        
-        
-    def log_user_out(self):
-        self.name = ""
-        self.login = ""
 
         
     def create_ev(self, name, date, time, descr, user_det):
@@ -365,7 +359,7 @@ class Events:
         name = name.replace("'", "")
         self.name = name
         
-    
+#     make the format of the date to yyyy-mm-dd
     def format_date(self, date):
         date = date.split("-")
         date = [date[2], date[1], date[0]]

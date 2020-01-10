@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>TASK ORGANISER</title>
+<title>TASK MANAGER</title>
 <link rel="stylesheet" href="../static/CSS/style.css">
 <link rel="stylesheet" href="../static/CSS/modalStyle.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -18,7 +18,7 @@
 	<header>
 		{% block header %}
 			<div class="nav">
-				<h1><a href="/">Task Organiser</a></h1>
+				<h1><a href="/">Task Manager</a></h1>
 			</div>
 			<div class="admin">
 				<h3 onclick="openMod('up')">Sign Up</h3>
@@ -86,9 +86,9 @@
 		</div>
 		<form id="form" method="POST" action="/signUp">
 			<h3>User Name:</h3>
-			<input id="modU" type="text" placeholder="User Name" name="upName" value="miguel" required>
+			<input id="modU" type="text" placeholder="User Name" name="upName" required>
 			<h3>Password:</h3>
-			<input id="modP" type="password" placeholder="Password" name="upPass" value="12345" required>
+			<input id="modP" type="password" placeholder="Password" name="upPass" required>
 			<button id="formbut" type="submit" value="singUp">Sign Up</button>
 			<span class="close">&times;</span>
 		</form>
