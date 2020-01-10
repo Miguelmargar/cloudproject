@@ -71,8 +71,6 @@ def home():
     pat = r"'(.*?)'"
     details = re.findall(pat, details)
     
-    print(details)
-
     a.name = details[0]
     a.login = details[1]
     

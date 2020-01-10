@@ -146,10 +146,15 @@ class Events:
                 return ()
                             
         elif self.login == "loginsea":
+            if "'" in self.sea_word:
+                quote = "\""
+            else:
+                quote = "\'"
+            
             query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                     FROM events
-                    WHERE events.name = '""" + self.sea_word + "' and events.user_name = '" + self.name + "';"
-            
+                    WHERE events.name = """ + quote + self.sea_word + quote + " and events.user_name = '" + self.name + "';"
+
             try:
                 cur = con.cursor()
                 cur.execute(query)
