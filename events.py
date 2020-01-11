@@ -115,11 +115,12 @@ class Events:
         cur.close()
         con.commit()
         
-        self.name = user_det[0]
-        self.login = user_det[1]
+        self.login = user_det[1] #need to delete this when it is passed to show_main in app.py
+        
+        return [user_det[0], user_det[1]]
         
     
-    def show_events(self):
+    def show_events(self, name):
         user = dbuser
         password = db_key
         host = dbhost
@@ -134,7 +135,7 @@ class Events:
             
             query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                     FROM events
-                    WHERE events.user_name = '""" + self.name + "';"
+                    WHERE events.user_name = '""" + name + "';"
 
             try:
                 cur = con.cursor()
@@ -153,7 +154,7 @@ class Events:
             
             query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                     FROM events
-                    WHERE events.name = """ + quote + self.sea_word + quote + " and events.user_name = '" + self.name + "';"
+                    WHERE events.name = """ + quote + self.sea_word + quote + " and events.user_name = '" + name + "';"
 
             try:
                 cur = con.cursor()
@@ -167,7 +168,7 @@ class Events:
         elif self.login == "loginarch":
             query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                         FROM archived
-                        WHERE archived.user_name = '""" + self.name + "';"
+                        WHERE archived.user_name = '""" + name + "';"
             try:
                 cur = con.cursor()
                 cur.execute(query)
@@ -181,7 +182,7 @@ class Events:
         elif self.login == "loginsha":
             query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr, fromName
                     FROM shared_with
-                    WHERE shared_with.toName = '""" + self.name + "';"
+                    WHERE shared_with.toName = '""" + name + "';"
             try:
                 cur = con.cursor()
                 cur.execute(query)
@@ -238,12 +239,12 @@ class Events:
         cur.close()
         con.commit()
         
-        self.name = info[4]
-        self.login = info[5]
+        self.login = info[5] # need to delete this when passed to show_main in app.py
         
+        return [info[4], info[5]]
         
     def search(self, word):
-        self.sea_word = word
+        self.sea_word = word # need to look into avoiding using a class variable here for concurrency issues
         self.login = "loginsea"
     
     
@@ -272,9 +273,9 @@ class Events:
         cur.close()
         con.commit()
 
-        self.name = old_details[4]
-        self.login = old_details[5]
+        self.login = old_details[5] # need to delete when passing to show_main in app.py
         
+        return [old_details[4], old_details[5]]
         
     def arch_eve(self, info):
         self.info = info 
@@ -313,13 +314,9 @@ class Events:
         cur.close()
         con.commit()       
         
-        self.del_event(self.info)
+        self.del_event(self.info) # check self.info for concurrency issues
    
-        
-    def show_arch(self, name):
-        self.login = "loginarch"
-        name = name.replace("'", "")
-        self.name = name
+        return info[4]
    
         
     def share_with(self, user_sha, user_eve):
@@ -345,24 +342,17 @@ class Events:
         details = user_eve.split("*,")
 
         if len(data) < 1 or data[0][0] != user_sha:
-            self.name = details[4]
             self.login = details[5]
-            return False
+            return ["False", details[4], details[5]]
         else:
             insert = "INSERT INTO shared_with (name, date, time, descr, fromName, toName) VALUES (%s, %s, %s, %s, %s, %s)"
             cur = con.cursor()
             cur.execute(insert, (details[0], self.format_date(details[1]), details[2], details[3], details[4], user_sha),)
             cur.close()
             con.commit()
-            self.name = details[4]
             self.login = details[5]
-            return True       
+            return ["True", details[4], details[5]]       
             
-    
-    def show_shared_with(self, name):
-        self.login = "loginsha"
-        name = name.replace("'", "")
-        self.name = name
         
 #     make the format of the date to yyyy-mm-dd
     def format_date(self, date):
