@@ -5,10 +5,8 @@ from passw import *
 class Events:
     
     def __init__(self):
-        self.name = ""
-        self.login = ""
-            
-            
+        None
+    
     def sign_user_up(self, name, passw):
         user = dbuser
         password = db_key
@@ -70,8 +68,7 @@ class Events:
         cur.close()
         
         if len(data) < 1 or data[0][0] != name:
-            self.login = "nameerr"
-            return "nameerr"
+            state = "nameerr"
          
         query = """SELECT password
                 FROM eventmanager.users
@@ -83,22 +80,18 @@ class Events:
         cur.close()
 
         if len(data) < 1 or not self.verify_password(data[0][0], passw):
-            self.login = "passerr"
-            return "passerr"
+            state = "passerr"
         
-        self.name = name
-        self.login = "loggedin"
+        state = "loggedin"
+        
+        return state
 
         
-    def create_ev(self, name, date, time, descr, user_det):
+    def create_ev(self, name, date, time, descr, user_name):
         user = dbuser
         password = db_key
         host = dbhost
         database = dbname
-        
-        user_det = user_det.replace("'", "")
-        user_det = user_det[1:-1].split(",")
-        user_det = [i.strip() for i in user_det]
         
         if time == "" or time == "00:00":
             time = "All Day" 
@@ -111,16 +104,12 @@ class Events:
         insert = "INSERT INTO events (user_name,name,date,time,descr) VALUES (%s,%s,%s,%s,%s);"
         
         cur = con.cursor()
-        cur.execute(insert, (user_det[0],name,date,time,descr),)
+        cur.execute(insert, (user_name,name,date,time,descr),)
         cur.close()
         con.commit()
         
-        self.login = user_det[1] #need to delete this when it is passed to show_main in app.py
-        
-        return [user_det[0], user_det[1]]
-        
     
-    def show_events(self, name):
+    def show_events(self, name, login, *args):
         user = dbuser
         password = db_key
         host = dbhost
@@ -131,7 +120,7 @@ class Events:
         except Exception as e:
             sys.exit(e)
         
-        if self.login == "loggedin":
+        if login == "loggedin":
             
             query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                     FROM events
@@ -146,15 +135,15 @@ class Events:
             except:
                 return ()
                             
-        elif self.login == "loginsea":
-            if "'" in self.sea_word:
+        elif login == "loginsea":
+            if "'" in args[0]:
                 quote = "\""
             else:
                 quote = "\'"
             
             query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                     FROM events
-                    WHERE events.name = """ + quote + self.sea_word + quote + " and events.user_name = '" + name + "';"
+                    WHERE events.name = """ + quote + args[0] + quote + " and events.user_name = '" + name + "';"
 
             try:
                 cur = con.cursor()
@@ -165,7 +154,7 @@ class Events:
             except:
                 return ()
                                  
-        elif self.login == "loginarch":
+        elif login == "loginarch":
             query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr
                         FROM archived
                         WHERE archived.user_name = '""" + name + "';"
@@ -179,7 +168,7 @@ class Events:
             except:
                 return ()  
         
-        elif self.login == "loginsha":
+        elif login == "loginsha":
             query = """SELECT name, DATE_FORMAT(date, '%d-%m-%Y'), time, descr, fromName
                     FROM shared_with
                     WHERE shared_with.toName = '""" + name + "';"
@@ -239,14 +228,8 @@ class Events:
         cur.close()
         con.commit()
         
-        self.login = info[5] # need to delete this when passed to show_main in app.py
-        
         return [info[4], info[5]]
         
-    def search(self, word):
-        self.sea_word = word # need to look into avoiding using a class variable here for concurrency issues
-        self.login = "loginsea"
-    
     
     def edit_event(self, name, date, time, descr, old_details):
         user = dbuser
@@ -273,9 +256,6 @@ class Events:
         cur.close()
         con.commit()
 
-        self.login = old_details[5] # need to delete when passing to show_main in app.py
-        
-        return [old_details[4], old_details[5]]
         
     def arch_eve(self, info):
         self.info = info 
@@ -342,16 +322,14 @@ class Events:
         details = user_eve.split("*,")
 
         if len(data) < 1 or data[0][0] != user_sha:
-            self.login = details[5]
-            return ["False", details[4], details[5]]
+            return "False"
         else:
             insert = "INSERT INTO shared_with (name, date, time, descr, fromName, toName) VALUES (%s, %s, %s, %s, %s, %s)"
             cur = con.cursor()
             cur.execute(insert, (details[0], self.format_date(details[1]), details[2], details[3], details[4], user_sha),)
             cur.close()
             con.commit()
-            self.login = details[5]
-            return ["True", details[4], details[5]]       
+            return "True"       
             
         
 #     make the format of the date to yyyy-mm-dd

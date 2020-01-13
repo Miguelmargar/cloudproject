@@ -86,9 +86,9 @@
 		</div>
 		<form id="form" method="POST" action="/signUp">
 			<h3>User Name:</h3>
-			<input id="modU" type="text" placeholder="User Name" name="upName" required>
+			<input id="modU" type="text" placeholder="User Name" name="upName" value="miguel" required>
 			<h3>Password:</h3>
-			<input id="modP" type="password" placeholder="Password" name="upPass" required>
+			<input id="modP" type="password" placeholder="Password" name="upPass" value="12345" required>
 			<button id="formbut" type="submit" value="singUp">Sign Up</button>
 			<span class="close">&times;</span>
 		</form>
@@ -110,7 +110,6 @@
 			<input id="radAll" type="radio" name="isTime" value="AllDay"> All day
 			<h3>Task Comments:</h3>
 			<textarea name="desc" maxlength=150></textarea> 
-			<input type="hidden" id="cre_event" name="cre_event" value="{{ name, login }}">
 			<button type="submit" value="Submit">Create</button>
 			<span id="creClsBt">&times;</span>
 		</form>

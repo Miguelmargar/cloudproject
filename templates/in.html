@@ -4,8 +4,8 @@
 {% block header %}
 	{% if login == "loggedin" or login == "loginsea" or login == "loginsha" or login == "loginarch" %}
 		<div class="nav">
-				<h1><a href="/home?value={{ name, 'loggedin' }}">Task Manager</a></h1>
-				<h3 id="he_name">{{ name }}</h3>
+				<h1><a href="/home">Task Manager</a></h1>
+				<h3 id="he_name">{{ session['user'] }}</h3>
 			</div>
 			<div class="admin">
 				<form method="GET" action="/logOut">
@@ -33,13 +33,13 @@
 
 	<div class="evsacts">
 		<h3 onclick="createEve()">Create Event</h3>
-		<h3><a href="/show_archive?value={{ name }}">Archive</a></h3>
-		<h3><a href="/show_shared_with?value={{ name }}">Shared WITH Me</a></h3>
+		<h3><a href="/show_archive">Archive</a></h3>
+		<h3><a href="/show_shared_with">Shared With Me</a></h3>
 		<div id="sear">
 			<h3>Search Event:</h3>
-			<form method="POST" action="/searchEvent">
+			<form method="POST" action="/show_main">
 				<input type="text" name="search" placeholder="Event Name">
-				<button type="submit" name="sea_deta" value="{{ name }}">Search</button>
+				<button type="submit" name="search">Search</button>
 			</form>
 		</div>
 	</div>
@@ -77,26 +77,26 @@
 			{% if login == "loggedin" or login == "loginsea" %}
 				<button class="evButton" type="submit" name="edit" onclick="getOldDetails({{ [i[0], i[1], i[2], i[3], name, login] }})">Edit</button>
 	
-				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
-					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], name, login }}">Delete</button>
+				<form method="POST" action="/deleteEvent">
+					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], session['user'], session['state'] }}">Delete</button>
 				</form>
 				
-				<form method="POST" action="/archive_event" enctype="multipart/form-data">
+				<form method="POST" action="/archive_event">
 					<button class="evButton" type="submit" name="archive" value="{{ i[0], i[1], i[2], i[3], name, login }}">Archive</button>
 				</form>
 				
-				<button class="evButton" type="submit" name="share" onclick="shareWithDetails({{ [i[0], i[1], i[2], i[3], name, login] }})">Share</button>	
+				<button class="evButton" type="submit" name="share" onclick="shareWithDetails({{ [i[0], i[1], i[2], i[3], session['user'], session['state']] }})">Share</button>	
 			{% endif %}
 			
 			{% if login == "loginarch" %}
-				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
-					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], name, login }}">Delete</button>
+				<form method="POST" action="/deleteEvent">
+					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], session['user'], session['state'] }}">Delete</button>
 				</form>
 			{% endif %}
 			
 			{% if login == "loginsha" %}
-				<form method="POST" action="/deleteEvent" enctype="multipart/form-data">
-					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], name, login, i[4]  }}">Delete</button>
+				<form method="POST" action="/deleteEvent">
+					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], session['user'], session['state'], i[4]  }}">Delete</button>
 				</form>
 			{% endif %}
 			

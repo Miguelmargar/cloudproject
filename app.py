@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, redirect, request, url_for
+from flask import Flask, flash, render_template, redirect, request, url_for, session, g
 from events import *
 from threading import Lock
 
@@ -31,39 +31,37 @@ def log_user():
     name = request.form.get("logName")
     passw = request.form.get("logPass")
     
-    login = a.log_user_in(name, passw)
+    state = a.log_user_in(name, passw)
     
-    if a.login == "loggedin":
-        return redirect(url_for("show_main", name=name))
-    elif a.login == "nameerr":
+    if state == "loggedin":
+        session["user"] = name
+        session["state"] = state
+        return redirect("/show_main")
+    elif state == "nameerr":
         flash("ACCOUNT DOES NOT EXISTS - PLEASE TRY A DIFFERENT NAME", "error")
         return redirect("/")
-    elif a.login == "passerr":
+    elif state == "passerr":
         flash("WRONG PASSWORD - PLEASE TRY CHECKING YOUR PASSWORD", "error")
         return redirect("/")
+ 
     
-@app.route("/show_main")
+@app.route("/show_main", methods=['GET', 'POST'])
 def show_main():
-    login = a.login
-    name = request.args.get('name')
-
-    events = a.show_events(name)
     
-    a.login = ""
-    a.name = ""
-    return render_template("/in.html", login=login, name=name, events=events)
+    if request.method == 'POST':
+        word = request.form.get('search')
+        session["state"] = "loginsea"       
+        events = a.show_events(session["user"], session["state"], word)
+    else:
+        events = a.show_events(session["user"], session["state"])
+    
+    return render_template("/in.html", login=session["state"], name=session["user"], events=events)
 
-@app.route("/home", methods=['GET'])
+
+@app.route("/home")
 def home():
-    details = request.args.get('value')
-    
-    pat = r"'(.*?)'"
-    details = re.findall(pat, details)
-    
-    name = details[0]
-    a.login = details[1]
-    
-    return redirect(url_for("show_main", name=name))
+    session["state"] = "loggedin"
+    return redirect("/show_main")
 
 
 @app.route("/createEvent", methods=['POST'])
@@ -72,14 +70,10 @@ def create_event():
     date = request.form.get('date')
     time = request.form.get('time')
     desc = request.form.get('desc')
-    user_det = request.form.get('cre_event')
 
-    user_det = a.create_ev(nameForm, date, time, desc, user_det)
+    user_det = a.create_ev(nameForm, date, time, desc, session["user"])
     
-    name = user_det[0]
-    login = user_det[1] #need to pass it to show_main
-    
-    return redirect(url_for("show_main", name=name))
+    return redirect("/show_main")
 
 
 @app.route("/deleteEvent", methods=['POST'])
@@ -88,31 +82,18 @@ def delete_event():
 
     user_dets = a.del_event(info)
     
-    name = user_dets[0]
-    login = user_dets[1]
-    
     flash("Task Deleted Successfully!", "good")
     
-    return redirect(url_for("show_main", name=name))
+    return redirect("/show_main")
     
 
 @app.route("/logOut", methods=['GET'])
 def log_user_out():  
-    
+    session.pop("user", None)
+    session.pop("state", None)
     flash("You Have Successfully Logged Out", "good")
     
     return redirect("/")
-
-
-@app.route("/searchEvent", methods=['POST'])
-def search_event():
-    word = request.form.get('search')
-    user_name = request.form.get('sea_deta')
-
-    a.search(word)
-    name = user_name
-
-    return redirect(url_for("show_main", name=name))
     
 
 @app.route("/edit_event", methods=['POST'])
@@ -124,10 +105,8 @@ def edit_event():
     old_details = request.form.get('ed_event')
     
     user_dets = a.edit_event(new_name, new_date, new_time, new_desc, old_details)
-    
-    name = user_dets[0]
      
-    return redirect(url_for("show_main", name=name))
+    return redirect("/show_main")
 
 
 @app.route("/archive_event", methods=['POST'])
@@ -138,17 +117,13 @@ def archive_event():
     
     flash("Task Successfully Archived!", "good")
 
-    return redirect(url_for("show_main", name=name))
+    return redirect("/show_main")
 
 
 @app.route("/show_archive")
 def show_archive():
-    name = request.args.get('value')
-    
-    a.login = "loginarch"
-    name = name.replace("'", "")
-    
-    return redirect(url_for("show_main", name=name))
+    session["state"] = "loginarch"
+    return redirect("/show_main")
 
 
 @app.route("/share_with", methods=['POST'])
@@ -158,24 +133,18 @@ def share_with():
     
     is_shared = a.share_with(share_user, share_details)
     
-    if is_shared[0] == "True":
+    if is_shared == "True":
         flash("Your Event has been shared with '%s'" % share_user, "good")
     else:
         flash("Error Sharing, Name '%s' does not exist, please check for spelling mistakes" % share_user, "error")
     
-    name = is_shared[1]
-    
-    return redirect(url_for("show_main", name=name))
+    return redirect("/show_main")
  
  
 @app.route("/show_shared_with")
 def show_shared_with():
-    name = request.args.get('value')
-     
-    a.login = "loginsha"
-    name = name.replace("'", "")
-     
-    return redirect(url_for("show_main", name=name))
+    session["state"] = "loginsha"
+    return redirect("/show_main")
 
     
     
