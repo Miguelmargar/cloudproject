@@ -1,6 +1,6 @@
 from flask import Flask, flash, render_template, redirect, request, url_for, session, g
 from events import *
-from threading import Lock
+
 
 app = Flask(__name__)
 app.secret_key = flash_key
@@ -44,19 +44,27 @@ def log_user():
         flash("WRONG PASSWORD - PLEASE TRY CHECKING YOUR PASSWORD", "error")
         return redirect("/")
  
+@app.before_request
+def before_request():
+    g.user = None
+    if "user" in session:
+        g.user = session["user"]
     
 @app.route("/show_main", methods=['GET', 'POST'])
 def show_main():
     
-    if request.method == 'POST':
-        word = request.form.get('search')
-        session["state"] = "loginsea"       
-        events = a.show_events(session["user"], session["state"], word)
+    if g.user:
+        if request.method == 'POST':
+            word = request.form.get('search')
+            session["state"] = "loginsea"       
+            events = a.show_events(session["user"], session["state"], word)
+        else:
+            events = a.show_events(session["user"], session["state"])
+        
+        return render_template("/in.html", login=session["state"], name=session["user"], events=events)
     else:
-        events = a.show_events(session["user"], session["state"])
-    
-    return render_template("/in.html", login=session["state"], name=session["user"], events=events)
-
+        flash("ERROR, Something Went Wrong, Please Try Loggin In Again", "error")
+        return redirect("/")
 
 @app.route("/home")
 def home():
