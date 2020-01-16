@@ -292,87 +292,7 @@ ul {
 	100% {color: black;}
 }
 
-/*media query for mobile devices below laptop screen sizes*/
-@media (max-width: 799px) {
-	main {
-		padding-top: 5px;
-	}
-	
-	.nav {
-		width: 100%;
-	}
-	
-	#he_name {
-		width: 100%;
-		margin: auto;
-		padding: 0px;
-	}
-	
-	#b h3 {
-		margin: auto;
-		margin: 0px;
-		padding-top: 20px;
-		padding-bottom: 10px;
-	}
-	
-	.admin {
-		width: 100%;
-		padding-bottom: 15px;
-	}
-	
-	.admin h3 {
-		margin-top: 10px;
-	}
-	
-	.error {
-		margin-top: 10px;
-		margin-bottom: 15px;
-	}
-	
-	.pic {
-		display: block;
-		width: 100%;
-		margin: auto;
-	}
-	
-	 .main:not(.otherColor) {
-		height: 575px;
-	}
-	
-	.otherColor {
-		display: none;
-	}
-	
-	.points {
-		float: right;
-		display: block;
-		width: 100%;
-		margin: auto;
-	}
-	
-	.points ul {
-		text-align: center;
-	}
-	
-	.evsacts h3 {
-		width: 100%;
-		margin: 10px 0px 10px 0px;
-		text-align: center;
-	}
-	
-	#sear {
-		width: 100%;
-		margin: 0px 0px 10px 0px;
-	}
-}
 
-@media (max-width: 375px) {
-	.main {
-		width: 90%;
-	}
-	
-}
-/*End of media queries for screen sizes below laptops*/
 
 /*--------------Each Event-----------------*/
 
@@ -452,7 +372,7 @@ ul {
 
 footer {
 	margin: 0px;
-	height: 124px;
+	height: auto;
 	width: 100%;
 	background-color: #c9c9c9;
 	text-align: center;
@@ -464,5 +384,121 @@ footer h2 {
 	margin: 0px;
 }
 
-/*-----------------footer end-----------------*/
+.footerL {
+	width: 49%;
+	display: inline-block;
+	text-align: right;
+	padding-right: 40px;
+	box-sizing: border-box;
+}
 
+.footerR {
+	width: 49%;
+	display: inline-block;
+	text-align: left;
+	padding-left: 40px;
+	box-sizing: border-box;
+}
+
+.footerL h3 a, .footerR h3 a {
+	color: #8c8c8c;
+	transition: color 0.5s;
+	text-decoration: none;
+}
+
+.footerL h3 a:hover, footerR h3 a:hover {
+	color: black;
+	cursor: pointer;
+}
+
+/*-----------------footer end-----------------*/
+/*media query for mobile devices below laptop screen sizes*/
+@media (max-width: 799px) {
+	main {
+		padding-top: 5px;
+	}
+	
+	.nav {
+		width: 100%;
+	}
+	
+	#he_name {
+		width: 100%;
+		margin: auto;
+		padding: 0px;
+	}
+	
+	#b h3 {
+		margin: auto;
+		margin: 0px;
+		padding-top: 20px;
+		padding-bottom: 10px;
+	}
+	
+	.admin {
+		width: 100%;
+		padding-bottom: 15px;
+	}
+	
+	.admin h3 {
+		margin-top: 10px;
+	}
+	
+	.error {
+		margin-top: 10px;
+		margin-bottom: 15px;
+	}
+	
+	.pic {
+		display: block;
+		width: 100%;
+		margin: auto;
+	}
+	
+	 .main:not(.otherColor) {
+		height: 575px;
+	}
+	
+	.otherColor {
+		display: none;
+	}
+	
+	.points {
+		float: right;
+		display: block;
+		width: 100%;
+		margin: auto;
+	}
+	
+	.points ul {
+		text-align: center;
+	}
+	
+	.evsacts h3 {
+		width: 100%;
+		margin: 10px 0px 10px 0px;
+		text-align: center;
+	}
+	
+	#sear {
+		width: 100%;
+		margin: 0px 0px 10px 0px;
+	}
+	
+	.footerL {
+		text-align: center;
+		width: 100%;
+		padding-right: 0px;
+	}
+	
+	.footerR {
+		display: none;
+	}
+}
+
+@media (max-width: 375px) {
+	.main {
+		width: 90%;
+	}
+}
+/*End of media queries for screen sizes below laptops*/
