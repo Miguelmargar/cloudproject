@@ -59,6 +59,13 @@ a:hover {
 	display: inline-block;
 }
 
+.nav img {
+	width: 7%;
+	height: auto;
+	display: inline-block;
+	margin-left: 15px;
+}
+
 #b, #b:visited, #b:active{
 	transition: color 1s;
 	border: 0px;
@@ -426,6 +433,11 @@ footer h2 {
 		width: 100%;
 		margin: auto;
 		padding: 0px;
+	}
+	
+	.nav img {
+		margin-left: 0px;
+		margin-top: 15px;
 	}
 	
 	#b h3 {

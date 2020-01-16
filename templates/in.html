@@ -6,6 +6,11 @@
 		<div class="nav">
 				<h1><a href="/home">Task Manager</a></h1>
 				<h3 id="he_name">{{ session['user'] }}</h3>
+				{% if not pic %}
+					<img src="../static/userDefault.png">
+				{% elif pic %}
+					<img src="#">
+				{% endif %}
 			</div>
 			<div class="admin">
 				<form method="GET" action="/logOut">
