@@ -8,10 +8,10 @@ class Events:
         None
     
     def sign_user_up(self, name, passw):
-        user = dbuser
+        user = db_user
         password = db_key
-        host = dbhost
-        database = dbname
+        host = db_host
+        database = db_name
         
         passw = self.hash_password(passw)
         
@@ -48,10 +48,10 @@ class Events:
         
         
     def log_user_in(self, name, passw):
-        user = dbuser
+        user = db_user
         password = db_key
-        host = dbhost
-        database = dbname
+        host = db_host
+        database = db_name
          
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
@@ -88,10 +88,10 @@ class Events:
 
         
     def create_ev(self, name, date, time, descr, user_name):
-        user = dbuser
+        user = db_user
         password = db_key
-        host = dbhost
-        database = dbname
+        host = db_host
+        database = db_name
         
         if time == "" or time == "00:00":
             time = "All Day" 
@@ -110,10 +110,10 @@ class Events:
         
     
     def show_events(self, name, login, *args):
-        user = dbuser
+        user = db_user
         password = db_key
-        host = dbhost
-        database = dbname
+        host = db_host
+        database = db_name
          
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
@@ -183,10 +183,10 @@ class Events:
             
     
     def del_event(self, info):
-        user = dbuser
+        user = db_user
         password = db_key
-        host = dbhost
-        database = dbname
+        host = db_host
+        database = db_name
 
         pat = r"\"(.*?)\"|'(.*?)'"
         info = re.findall(pat, info)
@@ -232,10 +232,10 @@ class Events:
         
     
     def edit_event(self, name, date, time, descr, old_details):
-        user = dbuser
+        user = db_user
         password = db_key
-        host = dbhost
-        database = dbname
+        host = db_host
+        database = db_name
 
         old_details = old_details.split("*,")
          
@@ -259,10 +259,10 @@ class Events:
         
     def arch_eve(self, info):
         self.info = info 
-        user = dbuser
+        user = db_user
         password = db_key
-        host = dbhost
-        database = dbname
+        host = db_host
+        database = db_name
          
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
@@ -300,10 +300,10 @@ class Events:
    
         
     def share_with(self, user_sha, user_eve):
-        user = dbuser
+        user = db_user
         password = db_key
-        host = dbhost
-        database = dbname
+        host = db_host
+        database = db_name
          
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)

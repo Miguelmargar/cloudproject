@@ -1,4 +1,4 @@
-body {
+body, html {
 	height: auto;
 	width: 100%;
 	margin: 0;
@@ -60,13 +60,32 @@ a:hover {
 }
 
 .nav img {
+	padding-top: 15px;
 	width: 7%;
 	height: auto;
 	display: inline-block;
 	margin-left: 15px;
 }
 
-#b, #b:visited, #b:active{
+@media(max-width: 425px) {
+	.nav img {
+		width: 15%;
+	}
+}
+
+@media(min-width: 1440px) {
+	.admin form {
+		margin-top: 10px;
+	}
+}
+
+@media(min-width: 2560px) {
+	.admin form {
+		margin-top: 32px;
+	}
+}
+
+#b, #b:visited, #b:active {
 	transition: color 1s;
 	border: 0px;
 	background-color: white;
@@ -186,7 +205,7 @@ main {
 	border-bottom: 5px solid #b2b2b2;
 	padding: 25px 0px 20px 0px; 
 	width: 100%;
-	min-height: 500px;
+	min-height: 600px;
 	text-align: center;
 }
 
