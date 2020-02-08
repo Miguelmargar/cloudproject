@@ -63,7 +63,7 @@ def show_main():
         
         return render_template("/in.html", login=session["state"], name=session["user"], events=events)
     else:
-        flash("ERROR, Something Went Wrong, Please Try Loggin In Again", "error")
+        flash("ERROR, Something Went Wrong, Please Try Logging In Again", "error")
         return redirect("/")
 
 @app.route("/home")

@@ -110,7 +110,58 @@
 }
 
 /*----------------Sign In and Log In modals end---------------*/
+/*----------------Change Profile Image modal------------------*/
 
+.modalImg {
+	height: auto;
+	width:350px;
+	background-color: white;
+	margin: auto;
+	border-radius: 8px;
+	animation-name: animatetop;
+	animation-duration: 0.8s;
+	position: relative;
+}
+
+.modalImg h2 {
+	text-align: center;
+	padding: 15px 0px 15px 0px;
+	margin: 0px 0px 0px 0px;
+}
+
+.currImg {
+	width: 100%;
+	height: auto;
+	text-align: center;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 0px 0px 15px 0px;
+}
+
+.currImg img {
+	width: 50%;
+	padding: 15px 0px 15px 0px;
+}
+
+/* The Close Button */
+#imgClsBt {
+	float: right;
+	margin-top: 43px;
+	margin-right: 18px;
+	color: #327792;
+	font-size: 35px;
+	font-weight: bold;
+	transition: 1s;
+	outline: none;
+}
+
+#imgClsBt:hover {
+	color: black;
+	cursor: pointer;
+}
+
+
+/*----------------Change Profile Image modal end--------------*/
 /*----------------Create task modal---------------------------*/
 
 .modalTop {

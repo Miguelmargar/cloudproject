@@ -1,5 +1,10 @@
 var modal;
 
+function editImg() {
+	modal = document.getElementById('imgCh');
+	modal.style.display='block';
+}
+
 function createEve() {
 	modal = document.getElementById('creMod');
 	modal.style.display='block';

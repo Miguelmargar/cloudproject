@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../static/CSS/modalStyle.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<script type=text/javascript>
+<script type="text/javascript">
         // Set-up connection variable between JS and Flask server application
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
@@ -107,6 +107,25 @@
 		</form>
 	</div>
 </div>
+
+
+<div id="imgCh" class="modal">
+	<div class="modalImg">
+		<h2>Change Profile Image</h2>
+		<div class="currImg">
+			{% if not pic %}
+				<img src="../static/userDefault.png">
+			{% elif pic %}
+				<img src="#">
+			{% endif %}
+		</div>
+		<h2>Upload new photo:</h2>
+		<span id="imgClsBt">&times;</span>
+	</div>
+</div>
+
+
+
 
 <!-- Modal for creating events -->
 <div id="creMod" class="modal">

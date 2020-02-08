@@ -67,6 +67,10 @@ a:hover {
 	margin-left: 15px;
 }
 
+.nav img:hover {
+	cursor: pointer;
+}
+
 @media(max-width: 425px) {
 	.nav img {
 		width: 15%;
