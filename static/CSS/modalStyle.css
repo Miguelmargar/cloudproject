@@ -121,6 +121,7 @@
 	animation-name: animatetop;
 	animation-duration: 0.8s;
 	position: relative;
+	color: #328d92;
 }
 
 .modalImg h2 {
@@ -133,14 +134,21 @@
 	width: 100%;
 	height: auto;
 	text-align: center;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
+	border-top: 5px solid #b2b2b2;
+	border-bottom: 5px solid #b2b2b2;
 	padding: 0px 0px 15px 0px;
 }
 
 .currImg img {
 	width: 50%;
 	padding: 15px 0px 15px 0px;
+}
+
+#myFile {
+	width: 100%;
+	text-align: center;
+	margin-left: 10px;
+	padding-bottom: 10px;
 }
 
 /* The Close Button */
