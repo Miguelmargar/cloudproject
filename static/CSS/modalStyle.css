@@ -113,6 +113,7 @@
 /*----------------Change Profile Image modal------------------*/
 
 .modalImg {
+	min-height: 345px;
 	height: auto;
 	width:350px;
 	background-color: white;
@@ -131,12 +132,13 @@
 }
 
 .currImg {
+	display: block;
 	width: 100%;
 	height: auto;
 	text-align: center;
 	border-top: 5px solid #b2b2b2;
 	border-bottom: 5px solid #b2b2b2;
-	padding: 0px 0px 15px 0px;
+	padding: 0px 0px 0px 0px;
 }
 
 .currImg img {
@@ -144,18 +146,41 @@
 	padding: 15px 0px 15px 0px;
 }
 
+.currImg form {
+	display: none;
+	margin: 5px 0 10px 0;
+}
+
+#imgYes {
+	margin: auto;
+	border-radius: 5px;
+	border: none;
+	color: #327792;
+	height: 40px;
+	width: 80px;
+	transition: 1.5s;
+	font-weight: bold;
+	outline: none;
+}
+
+#imgYes:hover {
+	background-color: #bae9b4;
+	color: black;
+	cursor: pointer;
+}
+
 #myFile {
-	width: 100%;
+	width: 200px;
 	text-align: center;
 	margin-left: 10px;
-	padding-bottom: 10px;
+	padding: 10px 0 10px 0;
+	display: inline-block;
 }
 
 /* The Close Button */
 #imgClsBt {
+	margin-right: 15px;
 	float: right;
-	margin-top: 43px;
-	margin-right: 18px;
 	color: #327792;
 	font-size: 35px;
 	font-weight: bold;

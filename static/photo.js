@@ -8,6 +8,8 @@ $("#myFile").change(function(e) {
 
 		reader.onload = function (e) {
 			$('.currImg img').attr('src', e.target.result);
+			$('.currImg img').css('border-radius', '100%');
+			$('.modalImg form').slideDown('slow');
 		};
 		reader.readAsDataURL(file);
 	} else {
