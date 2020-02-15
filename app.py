@@ -154,6 +154,14 @@ def show_shared_with():
     session["state"] = "loginsha"
     return redirect("/show_main")
 
+
+@app.route("/change_img", methods=['POST'])
+def change_img():
+    user_photo = request.files['myFile']
+    print(user_photo)
+    
+    return redirect("/show_main")
+    
     
     
 if __name__ == '__main__':

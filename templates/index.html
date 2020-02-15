@@ -47,7 +47,7 @@
 		
 		<div class="main">
 			<div class="pic">
-				<img src="../static/index.png">
+				<img src="../static/assets/index.png">
 			</div>
 			<div class="points">
 				<ul>
@@ -68,7 +68,7 @@
 				</ul>
 			</div>
 			<div class="pic2">
-				<img src="../static/index.png">
+				<img src="../static/assets/index.png">
 			</div>
 		</div>
 		{% endblock %}
@@ -118,13 +118,14 @@
 			{% elif pic %}
 				<img src="#">
 			{% endif %}
-			<form>
-				<button id="imgYes" type="submit" value="singUp">Set Photo</button>
-			</form>
 		</div>
 		<h2>Upload new photo:</h2>
-		<input type="file" id="myFile">
-		<span id="imgClsBt">&times;</span>
+		<form method="POST" action="/change_img" enctype="multipart/form-data">
+			<input type="file" id="myFile" name="myFile">
+			<span id="imgClsBt">&times;</span>
+			<button id="imgYes" type="submit" value="singUp">Set Photo</button>
+		</form>
+		
 	</div>
 </div>
 
@@ -188,7 +189,7 @@
 </div>
 
 
-<script src="../static/events.js"></script>
-<script src="../static/photo.js"></script>
+<script src="../static/JS/events.js"></script>
+<script src="../static/JS/photo.js"></script>
 
 </html>

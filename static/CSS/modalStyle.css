@@ -146,13 +146,18 @@
 	padding: 15px 0px 15px 0px;
 }
 
-.currImg form {
-	display: none;
-	margin: 5px 0 10px 0;
+#myFile {
+	width: 200px;
+	text-align: center;
+	margin-left: 10px;
+	padding: 10px 0 10px 0;
+	display: inline-block;
 }
 
 #imgYes {
+	display: none;
 	margin: auto;
+	margin-bottom: 10px;
 	border-radius: 5px;
 	border: none;
 	color: #327792;
@@ -167,14 +172,6 @@
 	background-color: #bae9b4;
 	color: black;
 	cursor: pointer;
-}
-
-#myFile {
-	width: 200px;
-	text-align: center;
-	margin-left: 10px;
-	padding: 10px 0 10px 0;
-	display: inline-block;
 }
 
 /* The Close Button */
