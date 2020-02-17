@@ -158,7 +158,9 @@ def show_shared_with():
 @app.route("/change_img", methods=['POST'])
 def change_img():
     user_photo = request.files['myFile']
-    print(user_photo)
+    user = session["user"]
+    
+    picture_changed = a.change_user_pic(user_photo, user)
     
     return redirect("/show_main")
     

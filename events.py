@@ -365,4 +365,31 @@ class Events:
         pwdhash = binascii.hexlify(pwdhash).decode('ascii')
         
         return pwdhash == stored_password
+    
+    
+    def change_user_pic(self, new_pic, user):
+        user = db_user
+        password = db_key
+        host = db_host
+        database = db_name
+         
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
+        
+        query = """SELECT photo
+                FROM users
+                WHERE user_name = %s"""
+        
+        cur = con.cursor()
+        cur.execute(query, (user),)
+        data = cur.fetchall()
+        cur.close()
+        
+        print(data)
+        
+        
+        
+        
         
