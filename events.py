@@ -1,4 +1,5 @@
 import os, pymysql, sys, hashlib, binascii, re
+from werkzeug.utils import secure_filename
 from passw import *
 
 
@@ -367,7 +368,7 @@ class Events:
         return pwdhash == stored_password
     
     
-    def change_user_pic(self, new_pic, user):
+    def change_user_pic(self, user_photo, user_name):
         user = db_user
         password = db_key
         host = db_host
@@ -383,11 +384,15 @@ class Events:
                 WHERE user_name = %s"""
         
         cur = con.cursor()
-        cur.execute(query, (user),)
+        cur.execute(query, (user_name),)
         data = cur.fetchall()
         cur.close()
         
+        filename = user_name + "." + secure_filename(user_photo.filename).split(".")[1]
+        user_photo.save(os.path.join("static/assets/", filename))
+        
         print(data)
+        print(user_photo)
         
         
         
