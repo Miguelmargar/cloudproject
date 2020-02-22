@@ -60,11 +60,12 @@ a:hover {
 }
 
 .nav img {
-	padding-top: 15px;
+	margin-top: 15px;
 	width: 7%;
 	height: auto;
 	display: inline-block;
 	margin-left: 15px;
+	border-radius: 100%
 }
 
 .nav img:hover {

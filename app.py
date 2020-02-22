@@ -32,16 +32,25 @@ def log_user():
     passw = request.form.get("logPass")
     
     state = a.log_user_in(name, passw)
+    pic = a.check_pic(name)
     
     if state == "loggedin":
         session["user"] = name
         session["state"] = state
+        
+        if pic != 'no':
+            session['pic_name'] = pic
+        
         return redirect("/show_main")
+    
     elif state == "nameerr":
         flash("ACCOUNT DOES NOT EXISTS - PLEASE TRY A DIFFERENT NAME", "error")
+        
         return redirect("/")
+    
     elif state == "passerr":
         flash("WRONG PASSWORD - PLEASE TRY CHECKING YOUR PASSWORD", "error")
+        
         return redirect("/")
  
 @app.before_request
@@ -61,7 +70,7 @@ def show_main():
         else:
             events = a.show_events(session["user"], session["state"])
         
-        return render_template("/in.html", login=session["state"], name=session["user"], events=events)
+        return render_template("/in.html", events=events)
     else:
         flash("ERROR, Something Went Wrong, Please Try Logging In Again", "error")
         return redirect("/")
@@ -99,6 +108,7 @@ def delete_event():
 def log_user_out():  
     session.pop("user", None)
     session.pop("state", None)
+    session.pop("pic_name", None)
     flash("You Have Successfully Logged Out", "good")
     
     return redirect("/")
@@ -161,6 +171,8 @@ def change_img():
     user = session["user"]
     
     picture_changed = a.change_user_pic(user_photo, user)
+    
+    session['pic_name'] = picture_changed
     
     return redirect("/show_main")
     

@@ -53,7 +53,7 @@ class Events:
         password = db_key
         host = db_host
         database = db_name
-         
+        
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
         except Exception as e:
@@ -70,6 +70,7 @@ class Events:
         
         if len(data) < 1 or data[0][0] != name:
             state = "nameerr"
+            return state
          
         query = """SELECT password
                 FROM eventmanager.users
@@ -82,10 +83,37 @@ class Events:
 
         if len(data) < 1 or not self.verify_password(data[0][0], passw):
             state = "passerr"
+            return state
         
         state = "loggedin"
         
         return state
+    
+    
+    def check_pic(self, name):
+        user = db_user
+        password = db_key
+        host = db_host
+        database = db_name
+        
+        try:
+            con = pymysql.connect(host=host, database=database, user=user, password=password)
+        except Exception as e:
+            sys.exit(e)
+        
+        query = """SELECT photo, photo_name
+                FROM users
+                WHERE user_name = %s"""
+                    
+        cur = con.cursor()
+        cur.execute(query, (name),)
+        data = cur.fetchall()
+        cur.close()
+        
+        if data[0][0] == "yes":
+            return data[0][1]
+        else:
+            return data[0][0]
 
         
     def create_ev(self, name, date, time, descr, user_name):
@@ -389,10 +417,20 @@ class Events:
         cur.close()
         
         filename = user_name + "." + secure_filename(user_photo.filename).split(".")[1]
-        user_photo.save(os.path.join("static/assets/", filename))
         
-        print(data)
-        print(user_photo)
+        if data[0][0] == "no":
+            update = "UPDATE users SET photo = 'yes', photo_name = '" + filename + "' WHERE user_name = '" + user_name + "'"
+        elif data[0][0] == "yes":
+            update = "UPDATE users SET photo_name = '" + filename + "' WHERE user_name = '" + user_name + "'"
+        print(update)
+        cur = con.cursor()
+        cur.execute(update)
+        cur.close()
+        con.commit()
+         
+        user_photo.save(os.path.join("static/assets/", filename))
+         
+        return filename
         
         
         
