@@ -113,10 +113,10 @@
 	<div class="modalImg">
 		<h2>Change Profile Image</h2>
 		<div class="currImg">
-			{% if not pic %}
+			{% if not session['pic_name'] %}
 				<img src="../static/assets/userDefault.png">
-			{% elif pic %}
-				<img src="#">
+			{% elif session['pic_name'] %}
+				<img src="../static/assets/{{ session['pic_name'] }}" >
 			{% endif %}
 		</div>
 		<h2>Upload new photo:</h2>

@@ -17,4 +17,16 @@ $("#myFile").change(function(e) {
 	}
 })
 
+// check for image in user's main screen if it's not the default leave as is otherwise round corners
+var mainImgSrc = $(".nav img").attr('src');
+if (mainImgSrc != "../static/assets/userDefault.png") {
+	$(".nav img").css('border-radius', '100%');
+} else {
+	$(".nav img").css('border-radius', '0%');
+}
 
+// check for image inside modal if it's not the default leave as is otherwise round corners
+var imgSrc = $(".currImg img").attr('src');
+if (imgSrc != "../static/assets/userDefault.png") {
+	$(".currImg img").css('border-radius', '100%');
+}

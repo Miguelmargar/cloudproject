@@ -417,6 +417,8 @@ class Events:
         cur.close()
         
         filename = user_name + "." + secure_filename(user_photo.filename).split(".")[1]
+        filename = filename.replace("'","\\'")
+        user_name = user_name.replace("'","\\'")
         
         if data[0][0] == "no":
             update = "UPDATE users SET photo = 'yes', photo_name = '" + filename + "' WHERE user_name = '" + user_name + "'"
@@ -428,6 +430,7 @@ class Events:
         cur.close()
         con.commit()
          
+        filename = filename.replace("\\'","'")
         user_photo.save(os.path.join("static/assets/", filename))
          
         return filename

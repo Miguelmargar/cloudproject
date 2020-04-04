@@ -173,7 +173,7 @@ def change_img():
     picture_changed = a.change_user_pic(user_photo, user)
     
     session['pic_name'] = picture_changed
-    
+    print(session['pic_name'])
     return redirect("/show_main")
     
     
