@@ -16,7 +16,7 @@ class Events:
         
         passw = self.hash_password(passw)
         
-        try:
+        try:           
             con = pymysql.connect(host=host, database=database, user=user, password=password)
         except Exception as e:
             sys.exit(e)
@@ -110,10 +110,12 @@ class Events:
         data = cur.fetchall()
         cur.close()
         
-        if data[0][0] == "yes":
+        if len(data) > 0 and data[0][0] == "yes":
             return data[0][1]
-        else:
+        elif len(data) > 0 and data[0][0] == "no":
             return data[0][0]
+        else:
+            return "no"
 
         
     def create_ev(self, name, date, time, descr, user_name):
@@ -424,7 +426,7 @@ class Events:
             update = "UPDATE users SET photo = 'yes', photo_name = '" + filename + "' WHERE user_name = '" + user_name + "'"
         elif data[0][0] == "yes":
             update = "UPDATE users SET photo_name = '" + filename + "' WHERE user_name = '" + user_name + "'"
-        print(update)
+        
         cur = con.cursor()
         cur.execute(update)
         cur.close()

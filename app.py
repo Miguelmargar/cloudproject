@@ -33,7 +33,7 @@ def log_user():
     
     state = a.log_user_in(name, passw)
     pic = a.check_pic(name)
-    
+    print(pic)
     if state == "loggedin":
         session["user"] = name
         session["state"] = state
