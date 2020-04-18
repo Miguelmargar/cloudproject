@@ -11,6 +11,16 @@
 				{% elif session['pic_name'] %}
 					<img src="../static/assets/{{ session['pic_name'] }}" onclick="editImg()">
 				{% endif %}
+				<div id="today">
+					<h3>Today:</h3>
+					<div id="currDate"></div>
+				</div>
+				
+			<script>
+				var d = new Date();
+				var n = d.toDateString();
+				document.getElementById("currDate").innerHTML = n;
+			</script>
 			</div>
 			<div class="admin">
 				<form method="GET" action="/logOut">
