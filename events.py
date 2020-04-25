@@ -67,7 +67,6 @@ class Events:
         cur.execute(query, (name),)
         data = cur.fetchall()
         cur.close()
-        
         if len(data) < 1 or data[0][0] != name:
             state = "nameerr"
             return state
@@ -294,7 +293,7 @@ class Events:
         password = db_key
         host = db_host
         database = db_name
-         
+        
         try:
             con = pymysql.connect(host=host, database=database, user=user, password=password)
         except Exception as e:

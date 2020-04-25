@@ -4,29 +4,23 @@
 {% block header %}
 	{% if session["state"] == "loggedin" or session["state"] == "loginsea" or session["state"] == "loginsha" or session["state"] == "loginarch" %}
 		<div class="nav">
-				<h1><a href="/home">Task Manager</a></h1>
-				<h3 id="he_name">{{ session['user'] }}</h3>
-				{% if not session['pic_name'] %}
-					<img src="../static/assets/userDefault.png" onclick="editImg()">
-				{% elif session['pic_name'] %}
-					<img src="../static/assets/{{ session['pic_name'] }}" onclick="editImg()">
-				{% endif %}
-				<div id="today">
-					<h3>Today:</h3>
-					<div id="currDate"></div>
-				</div>
-				
-			<script>
-				var d = new Date();
-				var n = d.toDateString();
-				document.getElementById("currDate").innerHTML = n;
-			</script>
+			<h1><a href="/home">Task Manager</a></h1>
+			<h3 id="he_name">{{ session['user'] }}</h3>
+			{% if not session['pic_name'] %}
+				<img src="../static/assets/userDefault.png" onclick="editImg()">
+			{% elif session['pic_name'] %}
+				<img src="../static/assets/{{ session['pic_name'] }}" onclick="editImg()">
+			{% endif %}
+			<div id="today">
+				<h3>Today:</h3>
+				<div id="currDate"></div>
 			</div>
-			<div class="admin">
-				<form method="GET" action="/logOut">
-					<button id="b" type="submit" value="logout"><h3>Logout</h3></button>
-				</form>
-			</div>
+		</div>
+		<div class="admin">
+			<form method="GET" action="/logOut">
+				<button id="b" type="submit" value="logout"><h3>Logout</h3></button>
+			</form>
+		</div>
 	{% endif %}
 {% endblock %}
 
@@ -90,14 +84,14 @@
 			{% endif %}
 
 			{% if session["state"] == "loggedin" or session["state"] == "loginsea" %}
-				<button class="evButton" type="submit" name="edit" onclick="getOldDetails({{ [i[0], i[1], i[2], i[3], name, login] }})">Edit</button>
+				<button class="evButton" type="submit" name="edit" onclick="getOldDetails({{ [i[0], i[1], i[2], i[3], session['user'], session['state']] }})">Edit</button>
 	
 				<form method="POST" action="/deleteEvent">
 					<button class="evButton" type="submit" name="delete" value="{{ i[0], i[1], i[2], i[3], session['user'], session['state'] }}">Delete</button>
 				</form>
 				
 				<form method="POST" action="/archive_event">
-					<button class="evButton" type="submit" name="archive" value="{{ i[0], i[1], i[2], i[3], name, login }}">Archive</button>
+					<button class="evButton" type="submit" name="archive" value="{{ i[0], i[1], i[2], i[3], session['user'], session['state'] }}">Archive</button>
 				</form>
 				
 				<button class="evButton" type="submit" name="share" onclick="shareWithDetails({{ [i[0], i[1], i[2], i[3], session['user'], session['state']] }})">Share</button>	

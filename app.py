@@ -30,7 +30,7 @@ def sign_user():
 def log_user():
     name = request.form.get("logName")
     passw = request.form.get("logPass")
-    
+   
     state = a.log_user_in(name, passw)
     pic = a.check_pic(name)
     
@@ -89,7 +89,7 @@ def create_event():
     desc = request.form.get('desc')
 
     user_det = a.create_ev(nameForm, date, time, desc, session["user"])
-    
+    session["state"] = "loggedin"
     return redirect("/show_main")
 
 
@@ -130,7 +130,7 @@ def edit_event():
 @app.route("/archive_event", methods=['POST'])
 def archive_event():
     info = request.form["archive"]
-        
+    
     name = a.arch_eve(info)
     
     flash("Task Successfully Archived!", "good")
@@ -173,7 +173,7 @@ def change_img():
     picture_changed = a.change_user_pic(user_photo, user)
     
     session['pic_name'] = picture_changed
-    print(session['pic_name'])
+    
     return redirect("/show_main")
     
     

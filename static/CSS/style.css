@@ -415,6 +415,7 @@ ul {
 
 .evButton:hover {
 	background-color: #6bc5e7;
+	cursor: pointer;
 }
 
 /*--------------Each Event end-------------*/
