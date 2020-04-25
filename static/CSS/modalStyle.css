@@ -30,6 +30,12 @@
 	to {top:0; opacity:1}
 }
 
+@media(max-width: 370px) {
+	.sign {
+		width: 300px;
+	}
+}
+
 .signtop {
 	margin: 0;
 	height: 15%;
