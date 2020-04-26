@@ -1,5 +1,6 @@
 from flask import Flask, flash, render_template, redirect, request, url_for, session, g
 from events import *
+from users import *
 
 
 app = Flask(__name__)
@@ -8,7 +9,9 @@ app.secret_key = flash_key
 @app.route('/')
 def index():
     global a
+    global b
     a = Events()
+    b = Users()
     
     return render_template("index.html")
 
@@ -17,7 +20,7 @@ def sign_user():
     name = request.form.get("signName")
     passw = request.form.get("signPass")
     
-    sign = a.sign_user_up(name, passw)
+    sign = b.sign_user_up(name, passw)
     
     if sign == "created":
         flash("%s, Your Account Has Been Created" % name.capitalize(), "good")
@@ -31,8 +34,8 @@ def log_user():
     name = request.form.get("logName")
     passw = request.form.get("logPass")
    
-    state = a.log_user_in(name, passw)
-    pic = a.check_pic(name)
+    state = b.log_user_in(name, passw)
+    pic = b.check_pic(name)
     
     if state == "loggedin":
         session["user"] = name
@@ -170,7 +173,7 @@ def change_img():
     user_photo = request.files['myFile']
     user = session["user"]
     
-    picture_changed = a.change_user_pic(user_photo, user)
+    picture_changed = b.change_user_pic(user_photo, user)
     
     session['pic_name'] = picture_changed
     
